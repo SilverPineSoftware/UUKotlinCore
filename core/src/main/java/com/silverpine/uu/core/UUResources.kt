@@ -6,13 +6,12 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
+import com.silverpine.uu.logging.UULog
 
 object UUResources
 {
     private var applicationContext: Context? = null
     private var resources: Resources? = null
-
-    //const val NEWLINE: String = "\n"
 
     fun init(context: Context)
     {
@@ -89,7 +88,7 @@ object UUResources
         }
         catch (ex: java.lang.Exception)
         {
-            //UULog.error(UUDeviceInfo::class.java, "getAppVersion", ex)
+            UULog.e(javaClass, "getAppVersion", "", ex)
         }
 
         return "unknown"
