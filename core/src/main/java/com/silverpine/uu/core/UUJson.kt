@@ -1,12 +1,7 @@
 package com.silverpine.uu.core
 
-import androidx.annotation.Nullable
 import com.silverpine.uu.logging.UULog
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.JsonQualifier
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import java.lang.reflect.Type
 
 
 object UUJson
@@ -73,6 +68,7 @@ fun <T> Class<T>.uuFromJson(source: String?): T?
 }*/
 
 
+/*
 @Retention(AnnotationRetention.RUNTIME)
 @JsonQualifier
 annotation class SerializeNulls
@@ -97,4 +93,4 @@ annotation class SerializeNulls
             }
         }
     }
-}
+}*/
