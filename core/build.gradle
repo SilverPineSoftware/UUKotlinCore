@@ -10,7 +10,7 @@ plugins {
 ext {
     PUBLISH_ARTIFACT_ID = 'uu-core-ktx'
     PUBLISH_DESCRIPTION = 'Useful Utilities Core'
-    SCM_MODULE_NAME = 'UUAndroidCore'
+    SCM_MODULE_NAME = 'UUKotlinCore'
 }
 
 apply from: "../uu-build-common.gradle"
