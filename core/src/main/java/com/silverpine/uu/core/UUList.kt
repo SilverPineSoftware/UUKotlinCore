@@ -25,3 +25,15 @@ inline fun <reified T> List<T>.uuSlice(start: Int, count: Int): List<T>
 
     return slice(start..endIndex)
 }
+
+fun <T> List<T>.uuGetOrNull(index: Int): T?
+{
+    return if (index in indices)
+    {
+        this[index]
+    }
+    else
+    {
+        null
+    }
+}
