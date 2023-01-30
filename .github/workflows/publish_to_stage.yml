@@ -21,6 +21,8 @@ jobs:
         # Builds the release artifacts of the library
       - name: Release build
         run: ./gradlew clean :core:assembleRelease
+        env:
+          BUILD_NUMBER: ${{github.run_number}}
 
 #        # Generates other artifacts (javadocJar is optional)
 #      - name: Source jar and dokka
