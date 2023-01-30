@@ -38,13 +38,10 @@ def getVersionName = { ->
 
     def versionName = version
     def buildBranch = getBuildBranch().trim()
-
-    def buildNumber = System.getenv('BUILD_NUMBER')
-    project.logger.lifecycle("buildNumber: $buildNumber")
-
+    
     if (buildNumber != null && buildBranch != 'main')
     {
-        versionName = "${versionName}.${buildNumber}-${buildBranch}-SNAPSHOT"
+        versionName = "${versionName}-${buildBranch}-SNAPSHOT"
     }
 
     return versionName
