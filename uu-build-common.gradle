@@ -44,7 +44,7 @@ def getVersionName = { ->
 
     if (buildNumber != null && buildBranch != 'main')
     {
-        versionName = "${versionName}.${buildNumber}-${buildBranch}"
+        versionName = "${versionName}.${buildNumber}-${buildBranch}-SNAPSHOT"
     }
 
     return versionName
