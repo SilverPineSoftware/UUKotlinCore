@@ -38,8 +38,8 @@ def getVersionName = { ->
 
     def versionName = version
     def buildBranch = getBuildBranch().trim()
-    
-    if (buildNumber != null && buildBranch != 'main')
+
+    if (buildBranch != 'main')
     {
         versionName = "${versionName}-${buildBranch}-SNAPSHOT"
     }
