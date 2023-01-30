@@ -27,13 +27,27 @@ def getBuildBranch = { ->
         val = ""
     }
 
-    def result = uuTrimAndQuote(val)
-    project.logger.lifecycle("buildBranch: $result")
-    return result
+    return val
 }
 
 ext {
-    BUILD_BRANCH = getBuildBranch()
+    BUILD_BRANCH = uuTrimAndQuote(getBuildBranch())
+}
+
+def getVersionName = { ->
+
+    def versionName = version
+    def buildBranch = getBuildBranch().trim()
+
+    def buildNumber = System.getenv('BUILD_NUMBER')
+    project.logger.lifecycle("buildNumber: $buildNumber")
+
+    if (buildNumber != null && buildBranch != 'main')
+    {
+        versionName = "${versionName}.${buildNumber}-${buildBranch}"
+    }
+
+    return versionName
 }
 
 def getBuildCommitHash = { ->
@@ -75,14 +89,15 @@ def getBuildDate = { ->
 
 ext {
     PUBLISH_GROUP_ID = 'com.silverpine.uu'
-    BUILD_VERSION = version
+    BUILD_VERSION = getVersionName()
     BUILD_COMMIT_HASH = getBuildCommitHash()
     BUILD_DATE = getBuildDate()
 }
 
 group = PUBLISH_GROUP_ID
 
-project.logger.lifecycle("version: $version")
+project.logger.lifecycle("BUILD_VERSION: $BUILD_VERSION")
+project.logger.lifecycle("BUILD_BRANCH: $BUILD_BRANCH")
 
 android {
 

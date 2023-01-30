@@ -30,6 +30,7 @@ jobs:
       - name: Publish to MavenCentral
         run: ./gradlew publishToSonatype --max-workers 1
         env:
+          BUILD_NUMBER: ${{github.run_number}}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
