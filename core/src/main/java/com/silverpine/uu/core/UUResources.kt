@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
@@ -77,7 +78,7 @@ object UUResources
         return result
     }
 
-    fun getColor(@ColorRes resourceId: Int, theme: Resources.Theme? = null): Int?
+    fun getColor(@ColorRes resourceId: Int, theme: Resources.Theme? = null, defaultValue: Int = 0): Int
     {
         var result: Int? = null
 
@@ -85,7 +86,7 @@ object UUResources
         {
             resources?.let()
             {
-                result = ResourcesCompat.getColor(it, resourceId, theme)
+                result = it.getColor(resourceId, theme)
             }
         }
         catch (ex: Exception)
@@ -93,7 +94,26 @@ object UUResources
             result = null
         }
 
-        return result
+        return result ?: defaultValue
+    }
+
+    fun getDimension(@DimenRes resourceId: Int, defaultValue: Float = 0.0f): Float
+    {
+        var result: Float? = null
+
+        try
+        {
+            resources?.let()
+            {
+                result = it.getDimension(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            result = null
+        }
+
+        return result ?: defaultValue
     }
 
     fun getAppVersion(): String
