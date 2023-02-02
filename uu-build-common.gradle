@@ -34,6 +34,7 @@ ext {
     BUILD_BRANCH = uuTrimAndQuote(getBuildBranch())
 }
 
+/*
 def getVersionName = { ->
 
     def versionName = version
@@ -45,7 +46,7 @@ def getVersionName = { ->
     }
 
     return versionName
-}
+}*/
 
 def getBuildCommitHash = { ->
 
@@ -86,7 +87,7 @@ def getBuildDate = { ->
 
 ext {
     PUBLISH_GROUP_ID = 'com.silverpine.uu'
-    BUILD_VERSION = getVersionName()
+    BUILD_VERSION = version
     BUILD_COMMIT_HASH = getBuildCommitHash()
     BUILD_DATE = getBuildDate()
 }
