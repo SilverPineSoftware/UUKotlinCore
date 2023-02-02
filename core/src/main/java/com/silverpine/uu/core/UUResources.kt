@@ -3,6 +3,7 @@ package com.silverpine.uu.core
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
@@ -66,6 +67,25 @@ object UUResources
             resources?.let()
             {
                 result = ResourcesCompat.getDrawable(it, resourceId, theme)
+            }
+        }
+        catch (ex: Exception)
+        {
+            result = null
+        }
+
+        return result
+    }
+
+    fun getColor(@ColorRes resourceId: Int, theme: Resources.Theme? = null): Int?
+    {
+        var result: Int? = null
+
+        try
+        {
+            resources?.let()
+            {
+                result = ResourcesCompat.getColor(it, resourceId, theme)
             }
         }
         catch (ex: Exception)
