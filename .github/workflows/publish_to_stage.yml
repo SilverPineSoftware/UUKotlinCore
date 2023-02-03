@@ -19,6 +19,8 @@ jobs:
           java-version: 11
       - name: Update Version
         run: ./scripts/update_version.sh
+        env:
+          BUILD_NUMBER: ${{github.run_number}}
       - name: Assemble Release
         run: ./gradlew clean :core:assembleRelease
       - name: Publish to Maven Staging
