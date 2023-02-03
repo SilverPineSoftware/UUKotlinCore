@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $SCRIPT_DIR
 
 # import common helper functions
-. "$SCRIPT_DIR/common_build_functions.sh"
+. common_build_functions.sh
 
 
 GRADLE_PROPERTIES_FILE=../gradle.properties
