@@ -14,16 +14,37 @@ class UUWorkerThread(name: String): HandlerThread(name)
 
     fun post(block: ()->Unit)
     {
-        handler.post(block)
+        try
+        {
+            handler.post(block)
+        }
+        catch (ex: Exception)
+        {
+            // Eat it
+        }
     }
 
     fun postDelayed(delay: Long, block: ()->Unit)
     {
-        handler.postDelayed(block, delay)
+        try
+        {
+            handler.postDelayed(block, delay)
+        }
+        catch (ex: Exception)
+        {
+            // Eat it
+        }
     }
 
     fun remove(block: ()->Unit)
     {
-        handler.removeCallbacks(block)
+        try
+        {
+            handler.removeCallbacks(block)
+        }
+        catch (ex: Exception)
+        {
+            // Eat it
+        }
     }
 }
