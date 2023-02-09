@@ -25,6 +25,11 @@ object UURandom
      */
     fun bytes(length: Int): ByteArray
     {
+        if (length < 0)
+        {
+            return ByteArray(0)
+        }
+
         val output = ByteArray(length)
         secureRandom.nextBytes(output)
         return output
@@ -38,7 +43,14 @@ object UURandom
      */
     fun int(max: Int): Int
     {
-        return secureRandom.nextInt(max)
+        return if (max > 0)
+        {
+            secureRandom.nextInt(max)
+        }
+        else
+        {
+            0
+        }
     }
 
     /**
@@ -52,6 +64,16 @@ object UURandom
     }
 
     /**
+     * Generates a random unsigned integer
+     *
+     * @return a random unsigned integer
+     */
+    fun uInt(): UInt
+    {
+        return int().toUInt()
+    }
+
+    /**
      * Generates a random long
      *
      * @return a random long
@@ -59,6 +81,16 @@ object UURandom
     fun long(): Long
     {
         return secureRandom.nextLong()
+    }
+
+    /**
+     * Generates a random unsigned long
+     *
+     * @return a random unsigned long
+     */
+    fun uLong(): ULong
+    {
+        return long().toULong()
     }
 
     /**
@@ -103,6 +135,17 @@ object UURandom
     }
 
     /**
+     * Generates a random unsigned byte
+     *
+     * @return a random unsigned byte
+     */
+    fun uByte(): UByte
+    {
+        val result = bytes(1)
+        return result[0].toUByte()
+    }
+
+    /**
      * Generates a random short
      *
      * @return a random short
@@ -115,13 +158,23 @@ object UURandom
     }
 
     /**
+     * Generates a random unsigned short
+     *
+     * @return a random unsigned short
+     */
+    fun uShort(): UShort
+    {
+        return short().toUShort()
+    }
+
+    /**
      * Generates a random byte
      *
      * @return a random byte
      */
     fun char(): Char
     {
-        return Char(byte().toInt())
+        return Char(uShort())
     }
 
     /**
@@ -135,56 +188,76 @@ object UURandom
         return uid.toString()
     }
 
-    inline fun <reified T> objArray(maxLength: Int, random: ()->T): Array<T?>
+    inline fun <reified T> objArray(maxLength: Int, random: ()->T): Array<T>
     {
         val length = int(maxLength)
 
-        val a = arrayOfNulls<T?>(length)
+        val working = arrayListOf<T>()
 
         for (i in 0 until length)
         {
-            a[i] = random()
+            working.add(random())
         }
 
-        return a
+        return working.toTypedArray()
     }
 
-    fun byteObjArray(maxLength: Int): Array<Byte?>
+    fun byteObjArray(maxLength: Int): Array<Byte>
     {
         return objArray(maxLength, this::byte)
     }
 
-    fun shortObjArray(maxLength: Int): Array<Short?>
+    fun uByteObjArray(maxLength: Int): Array<UByte>
+    {
+        return objArray(maxLength, this::uByte)
+    }
+
+    fun shortObjArray(maxLength: Int): Array<Short>
     {
         return objArray(maxLength, this::short)
     }
 
-    fun intObjArray(maxLength: Int): Array<Int?>
+    fun uShortObjArray(maxLength: Int): Array<UShort>
+    {
+        return objArray(maxLength, this::uShort)
+    }
+
+    fun intObjArray(maxLength: Int): Array<Int>
     {
         return objArray(maxLength, this::int)
     }
 
-    fun longObjArray(maxLength: Int): Array<Long?>
+    fun uIntObjArray(maxLength: Int): Array<UInt>
+    {
+        return objArray(maxLength, this::uInt)
+    }
+
+    fun longObjArray(maxLength: Int): Array<Long>
     {
         return objArray(maxLength, this::long)
     }
 
-    fun floatObjArray(maxLength: Int): Array<Float?>
+    fun uLongObjArray(maxLength: Int): Array<ULong>
+    {
+        return objArray(maxLength, this::uLong)
+    }
+
+    fun floatObjArray(maxLength: Int): Array<Float>
     {
         return objArray(maxLength, this::float)
     }
 
-    fun doubleObjArray(maxLength: Int): Array<Double?>
+    fun doubleObjArray(maxLength: Int): Array<Double>
     {
         return objArray(maxLength, this::double)
     }
 
-    fun booleanObjArray(maxLength: Int): Array<Boolean?>
+    fun boolObjArray(maxLength: Int): Array<Boolean>
     {
         return objArray(maxLength, this::bool)
     }
 
-    fun charObjArray(maxLength: Int): Array<Char?>
+    fun charObjArray(maxLength: Int): Array<Char>
     {
         return objArray(maxLength, this::char)
     }
