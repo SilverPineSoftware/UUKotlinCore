@@ -20,7 +20,7 @@ jobs:
       - name: Update Version
         run: ./scripts/update_version.sh
       - name: Assemble Release
-        run: ./gradlew clean :core:assembleRelease
+        run: ./gradlew clean :library:assembleRelease
       - name: Publish to MavenCentral
         run: ./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository -PbuildSnapshot=false
         env:
