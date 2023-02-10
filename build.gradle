@@ -7,5 +7,6 @@ plugins {
 
 ext["min_sdk"] = 26
 ext["target_sdk"] = 33
+ext["moshi_version"] = "1.13.0"
 
 apply from: "./publish-common.gradle"

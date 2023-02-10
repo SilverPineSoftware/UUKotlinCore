@@ -2,6 +2,10 @@ package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
 import com.squareup.moshi.Moshi
+import okio.buffer
+import okio.source
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 
 object UUJson
@@ -52,6 +56,27 @@ object UUJson
         {
             UULog.d(javaClass, "fromJson", "", ex)
             return null
+        }
+    }
+
+    fun <T> fromBytes(bytes: ByteArray, objectClass: Class<T>): T?
+    {
+        return fromStream(ByteArrayInputStream(bytes), objectClass)
+    }
+
+    fun <T> fromStream(stream: InputStream, objectClass: Class<T>): T?
+    {
+        return try
+        {
+            val moshi = requireMoshi()
+
+            val jsonAdapter = moshi.adapter(objectClass)
+            jsonAdapter.fromJson(stream.source().buffer())
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "fromStream", "", ex)
+            null
         }
     }
 }
