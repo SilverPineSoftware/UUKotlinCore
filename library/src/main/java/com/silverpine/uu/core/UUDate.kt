@@ -19,6 +19,8 @@ object UUDate
     const val MILLIS_IN_ONE_WEEK = DAYS_IN_ONE_WEEK * MILLIS_IN_ONE_DAY
     const val MINUTES_IN_ONE_DAY = MINUTES_IN_ONE_HOUR * HOURS_IN_ONE_DAY
 
+    val UTC_TIME_ZONE = TimeZone.getTimeZone("UTC")
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Date Formats
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -319,12 +321,49 @@ object UUDate
 
 
 
+fun String.uuParseDate(
+    formatter: String,
+    timeZone: TimeZone = TimeZone.getDefault(),
+    locale: Locale = Locale.getDefault()): Date?
+{
+    if (isNotEmpty())
+    {
+        val df = SimpleDateFormat(formatter, locale)
+        df.timeZone = timeZone
+
+        return df.parse(this)
+    }
+
+    return null
+}
+
+fun String.uuParseDate(
+    formatters: Array<String>?,
+    timeZone: TimeZone = TimeZone.getDefault(),
+    locale: Locale = Locale.getDefault()): Date?
+{
+    if (formatters != null)
+    {
+        for (formatter in formatters)
+        {
+            val parsed = uuParseDate(formatter, timeZone, locale)
+            if (parsed != null)
+            {
+                return parsed
+            }
+        }
+    }
+
+    return null
+}
+
+
 fun Long.uuFormatDate(formatter: String, timeZone: TimeZone = TimeZone.getDefault(), locale: Locale = Locale.getDefault()): String
 {
     return Date(this).uuFormatDate(formatter, timeZone, locale)
 }
 
-fun Date.uuFormatDate(formatter: String, timeZone: TimeZone = TimeZone.getDefault(), locale: Locale = Locale.US): String
+fun Date.uuFormatDate(formatter: String, timeZone: TimeZone = TimeZone.getDefault(), locale: Locale = Locale.getDefault()): String
 {
     val df = SimpleDateFormat(formatter, locale)
     df.timeZone = timeZone
