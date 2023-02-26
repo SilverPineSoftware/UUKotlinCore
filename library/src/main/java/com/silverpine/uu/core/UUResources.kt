@@ -3,10 +3,7 @@ package com.silverpine.uu.core
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import androidx.annotation.ColorRes
-import androidx.annotation.DimenRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import androidx.core.content.res.ResourcesCompat
 import com.silverpine.uu.logging.UULog
 
@@ -140,3 +137,6 @@ object UUResources
         return ctx.packageName
     }
 }
+
+fun Resources.uuGetRawTextFile(@RawRes id: Int) =
+    openRawResource(id).bufferedReader().use { it.readText() }
