@@ -136,6 +136,11 @@ object UUResources
         val ctx = applicationContext ?: return "unknown"
         return ctx.packageName
     }
+
+    fun getRawText(@RawRes id: Int): String
+    {
+        return resources?.uuGetRawTextFile(id) ?: ""
+    }
 }
 
 fun Resources.uuGetRawTextFile(@RawRes id: Int) =
