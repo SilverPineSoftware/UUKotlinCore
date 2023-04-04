@@ -198,6 +198,24 @@ fun String.uuIsDigits(): Boolean
 }
 
 /**
+ * Checks to see if all characters in a string are alphabetic
+ *
+ * @return true or false
+ */
+val String.uuIsAlphabeticOnly: Boolean
+    get() = matches(Regex("^[a-zA-Z]*\$"))
+
+
+/**
+ * Checks to see if all characters in a string are alphabetic or numeric
+ *
+ * @return true or false
+ */
+val String.uuIsAlphanumericOnly: Boolean
+    get() = matches(Regex("^[a-zA-Z\\d]*\$"))
+
+
+/**
  * Applies a simple transform to each element in an array
  *
  * @param input the input array
@@ -215,3 +233,6 @@ fun Array<String>.uuTransform(transform: (String)->String): Array<String>
 
     return result.toTypedArray()
 }
+
+val String.uuWordCount: Int
+    get() = this.trim().split("\\s+".toRegex()).size
