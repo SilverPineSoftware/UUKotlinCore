@@ -33,16 +33,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     namespace 'com.silverpine.uu.core'
 }
 
 dependencies {
 
-    implementation 'androidx.annotation:annotation:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.annotation:annotation:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 
     implementation "com.squareup.moshi:moshi:${moshi_version}"
     implementation "com.squareup.moshi:moshi-adapters:${moshi_version}"

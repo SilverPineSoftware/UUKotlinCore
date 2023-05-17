@@ -130,6 +130,13 @@ signing {
     sign publishing.publications
 }
 
+android {
+    publishing {
+        singleVariant("release") {
+        }
+    }
+}
+
 afterEvaluate {
     publishing {
         publications {
