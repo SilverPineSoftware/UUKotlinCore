@@ -119,7 +119,7 @@ fun String.uuToBase64Bytes(base64Options: Int = Base64.NO_WRAP): ByteArray?
     }
 }
 
-fun String.decodeFromBase64ToUtf8String(base64options: Int = Base64.NO_WRAP): String
+fun String.uuDecodeFromBase64ToUtf8String(base64options: Int = Base64.NO_WRAP): String
 {
     return uuFromBase64ToString(base64options, Charsets.UTF_8)
 }

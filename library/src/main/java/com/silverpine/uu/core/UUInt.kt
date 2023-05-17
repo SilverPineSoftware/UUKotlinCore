@@ -8,9 +8,9 @@ fun Int.uuEpochTimeToSystemTime(): Long
 }
 
 // Convert px to dp
-val Int.dp: Int
+val Int.uuDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 //Convert dp to px
-val Int.px: Int
+val Int.uuPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
