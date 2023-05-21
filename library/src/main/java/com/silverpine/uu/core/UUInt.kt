@@ -14,3 +14,14 @@ val Int.uuDp: Int
 //Convert dp to px
 val Int.uuPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun Int.uuIsBitSet(mask: Int): Boolean
+{
+    return this and mask == mask
+}

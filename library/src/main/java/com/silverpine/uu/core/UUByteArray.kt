@@ -84,3 +84,20 @@ fun ByteArray.uuBase64(base64Options: Int = Base64.NO_WRAP): String
     }
 }
 
+fun ByteArray.uuSubData(index: Int, count: Int): ByteArray?
+{
+    if (index < 0)
+    {
+        return null
+    }
+
+    val dataLength = size
+    val upperIndex = (index + count).coerceAtMost(dataLength)
+    if (index > upperIndex)
+    {
+        return null
+    }
+
+    return copyOfRange(index, upperIndex)
+}
+
