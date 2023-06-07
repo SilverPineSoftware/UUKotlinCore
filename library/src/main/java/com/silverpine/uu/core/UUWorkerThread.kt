@@ -38,6 +38,18 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
     }
 
+    fun postDelayed(delay: Long, runnable: Runnable)
+    {
+        try
+        {
+            handler.postDelayed(runnable, delay)
+        }
+        catch (ex: Exception)
+        {
+            // Eat it
+        }
+    }
+
     fun remove(block: ()->Unit)
     {
         try
@@ -54,6 +66,30 @@ class UUWorkerThread(name: String): HandlerThread(name)
             {
                 val hasCallback = handler.hasCallbacks(block)
                 UULog.d(javaClass, "remove", "AFTER remove, hasCallback: $hasCallback")
+            }
+        }
+        catch (ex: Exception)
+        {
+            // Eat it
+        }
+    }
+
+    fun remove(runnable: Runnable)
+    {
+        try
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            {
+                val hasCallback = handler.hasCallbacks(runnable)
+                UULog.d(javaClass, "remove", "BEFORE remove, hasRunnable: $hasCallback")
+            }
+
+            handler.removeCallbacks(runnable)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            {
+                val hasCallback = handler.hasCallbacks(runnable)
+                UULog.d(javaClass, "remove", "AFTER remove, hasRunnable: $hasCallback")
             }
         }
         catch (ex: Exception)

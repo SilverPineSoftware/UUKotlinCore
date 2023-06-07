@@ -13,7 +13,7 @@ class UUTimer(
     val userInfo: Any?,
     private val block: (UUTimer, Any?)->Unit)
 {
-    private var invokeBlock: (()->Unit)? = { timerTick() }
+    private var invokeBlock: Runnable? = Runnable { timerTick() }
 
     /**
      * Gets the last time this timer was fired
