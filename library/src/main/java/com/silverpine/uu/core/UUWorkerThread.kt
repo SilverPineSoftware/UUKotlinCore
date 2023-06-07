@@ -1,7 +1,9 @@
 package com.silverpine.uu.core
 
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
+import com.silverpine.uu.logging.UULog
 
 class UUWorkerThread(name: String): HandlerThread(name)
 {
@@ -40,7 +42,19 @@ class UUWorkerThread(name: String): HandlerThread(name)
     {
         try
         {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            {
+                val hasCallback = handler.hasCallbacks(block)
+                UULog.d(javaClass, "remove", "BEFORE remove, hasCallback: $hasCallback")
+            }
+
             handler.removeCallbacks(block)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            {
+                val hasCallback = handler.hasCallbacks(block)
+                UULog.d(javaClass, "remove", "AFTER remove, hasCallback: $hasCallback")
+            }
         }
         catch (ex: Exception)
         {
