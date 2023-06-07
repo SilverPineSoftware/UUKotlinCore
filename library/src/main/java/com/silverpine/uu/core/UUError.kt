@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  * of user information.
  */
 @Parcelize
-class UUError(
+open class UUError(
     val code: Int,
     val domain: String = "UUErrorDomain",
     var exception: Exception? = null,
