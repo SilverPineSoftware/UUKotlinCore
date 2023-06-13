@@ -50,4 +50,8 @@ open class UUError(
         }
     }
 
+    override fun toString(): String
+    {
+        return "Domain: $domain, Code: $code, Description: $errorDescription, Resolution: $errorResolution"
+    }
 }
