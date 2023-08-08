@@ -9,75 +9,64 @@ import com.silverpine.uu.logging.UULog
  */
 object UUThread
 {
+    private val workerThread = UUWorkerThread("UUThread")
+
     /**
      * Checks to see if the currently running thread is the main thread or not
      *
      * @return true if the main thread, false otherwise
      */
-    val isMainThread: Boolean
+    val isMain: Boolean
         get() = (Looper.myLooper() == Looper.getMainLooper())
 
     /**
      * Safely runs a block of code on the main thread.
      *
+     * @param delay the amount of delay before running the block
      * @param block the block to run
+     *
      */
-    fun runOnMainThread(block: ()->Unit)
+    fun main(delay: Long, block: ()->Unit)
     {
-        try
+        workerThread.postDelayed(delay)
         {
-            if (isMainThread)
-            {
-                try
-                {
-                    block.invoke()
-                }
-                catch (ex: Exception)
-                {
-                    UULog.d(javaClass, "runOnMainThread.invoke", "", ex)
-                }
-            }
-            else
-            {
-                Handler(Looper.getMainLooper()).post { runOnMainThread(block) }
-            }
+            Handler(Looper.getMainLooper()).post(block)
         }
-        catch (ex: Exception)
-        {
-            UULog.d(javaClass, "runOnMainThread", "", ex)
-        }
+    }
+
+    /**
+     * Safely runs a block of code on the main thread.
+     *
+     * @param block the block to run
+     *
+     * Runs immediately
+     */
+    fun main(block: ()->Unit)
+    {
+        main(0L, block)
     }
 
     /**
      * Safely runs a block of code on a background thread.
      *
      * @param block the block to run
+     * * @param delay the amount of delay before running the block
      */
-    fun runOnBackgroundThread(block: ()->Unit)
+    fun background(delay: Long, block: ()->Unit)
     {
-        try
-        {
-            val t: Thread = object : Thread()
-            {
-                override fun run()
-                {
-                    try
-                    {
-                        block.invoke()
-                    }
-                    catch (ex: Exception)
-                    {
-                        UULog.d(javaClass, "runOnBackgroundThread.invoke", "", ex)
-                    }
-                }
-            }
+        workerThread.postDelayed(delay, block)
+    }
 
-            t.start()
-        }
-        catch (ex: Exception)
-        {
-            UULog.d(javaClass, "runOnBackgroundThread", "", ex)
-        }
+    /**
+     * Safely runs a block of code on a background thread.
+     *
+     * @param block the block to run
+     *
+     * Runs immediately
+     */
+    fun background(block: ()->Unit)
+    {
+        background(0L, block)
     }
 
     fun safeSleep(fromWhere: String, millis: Long)
@@ -86,7 +75,7 @@ object UUThread
         {
             UULog.d(javaClass,
                 "safeSleep",
-                fromWhere + ", currentState: " + Thread.currentThread().state + ", isMainThread: " + isMainThread
+                fromWhere + ", currentState: " + Thread.currentThread().state + ", isMainThread: " + isMain
             )
 
             Thread.sleep(millis)

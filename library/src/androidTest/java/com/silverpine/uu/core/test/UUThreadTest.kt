@@ -1,7 +1,7 @@
 package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.silverpine.uu.core.UUWorkerThread
+import com.silverpine.uu.core.UUThread
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
@@ -14,47 +14,98 @@ import java.util.concurrent.CountDownLatch
 class UUThreadTest
 {
     @Test
-    fun test_0000_post()
+    fun test_0000_main()
     {
-        val t = UUWorkerThread("unit_test")
-
         val latch = CountDownLatch(1)
 
         var didInvoke = false
+        var didInvokeMain = false
 
-        t.post()
+        UUThread.main()
         {
             didInvoke = true
+            didInvokeMain = UUThread.isMain
             latch.countDown()
         }
 
         latch.await()
 
         Assert.assertTrue(didInvoke)
+        Assert.assertTrue(didInvokeMain)
     }
 
     @Test
-    fun test_0001_post()
+    fun test_0001_mainWithDelay()
     {
-        val t = UUWorkerThread("unit_test")
-
         val latch = CountDownLatch(1)
 
         var didInvoke = false
+        var didInvokeMain = false
         val start = System.currentTimeMillis()
         var end = 0L
         val delay = 100L
 
-        t.postDelayed(delay)
+        UUThread.main(delay)
         {
             end = System.currentTimeMillis()
             didInvoke = true
+            didInvokeMain = UUThread.isMain
             latch.countDown()
         }
 
         latch.await()
 
         Assert.assertTrue(didInvoke)
+        Assert.assertTrue(didInvokeMain)
+
+        val duration = end - start
+        Assert.assertTrue(duration >= delay)
+    }
+
+    @Test
+    fun test_0002_background()
+    {
+        val latch = CountDownLatch(1)
+
+        var didInvoke = false
+        var didInvokeMain = true
+
+        UUThread.background()
+        {
+            didInvoke = true
+            didInvokeMain = UUThread.isMain
+            latch.countDown()
+        }
+
+        latch.await()
+
+        Assert.assertTrue(didInvoke)
+        Assert.assertFalse(didInvokeMain)
+    }
+
+    @Test
+    fun test_0003_mainWithDelay()
+    {
+        val latch = CountDownLatch(1)
+
+        var didInvoke = false
+        var didInvokeMain = true
+        val start = System.currentTimeMillis()
+        var end = 0L
+        val delay = 100L
+
+        UUThread.background(delay)
+        {
+            end = System.currentTimeMillis()
+            didInvoke = true
+            didInvokeMain = UUThread.isMain
+            latch.countDown()
+        }
+
+        latch.await()
+
+        Assert.assertTrue(didInvoke)
+        Assert.assertFalse(didInvokeMain)
 
         val duration = end - start
         Assert.assertTrue(duration >= delay)
