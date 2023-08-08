@@ -3,7 +3,11 @@ package com.silverpine.uu.core
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import androidx.annotation.*
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
+import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import com.silverpine.uu.logging.UULog
 
@@ -103,6 +107,25 @@ object UUResources
             resources?.let()
             {
                 result = it.getDimension(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            result = null
+        }
+
+        return result ?: defaultValue
+    }
+
+    fun getDimensionPixelSize(@DimenRes resourceId: Int, defaultValue: Int = 0): Int
+    {
+        var result: Int? = null
+
+        try
+        {
+            resources?.let()
+            {
+                result = it.getDimensionPixelSize(resourceId)
             }
         }
         catch (ex: Exception)
