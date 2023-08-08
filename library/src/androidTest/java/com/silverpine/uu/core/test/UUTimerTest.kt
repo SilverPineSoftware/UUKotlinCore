@@ -1,8 +1,8 @@
 package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.silverpine.uu.core.UUThread
 import com.silverpine.uu.core.UUTimer
+import com.silverpine.uu.core.uuSleep
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
@@ -47,7 +47,7 @@ class UUTimerTest
 
         // A single shot timer gets cleaned up after the timer block is invoked, so we need
         // to wait.  This is a hacky way to test, but works in this simple case
-        UUThread.safeSleep("unit_test", 100)
+        uuSleep("unit_test", 100)
 
         Assert.assertEquals(0, UUTimer.listActiveTimers().size)
         Assert.assertNull(UUTimer.findActiveTimer(timerId))
@@ -79,7 +79,7 @@ class UUTimerTest
             //latch.countDown()
         }
 
-        UUThread.safeSleep("test", 100L)
+        uuSleep("test", 100L)
         Assert.assertEquals(1, UUTimer.listActiveTimers().size)
         val t = UUTimer.findActiveTimer(timerId)
         Assert.assertNotNull(t)
@@ -94,7 +94,7 @@ class UUTimerTest
 
         // A single shot timer gets cleaned up after the timer block is invoked, so we need
         // to wait.  This is a hacky way to test, but works in this simple case
-        UUThread.safeSleep("unit_test", 100)
+        uuSleep("unit_test", 100)
 
         Assert.assertEquals(0, UUTimer.listActiveTimers().size)
         Assert.assertNull(UUTimer.findActiveTimer(timerId))

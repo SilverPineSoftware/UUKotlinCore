@@ -1,7 +1,6 @@
 package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.silverpine.uu.core.UUThread
 import com.silverpine.uu.core.UUWorkerThread
 import org.junit.Assert
 import org.junit.FixMethodOrder

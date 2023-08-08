@@ -1,7 +1,9 @@
 package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.silverpine.uu.core.UUThread
+import com.silverpine.uu.core.uuDispatch
+import com.silverpine.uu.core.uuDispatchMain
+import com.silverpine.uu.core.uuIsMainThread
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
@@ -11,7 +13,7 @@ import java.util.concurrent.CountDownLatch
 
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class UUThreadTest
+class UUDispatchTest
 {
     @Test
     fun test_0000_main()
@@ -21,10 +23,10 @@ class UUThreadTest
         var didInvoke = false
         var didInvokeMain = false
 
-        UUThread.main()
+        uuDispatchMain()
         {
             didInvoke = true
-            didInvokeMain = UUThread.isMain
+            didInvokeMain = uuIsMainThread()
             latch.countDown()
         }
 
@@ -45,11 +47,11 @@ class UUThreadTest
         var end = 0L
         val delay = 100L
 
-        UUThread.main(delay)
+        uuDispatchMain(delay)
         {
             end = System.currentTimeMillis()
             didInvoke = true
-            didInvokeMain = UUThread.isMain
+            didInvokeMain = uuIsMainThread()
             latch.countDown()
         }
 
@@ -70,10 +72,10 @@ class UUThreadTest
         var didInvoke = false
         var didInvokeMain = true
 
-        UUThread.background()
+        uuDispatch()
         {
             didInvoke = true
-            didInvokeMain = UUThread.isMain
+            didInvokeMain = uuIsMainThread()
             latch.countDown()
         }
 
@@ -94,11 +96,11 @@ class UUThreadTest
         var end = 0L
         val delay = 100L
 
-        UUThread.background(delay)
+        uuDispatch(delay)
         {
             end = System.currentTimeMillis()
             didInvoke = true
-            didInvokeMain = UUThread.isMain
+            didInvokeMain = uuIsMainThread()
             latch.countDown()
         }
 
