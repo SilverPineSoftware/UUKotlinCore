@@ -36,6 +36,19 @@ object UURandom
     }
 
     /**
+     * Generates a random integer with an upper and lower bound
+     *
+     * @param min minimum value
+     * @param max maximum value
+     * @return a random integer
+     */
+    fun int(min: Int, max: Int): Int
+    {
+        val range = max - min
+        return secureRandom.nextInt(range) + min
+    }
+
+    /**
      * Generates a random integer with an upper bound
      *
      * @param max maximum value
@@ -43,14 +56,7 @@ object UURandom
      */
     fun int(max: Int): Int
     {
-        return if (max > 0)
-        {
-            secureRandom.nextInt(max)
-        }
-        else
-        {
-            0
-        }
+        return int(0, max)
     }
 
     /**

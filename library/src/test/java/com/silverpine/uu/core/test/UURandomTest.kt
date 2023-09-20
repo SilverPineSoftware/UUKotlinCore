@@ -110,6 +110,38 @@ class UURandomTest
     }
 
     @Test
+    fun test_int_min_max_positive()
+    {
+        val min = 0
+        val max = 1000
+        for (i in 0 until LOOPS)
+        {
+            val actual = UURandom.int(min, max)
+            assertNotNull(actual)
+            val rangeCheck = actual.toLong()
+            assertTrue(rangeCheck >= min.toLong())
+            assertTrue(rangeCheck <= max.toLong())
+            println("UURandom.int: $actual")
+        }
+    }
+
+    @Test
+    fun test_int_min_max_negative()
+    {
+        val min = -1000
+        val max = 1000
+        for (i in 0 until LOOPS)
+        {
+            val actual = UURandom.int(min, max)
+            assertNotNull(actual)
+            val rangeCheck = actual.toLong()
+            assertTrue(rangeCheck >= min.toLong())
+            assertTrue(rangeCheck <= max.toLong())
+            println("UURandom.int: $actual")
+        }
+    }
+
+    @Test
     fun test_uInt()
     {
         for (i in 0 until LOOPS)
