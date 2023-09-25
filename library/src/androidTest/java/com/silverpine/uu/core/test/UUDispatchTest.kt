@@ -1,5 +1,6 @@
 package com.silverpine.uu.core.test
 
+import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.silverpine.uu.core.uuDispatch
 import com.silverpine.uu.core.uuDispatchMain
@@ -61,6 +62,7 @@ class UUDispatchTest
         Assert.assertTrue(didInvokeMain)
 
         val duration = end - start
+        println("delay: $delay, duration: $duration")
         Assert.assertTrue(duration >= delay)
     }
 

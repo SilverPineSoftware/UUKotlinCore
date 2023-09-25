@@ -70,7 +70,7 @@ class UUTimerTest
         UUTimer.startTimer(timerId, interval, null)
         { timer, userInfo ->
 
-            System.out.println("GOT HERE")
+            println("GOT HERE")
             //Assert.fail("Should never get here")
 //            invokeTime = System.currentTimeMillis()
 //            callbackTimer = timer
