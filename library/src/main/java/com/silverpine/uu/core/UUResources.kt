@@ -13,17 +13,19 @@ import com.silverpine.uu.logging.UULog
 
 object UUResources
 {
-    private var applicationContext: Context? = null
-    private var resources: Resources? = null
+    private lateinit var applicationContext: Context
+    private lateinit var resources: Resources
 
     fun init(context: Context)
     {
         applicationContext = context
-        resources = applicationContext?.resources
+        resources = applicationContext.resources
     }
 
     fun getString(@StringRes resourceId: Int?): String
     {
+        requireResources()
+        
         var result: String? = null
 
         try
@@ -32,7 +34,7 @@ object UUResources
             {
                 if (resourceId != -1)
                 {
-                    result = resources?.getString(resourceId)
+                    result = resources.getString(resourceId)
                 }
             }
         }
@@ -46,11 +48,13 @@ object UUResources
 
     fun getString(@StringRes resourceId: Int, vararg arg: String): String
     {
+        requireResources()
+
         var result: String?
 
         try
         {
-            result = resources?.getString(resourceId, *arg)
+            result = resources.getString(resourceId, *arg)
         }
         catch (ex: Exception)
         {
@@ -62,11 +66,13 @@ object UUResources
 
     fun getDrawable(@DrawableRes resourceId: Int, theme: Resources.Theme? = null): Drawable?
     {
-        var result: Drawable? = null
+        requireResources()
+
+        var result: Drawable?
 
         try
         {
-            resources?.let()
+            resources.let()
             {
                 result = ResourcesCompat.getDrawable(it, resourceId, theme)
             }
@@ -81,11 +87,13 @@ object UUResources
 
     fun getColor(@ColorRes resourceId: Int, theme: Resources.Theme? = null, defaultValue: Int = 0): Int
     {
-        var result: Int? = null
+        requireResources()
+
+        var result: Int?
 
         try
         {
-            resources?.let()
+            resources.let()
             {
                 result = it.getColor(resourceId, theme)
             }
@@ -100,11 +108,13 @@ object UUResources
 
     fun getDimension(@DimenRes resourceId: Int, defaultValue: Float = 0.0f): Float
     {
-        var result: Float? = null
+        requireResources()
+
+        var result: Float?
 
         try
         {
-            resources?.let()
+            resources.let()
             {
                 result = it.getDimension(resourceId)
             }
@@ -119,11 +129,13 @@ object UUResources
 
     fun getDimensionPixelSize(@DimenRes resourceId: Int, defaultValue: Int = 0): Int
     {
-        var result: Int? = null
+        requireResources()
+
+        var result: Int?
 
         try
         {
-            resources?.let()
+            resources.let()
             {
                 result = it.getDimensionPixelSize(resourceId)
             }
@@ -138,10 +150,11 @@ object UUResources
 
     fun getAppVersion(): String
     {
-        val ctx = applicationContext ?: return "unknown"
+        requireResources()
 
         try
         {
+            val ctx = applicationContext
             val manager = ctx.packageManager
             val info = manager.getPackageInfo(ctx.packageName, 0)
             return info.versionName
@@ -156,13 +169,27 @@ object UUResources
 
     fun getAppBundleId(): String
     {
-        val ctx = applicationContext ?: return "unknown"
-        return ctx.packageName
+        requireResources()
+        return applicationContext.packageName
     }
 
     fun getRawText(@RawRes id: Int): String
     {
-        return resources?.uuGetRawTextFile(id) ?: ""
+        requireResources()
+        return resources.uuGetRawTextFile(id) ?: ""
+    }
+
+    private fun requireResources()
+    {
+        if (!UUResources::resources.isInitialized)
+        {
+            throw RuntimeException("Must call UUResource.init(...) prior to first use!")
+        }
+
+        if (!UUResources::applicationContext.isInitialized)
+        {
+            throw RuntimeException("Must call UUResource.init(...) prior to first use!")
+        }
     }
 }
 
