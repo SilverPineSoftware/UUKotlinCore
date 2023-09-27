@@ -10,6 +10,7 @@ import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import com.silverpine.uu.logging.UULog
+import java.io.ByteArrayOutputStream
 
 object UUResources
 {
@@ -173,10 +174,16 @@ object UUResources
         return applicationContext.packageName
     }
 
-    fun getRawText(@RawRes id: Int): String
+    fun getRawText(@RawRes id: Int): String?
     {
         requireResources()
-        return resources.uuGetRawTextFile(id) ?: ""
+        return resources.uuGetRawTextFile(id)
+    }
+
+    fun getRawBytes(@RawRes id: Int): ByteArray?
+    {
+        requireResources()
+        return resources.uuGetRawResourceBytes(id)
     }
 
     private fun requireResources()
@@ -193,5 +200,30 @@ object UUResources
     }
 }
 
-fun Resources.uuGetRawTextFile(@RawRes id: Int) =
+fun Resources.uuGetRawTextFile(@RawRes id: Int): String? =
     openRawResource(id).bufferedReader().use { it.readText() }
+
+fun Resources.uuGetRawResourceBytes(@RawRes id: Int): ByteArray?
+{
+    var bos = ByteArrayOutputStream()
+
+    openRawResource(id).use()
+    { inputStream ->
+
+        val chunk = ByteArray(10240)
+        var bytesRead = 0
+
+        while (true)
+        {
+            bytesRead = inputStream.read(chunk, 0, chunk.size)
+            if (bytesRead == -1)
+            {
+                break
+            }
+
+            bos.write(chunk, 0, bytesRead)
+        }
+    }
+
+    return bos.toByteArray()
+}
