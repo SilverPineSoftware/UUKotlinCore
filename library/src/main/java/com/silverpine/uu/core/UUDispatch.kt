@@ -3,8 +3,6 @@ package com.silverpine.uu.core
 import android.os.Handler
 import android.os.Looper
 
-private val workerThread = UUWorkerThread("UUDispatch")
-
 /**
  * Safely runs a block of code on the main thread.
  *
@@ -14,10 +12,7 @@ private val workerThread = UUWorkerThread("UUDispatch")
  */
 fun uuDispatchMain(delay: Long, block: ()->Unit)
 {
-    workerThread.postDelayed(delay)
-    {
-        Handler(Looper.getMainLooper()).post(block)
-    }
+    Handler(Looper.getMainLooper()).postDelayed(block, delay)
 }
 
 /**
@@ -29,7 +24,7 @@ fun uuDispatchMain(delay: Long, block: ()->Unit)
  */
 fun uuDispatchMain(block: ()->Unit)
 {
-    uuDispatchMain(0L, block)
+    Handler(Looper.getMainLooper()).post(block)
 }
 
 /**
@@ -40,7 +35,23 @@ fun uuDispatchMain(block: ()->Unit)
  */
 fun uuDispatch(delay: Long, block: ()->Unit)
 {
-    workerThread.postDelayed(delay, block)
+    val t = object: Thread()
+    {
+        override fun run()
+        {
+            try
+            {
+                sleep(delay)
+                block()
+            }
+            catch (ex: Exception)
+            {
+                // Eat it
+            }
+        }
+    }
+
+    t.start()
 }
 
 /**
@@ -52,5 +63,20 @@ fun uuDispatch(delay: Long, block: ()->Unit)
  */
 fun uuDispatch(block: ()->Unit)
 {
-    workerThread.post(block)
+    val t = object: Thread()
+    {
+        override fun run()
+        {
+            try
+            {
+                block()
+            }
+            catch (ex: Exception)
+            {
+                // Eat it
+            }
+        }
+    }
+
+    t.start()
 }
