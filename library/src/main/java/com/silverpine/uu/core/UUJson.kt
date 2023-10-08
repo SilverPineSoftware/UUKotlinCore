@@ -29,16 +29,16 @@ object UUJson
 
     fun <T> toJson(obj: T?, objectClass: Class<T>): String?
     {
-        try
+        return try
         {
             val moshi = requireMoshi()
             val jsonAdapter = moshi.adapter(objectClass)
-            return jsonAdapter.toJson(obj)
+            jsonAdapter.toJson(obj)
         }
         catch (ex: Exception)
         {
             UULog.d(javaClass, "toJson", "", ex)
-            return null
+            null
         }
     }
 
@@ -81,7 +81,6 @@ object UUJson
     }
 }
 
-/*
 fun Any.uuToJson(): String?
 {
     return UUJson.toJson(this, javaClass)
@@ -90,32 +89,4 @@ fun Any.uuToJson(): String?
 fun <T> Class<T>.uuFromJson(source: String?): T?
 {
     return UUJson.fromJson(source, this)
-}*/
-
-
-/*
-@Retention(AnnotationRetention.RUNTIME)
-@JsonQualifier
-annotation class SerializeNulls
-{
-    companion object
-    {
-        var JSON_ADAPTER_FACTORY: JsonAdapter.Factory = object : JsonAdapter.Factory
-        {
-            @Nullable
-            override fun create(
-                type: Type?,
-                annotations: Set<Annotation?>?,
-                moshi: Moshi
-            ): JsonAdapter<*>?
-            {
-                val nextAnnotations: Set<Annotation?> = Types.nextAnnotations(
-                    annotations,
-                    SerializeNulls::class.java
-                ) ?: return null
-
-                return moshi.nextAdapter(this, type, nextAnnotations).serializeNulls()
-            }
-        }
-    }
-}*/
+}
