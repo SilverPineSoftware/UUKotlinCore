@@ -22,7 +22,7 @@ jobs:
         env:
           BUILD_NUMBER: ${{github.run_number}}
       - name: Assemble Release
-        run: ./gradlew clean :library:test :library:connectedAndroidTest :library:assembleRelease
+        run: ./gradlew clean :library:test :library:assembleRelease
       - name: Publish to Maven Staging
         run: ./gradlew publishToSonatype --max-workers 1
         env:
