@@ -15,7 +15,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.bytes(length)
             assertNotNull(actual)
             assertEquals(length, actual.size)
@@ -242,7 +242,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.byteObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -255,7 +255,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.uByteObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -268,7 +268,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.shortObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -281,7 +281,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.uShortObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -294,7 +294,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.intObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -307,7 +307,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.uIntObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -320,7 +320,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.longObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -333,7 +333,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.uLongObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -346,7 +346,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.floatObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -359,7 +359,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.doubleObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -372,7 +372,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.boolObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -385,7 +385,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.charObjArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -398,7 +398,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.shortArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -411,7 +411,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.intArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -424,7 +424,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.longArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -437,7 +437,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.floatArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -450,7 +450,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.doubleArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -463,7 +463,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.boolArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -476,7 +476,7 @@ class UURandomTest
     {
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.charArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
@@ -496,12 +496,17 @@ class UURandomTest
 
         for (i in 0 until LOOPS)
         {
-            val length = UURandom.uByte().toInt()
+            val length = randomCount()
             val actual = UURandom.objArray(length) { makeRandom() }
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
             println("UURandom.objArray: ${ actual.map { "${it.a}-${it.b}" } }")
         }
+    }
+
+    private fun randomCount(): Int
+    {
+        return UURandom.int(1, 255)
     }
 
 

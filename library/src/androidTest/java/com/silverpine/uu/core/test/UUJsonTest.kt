@@ -1,11 +1,14 @@
 package com.silverpine.uu.core.test
 
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.silverpine.uu.core.UUJson
-import com.silverpine.uu.core.UURandom
+import com.silverpine.uu.core.test.models.CustomSerializersModel
+import com.silverpine.uu.core.test.models.GenericsConcreteModel
+import com.silverpine.uu.core.test.models.NullsModel
+import com.silverpine.uu.core.test.models.PrimitiveArraysModel
+import com.silverpine.uu.core.test.models.PrimitiveModel
+import com.silverpine.uu.core.uuFromJson
 import com.silverpine.uu.core.uuToJson
-import com.squareup.moshi.Moshi
+import com.silverpine.uu.logging.UULog
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
@@ -17,27 +20,70 @@ import java.util.*
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class UUJsonTest
 {
-    init
+    companion object
     {
-        UUJson.init(Moshi.Builder().build())
+        const val LOOPS = 100
     }
 
     @Test
-    fun test_0000_toJsonString()
+    fun test_0000_primitiveModel()
     {
-        val model = TestModel()
-        model.id = UURandom.uuid()
-        model.name = UURandom.charArray(10).toString()
-        model.level = UURandom.uByte().toInt()
-        model.xp = UURandom.uShort().toInt()
+        doToFromJsonTest(PrimitiveModel::default)
+        doToFromJsonTest(PrimitiveModel::random, LOOPS)
+        doToFromJsonTest(PrimitiveModel::min)
+        doToFromJsonTest(PrimitiveModel::max)
+    }
 
-        val json = UUJson.toJson(model, TestModel::class.java)
-        Assert.assertNotNull(json)
-        Log.d("TAG", "$json")
+    @Test
+    fun test_0001_customerSerializersModel()
+    {
+        doToFromJsonTest(CustomSerializersModel::default)
+        doToFromJsonTest(CustomSerializersModel::random, LOOPS)
+        doToFromJsonTest(CustomSerializersModel::min)
+        doToFromJsonTest(CustomSerializersModel::max)
+    }
 
-        val json2 = model.uuToJson()
-        Assert.assertNotNull(json2)
-        Log.d("TAG", "$json2")
+    @Test
+    fun test_0002_nullsModel()
+    {
+        doToFromJsonTest(NullsModel::default)
+        doToFromJsonTest(NullsModel::random, LOOPS)
+        doToFromJsonTest(NullsModel::min)
+        doToFromJsonTest(NullsModel::max)
+    }
+
+    @Test
+    fun test_0003_primitiveArraysModel()
+    {
+        doToFromJsonTest(PrimitiveArraysModel::default)
+        doToFromJsonTest(PrimitiveArraysModel::random, LOOPS)
+        doToFromJsonTest(PrimitiveArraysModel::min)
+        doToFromJsonTest(PrimitiveArraysModel::max)
+    }
+
+    @Test
+    fun test_0004_genericsModel()
+    {
+        doToFromJsonTest(GenericsConcreteModel::default)
+        doToFromJsonTest(GenericsConcreteModel::random, LOOPS)
+        doToFromJsonTest(GenericsConcreteModel::min)
+        doToFromJsonTest(GenericsConcreteModel::max)
+    }
+
+    private inline fun <reified T: Any> doToFromJsonTest(createObject: ()->T, loops: Int = 1)
+    {
+        for (i in 0 until loops)
+        {
+            val source = createObject()
+
+            val json = source.uuToJson()
+            Assert.assertNotNull(json)
+            UULog.d(javaClass, "doToFromJsonTest-$i", "JSON Object: $json")
+
+            val fromJson: T? = json?.uuFromJson()
+            Assert.assertNotNull(fromJson)
+            Assert.assertEquals(source, fromJson)
+        }
     }
 }
 

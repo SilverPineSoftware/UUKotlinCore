@@ -1,39 +1,22 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
-import com.squareup.moshi.Moshi
-import okio.buffer
-import okio.source
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
+import kotlinx.serialization.serializer
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
-
+/*
 object UUJson
 {
-    private var moshi: Moshi? = null
-
-    fun init(moshi: Moshi)
-    {
-        this.moshi = moshi
-    }
-
-    private fun requireMoshi(): Moshi
-    {
-        if (moshi == null)
-        {
-            throw RuntimeException("Moshi is null. Must call init(Moshi) before use.")
-        }
-
-        return moshi!!
-    }
-
     fun <T> toJson(obj: T?, objectClass: Class<T>): String?
     {
+        val nonNullObject = obj ?: return null
+
         return try
         {
-            val moshi = requireMoshi()
-            val jsonAdapter = moshi.adapter(objectClass)
-            jsonAdapter.toJson(obj)
+            Json.encodeToString(serializer(objectClass), nonNullObject)
         }
         catch (ex: Exception)
         {
@@ -42,36 +25,30 @@ object UUJson
         }
     }
 
-    fun <T> fromJson(source: String?, objectClass: Class<T>): T?
+    inline fun <reified T> fromJson(source: String?): T?
     {
-        try
+        val nonNullString = source ?: return null
+        return try
         {
-            val moshi = requireMoshi()
-            val src = source ?: return null
-
-            val jsonAdapter = moshi.adapter(objectClass)
-            return jsonAdapter.fromJson(src)
+            Json.decodeFromString<T>(nonNullString)
         }
         catch (ex: Exception)
         {
             UULog.d(javaClass, "fromJson", "", ex)
-            return null
+            null
         }
     }
 
-    fun <T> fromBytes(bytes: ByteArray, objectClass: Class<T>): T?
+    inline fun <reified T> fromBytes(bytes: ByteArray): T?
     {
-        return fromStream(ByteArrayInputStream(bytes), objectClass)
+        return fromStream(ByteArrayInputStream(bytes))
     }
 
-    fun <T> fromStream(stream: InputStream, objectClass: Class<T>): T?
+    inline fun <reified T> fromStream(stream: InputStream): T?
     {
         return try
         {
-            val moshi = requireMoshi()
-
-            val jsonAdapter = moshi.adapter(objectClass)
-            jsonAdapter.fromJson(stream.source().buffer())
+            Json.decodeFromStream<T>(stream)
         }
         catch (ex: Exception)
         {
@@ -79,14 +56,56 @@ object UUJson
             null
         }
     }
+}*/
+
+inline fun <reified T: Any> T.uuToJson(): String?
+{
+    return try
+    {
+        Json.encodeToString(serializer(javaClass), this)
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(javaClass, "uuToJsonString", "", ex)
+        null
+    }
 }
 
-fun Any.uuToJson(): String?
+inline fun <reified T> String.uuFromJson(): T?
 {
-    return UUJson.toJson(this, javaClass)
+    return try
+    {
+        Json.decodeFromString<T>(this)
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(javaClass, "uuFromJson", "", ex)
+        null
+    }
 }
 
-fun <T> Class<T>.uuFromJson(source: String?): T?
+inline fun <reified T> InputStream.uuFromJson(): T?
 {
-    return UUJson.fromJson(source, this)
+    return try
+    {
+        Json.decodeFromStream<T>(this)
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(javaClass, "uuFromJson", "", ex)
+        null
+    }
+}
+
+inline fun <reified T> ByteArray.uuFromJson(): T?
+{
+    return try
+    {
+        ByteArrayInputStream(this).uuFromJson<T>()
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(javaClass, "uuFromJson", "", ex)
+        null
+    }
 }

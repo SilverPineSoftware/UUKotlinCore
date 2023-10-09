@@ -5,6 +5,8 @@ plugins {
     id 'kotlin-kapt'
     id 'maven-publish'
     id 'signing'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
+    id 'kotlinx-serialization'
 }
 
 ext {
@@ -44,21 +46,12 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.security:security-crypto:1.0.0'
-
-    implementation "com.squareup.moshi:moshi:${moshi_version}"
-    implementation "com.squareup.moshi:moshi-adapters:${moshi_version}"
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshi_version}")
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation "com.squareup.moshi:moshi:${moshi_version}"
-    testImplementation "com.squareup.moshi:moshi-adapters:${moshi_version}"
-    kaptTest("com.squareup.moshi:moshi-kotlin-codegen:${moshi_version}")
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "com.squareup.moshi:moshi:${moshi_version}"
-    androidTestImplementation "com.squareup.moshi:moshi-adapters:${moshi_version}"
-    kaptAndroidTest("com.squareup.moshi:moshi-kotlin-codegen:${moshi_version}")
 }
 
 

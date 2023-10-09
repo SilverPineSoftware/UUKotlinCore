@@ -1,28 +1,26 @@
-import com.silverpine.uu.core.UUDate
-import com.silverpine.uu.core.uuFormatDate
-import com.silverpine.uu.core.uuParseDate
+package com.silverpine.uu.core
+
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class UUDateJsonAdapter(
+class UULongDateJsonAdapter(
     private val format: String = UUDate.RFC_3999_DATE_TIME_WITH_MILLIS_FORMAT,
     private val timeZone: TimeZone = UUDate.UTC_TIME_ZONE,
-    private val locale: Locale = Locale.US): KSerializer<Date>
+    private val locale: Locale = Locale.US): KSerializer<Long>
 {
-    override val descriptor = PrimitiveSerialDescriptor("UUDateJsonAdapter", PrimitiveKind.LONG)
-    override fun serialize(encoder: Encoder, value: Date)
+    override val descriptor = PrimitiveSerialDescriptor("UULongDateJsonAdapter", PrimitiveKind.LONG)
+    override fun serialize(encoder: Encoder, value: Long)
     {
         encoder.encodeString(value.uuFormatDate(format, timeZone, locale))
     }
 
-    override fun deserialize(decoder: Decoder): Date
+    override fun deserialize(decoder: Decoder): Long
     {
-        return decoder.decodeString().uuParseDate(format, timeZone, locale) ?: Date(0)
+        return decoder.decodeString().uuParseDate(format, timeZone, locale)?.time ?: 0
     }
 }
