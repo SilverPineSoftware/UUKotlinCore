@@ -18,10 +18,9 @@ ext {
 apply from: "../uu-build-common.gradle"
 
 android {
-    compileSdkVersion target_sdk
-
     defaultConfig {
         minSdkVersion min_sdk
+        compileSdk target_sdk
         targetSdkVersion target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
