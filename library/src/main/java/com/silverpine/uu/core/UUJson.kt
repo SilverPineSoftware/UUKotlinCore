@@ -1,6 +1,7 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.serializer
@@ -84,6 +85,7 @@ inline fun <reified T> String.uuFromJson(): T?
     }
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 inline fun <reified T> InputStream.uuFromJson(): T?
 {
     return try
