@@ -34,20 +34,6 @@ ext {
     BUILD_BRANCH = uuTrimAndQuote(getBuildBranch())
 }
 
-/*
-def getVersionName = { ->
-
-    def versionName = version
-    def buildBranch = getBuildBranch().trim()
-
-    if (buildBranch != 'main' && buildBranch != 'HEAD')
-    {
-        versionName = "${versionName}-${buildBranch}-SNAPSHOT"
-    }
-
-    return versionName
-}*/
-
 def getBuildCommitHash = { ->
 
     def val = null
@@ -108,7 +94,7 @@ android {
     }
 }
 
-task androidSourcesJar(type: Jar) {
+tasks.register('androidSourcesJar', Jar) {
     archiveClassifier.set('sources')
     if (project.plugins.findPlugin("com.android.library")) {
         // For Android libraries
