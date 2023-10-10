@@ -1,23 +1,30 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
-import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.serializer
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
-/*
 object UUJson
 {
-    fun <T> toJson(obj: T?, objectClass: Class<T>): String?
+    var json: Json = Json.Default
+
+    fun configure(json: Json)
+    {
+        this.json = json
+    }
+
+    fun <T> toJson(obj: T?, strategy: SerializationStrategy<T>): String?
     {
         val nonNullObject = obj ?: return null
 
         return try
         {
-            Json.encodeToString(serializer(objectClass), nonNullObject)
+            json.encodeToString(strategy, nonNullObject)
         }
         catch (ex: Exception)
         {
@@ -26,12 +33,13 @@ object UUJson
         }
     }
 
-    inline fun <reified T> fromJson(source: String?): T?
+    fun <T: Any> fromJson(source: String?, strategy: DeserializationStrategy<T>): T?
     {
         val nonNullString = source ?: return null
+
         return try
         {
-            Json.decodeFromString<T>(nonNullString)
+            json.decodeFromString(strategy, nonNullString)
         }
         catch (ex: Exception)
         {
@@ -40,16 +48,16 @@ object UUJson
         }
     }
 
-    inline fun <reified T> fromBytes(bytes: ByteArray): T?
+    fun <T: Any> fromBytes(bytes: ByteArray, strategy: DeserializationStrategy<T>): T?
     {
-        return fromStream(ByteArrayInputStream(bytes))
+        return fromStream(ByteArrayInputStream(bytes), strategy)
     }
 
-    inline fun <reified T> fromStream(stream: InputStream): T?
+    fun <T: Any> fromStream(stream: InputStream, strategy: DeserializationStrategy<T>): T?
     {
         return try
         {
-            Json.decodeFromStream<T>(stream)
+            json.decodeFromStream(strategy, stream)
         }
         catch (ex: Exception)
         {
@@ -57,13 +65,14 @@ object UUJson
             null
         }
     }
-}*/
+}
+
 
 inline fun <reified T: Any> T.uuToJson(): String?
 {
     return try
     {
-        Json.encodeToString(serializer(javaClass), this)
+        UUJson.toJson(this, serializer())
     }
     catch (ex: Exception)
     {
@@ -72,11 +81,11 @@ inline fun <reified T: Any> T.uuToJson(): String?
     }
 }
 
-inline fun <reified T> String.uuFromJson(): T?
+inline fun <reified T: Any> String.uuFromJson(): T?
 {
     return try
     {
-        Json.decodeFromString<T>(this)
+        UUJson.fromJson(this, serializer())
     }
     catch (ex: Exception)
     {
@@ -85,12 +94,11 @@ inline fun <reified T> String.uuFromJson(): T?
     }
 }
 
-@OptIn(ExperimentalSerializationApi::class)
-inline fun <reified T> InputStream.uuFromJson(): T?
+inline fun <reified T: Any> InputStream.uuFromJson(): T?
 {
     return try
     {
-        Json.decodeFromStream<T>(this)
+        UUJson.fromStream(this, serializer())
     }
     catch (ex: Exception)
     {
@@ -99,11 +107,11 @@ inline fun <reified T> InputStream.uuFromJson(): T?
     }
 }
 
-inline fun <reified T> ByteArray.uuFromJson(): T?
+inline fun <reified T: Any> ByteArray.uuFromJson(): T?
 {
     return try
     {
-        ByteArrayInputStream(this).uuFromJson<T>()
+        UUJson.fromBytes(this, serializer())
     }
     catch (ex: Exception)
     {

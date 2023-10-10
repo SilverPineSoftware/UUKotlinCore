@@ -1,6 +1,7 @@
 package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.silverpine.uu.core.UUJson
 import com.silverpine.uu.core.test.models.CustomSerializersModel
 import com.silverpine.uu.core.test.models.GenericsConcreteModel
 import com.silverpine.uu.core.test.models.NullsModel
@@ -9,7 +10,11 @@ import com.silverpine.uu.core.test.models.PrimitiveModel
 import com.silverpine.uu.core.uuFromJson
 import com.silverpine.uu.core.uuToJson
 import com.silverpine.uu.logging.UULog
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNamingStrategy
+import org.junit.AfterClass
 import org.junit.Assert
+import org.junit.BeforeClass
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +28,24 @@ class UUJsonTest
     companion object
     {
         const val LOOPS = 100
+
+        @JvmStatic
+        @BeforeClass
+        fun beforeClass()
+        {
+            UUJson.configure(Json()
+            {
+                ignoreUnknownKeys = true
+                namingStrategy = JsonNamingStrategy.SnakeCase
+            })
+        }
+
+        @JvmStatic
+        @AfterClass
+        fun afterClass()
+        {
+            UUJson.configure(Json.Default)
+        }
     }
 
     @Test

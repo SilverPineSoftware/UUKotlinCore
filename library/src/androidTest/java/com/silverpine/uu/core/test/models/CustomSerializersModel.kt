@@ -54,21 +54,9 @@ open class CustomSerializersModel
     {
         val o = (other as? CustomSerializersModel) ?: return false
 
-        if (createdAt != o.createdAt)
-        {
-            return false
-        }
-
-        if (updatedAt != o.updatedAt)
-        {
-            return false
-        }
-
-        return true
-        /*
         return (
                 createdAt == o.createdAt &&
                 updatedAt == o.updatedAt
-                )*/
+                )
     }
 }
