@@ -1,121 +1,34 @@
 package com.silverpine.uu.core
 
-import com.silverpine.uu.logging.UULog
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromStream
-import kotlinx.serialization.serializer
-import java.io.ByteArrayInputStream
 import java.io.InputStream
 
 object UUJson
 {
-    var json: Json = Json.Default
+    private var provider: UUJsonProvider = UUKotlinXJsonProvider(Json.Default)
 
-    fun configure(json: Json)
+    fun init(provider: UUJsonProvider)
     {
-        this.json = json
+        this.provider = provider
     }
 
-    fun <T> toJson(obj: T?, strategy: SerializationStrategy<T>): String?
+    fun <T: Any> toJson(obj: T?, objectClass: Class<T>): String?
     {
-        val nonNullObject = obj ?: return null
-
-        return try
-        {
-            json.encodeToString(strategy, nonNullObject)
-        }
-        catch (ex: Exception)
-        {
-            UULog.d(javaClass, "toJson", "", ex)
-            null
-        }
+        return provider.toJson(obj, objectClass)
     }
 
-    fun <T: Any> fromJson(source: String?, strategy: DeserializationStrategy<T>): T?
+    fun <T: Any> fromString(source: String?, objectClass: Class<T>): T?
     {
-        val nonNullString = source ?: return null
-
-        return try
-        {
-            json.decodeFromString(strategy, nonNullString)
-        }
-        catch (ex: Exception)
-        {
-            UULog.d(javaClass, "fromJson", "", ex)
-            null
-        }
+        return provider.fromString(source, objectClass)
     }
 
-    fun <T: Any> fromBytes(bytes: ByteArray, strategy: DeserializationStrategy<T>): T?
+    fun <T: Any> fromStream(source: InputStream?, objectClass: Class<T>): T?
     {
-        return fromStream(ByteArrayInputStream(bytes), strategy)
+        return provider.fromStream(source, objectClass)
     }
 
-    fun <T: Any> fromStream(stream: InputStream, strategy: DeserializationStrategy<T>): T?
+    fun <T: Any> fromBytes(source: ByteArray?, objectClass: Class<T>): T?
     {
-        return try
-        {
-            json.decodeFromStream(strategy, stream)
-        }
-        catch (ex: Exception)
-        {
-            UULog.d(javaClass, "fromStream", "", ex)
-            null
-        }
-    }
-}
-
-
-inline fun <reified T: Any> T.uuToJson(): String?
-{
-    return try
-    {
-        UUJson.toJson(this, serializer())
-    }
-    catch (ex: Exception)
-    {
-        UULog.d(javaClass, "uuToJsonString", "", ex)
-        null
-    }
-}
-
-inline fun <reified T: Any> String.uuFromJson(): T?
-{
-    return try
-    {
-        UUJson.fromJson(this, serializer())
-    }
-    catch (ex: Exception)
-    {
-        UULog.d(javaClass, "uuFromJson", "", ex)
-        null
-    }
-}
-
-inline fun <reified T: Any> InputStream.uuFromJson(): T?
-{
-    return try
-    {
-        UUJson.fromStream(this, serializer())
-    }
-    catch (ex: Exception)
-    {
-        UULog.d(javaClass, "uuFromJson", "", ex)
-        null
-    }
-}
-
-inline fun <reified T: Any> ByteArray.uuFromJson(): T?
-{
-    return try
-    {
-        UUJson.fromBytes(this, serializer())
-    }
-    catch (ex: Exception)
-    {
-        UULog.d(javaClass, "uuFromJson", "", ex)
-        null
+        return provider.fromBytes(source, objectClass)
     }
 }

@@ -2,13 +2,12 @@ package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.silverpine.uu.core.UUJson
+import com.silverpine.uu.core.UUKotlinXJsonProvider
 import com.silverpine.uu.core.test.models.CustomSerializersModel
 import com.silverpine.uu.core.test.models.GenericsConcreteModel
 import com.silverpine.uu.core.test.models.NullsModel
 import com.silverpine.uu.core.test.models.PrimitiveArraysModel
 import com.silverpine.uu.core.test.models.PrimitiveModel
-import com.silverpine.uu.core.uuFromJson
-import com.silverpine.uu.core.uuToJson
 import com.silverpine.uu.logging.UULog
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -33,18 +32,18 @@ class UUJsonTest
         @BeforeClass
         fun beforeClass()
         {
-            UUJson.configure(Json()
+            UUJson.init(UUKotlinXJsonProvider(Json()
             {
                 ignoreUnknownKeys = true
                 namingStrategy = JsonNamingStrategy.SnakeCase
-            })
+            }))
         }
 
         @JvmStatic
         @AfterClass
         fun afterClass()
         {
-            UUJson.configure(Json.Default)
+            UUJson.init(UUKotlinXJsonProvider(Json.Default))
         }
     }
 
@@ -99,13 +98,42 @@ class UUJsonTest
         {
             val source = createObject()
 
-            val json = source.uuToJson()
+            val json = UUJson.toJson(source, source.javaClass)
             Assert.assertNotNull(json)
             UULog.d(javaClass, "doToFromJsonTest-$i", "JSON Object: $json")
 
-            val fromJson: T? = json?.uuFromJson()
+            val check = TestObject(source)
+            val checkJson = check.encodeToJson()
+            Assert.assertEquals(json, checkJson)
+
+            val fromJson: T? = UUJson.fromString(json, source.javaClass)
             Assert.assertNotNull(fromJson)
             Assert.assertEquals(source, fromJson)
+
+            val fromObj = FromObject()
+            val fromCheck: T? = fromObj.decodeFromJson(json)
+            Assert.assertNotNull(fromJson)
+            Assert.assertEquals(source, fromCheck)
+        }
+    }
+
+
+
+
+    class TestObject<T: Any>(
+        private val jsonObject: T)
+    {
+        fun encodeToJson(): String?
+        {
+            return UUJson.toJson(jsonObject, jsonObject.javaClass)
+        }
+    }
+
+    class FromObject
+    {
+        inline fun <reified T: Any> decodeFromJson(string: String?): T?
+        {
+            return UUJson.fromString(string, T::class.java)
         }
     }
 }
