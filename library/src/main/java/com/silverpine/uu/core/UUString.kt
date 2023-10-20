@@ -236,3 +236,9 @@ fun Array<String>.uuTransform(transform: (String)->String): Array<String>
 
 val String.uuWordCount: Int
     get() = this.trim().split("\\s+".toRegex()).size
+
+val String.uuFileExtension: String
+    get()
+    {
+        return split(".").lastOrNull()?.lowercase() ?: ""
+    }
