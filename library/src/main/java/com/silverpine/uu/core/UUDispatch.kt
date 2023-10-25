@@ -2,6 +2,9 @@ package com.silverpine.uu.core
 
 import android.os.Handler
 import android.os.Looper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Safely runs a block of code on the main thread.
@@ -28,30 +31,30 @@ fun uuDispatchMain(block: ()->Unit)
 }
 
 /**
- * Safely runs a block of code on a background thread.
+ * Safely runs a block of code on a background thread using the IO coroutine scope
  *
+ * @param delay the amount of delay before running the block
  * @param block the block to run
- * * @param delay the amount of delay before running the block
+ *
  */
 fun uuDispatch(delay: Long, block: ()->Unit)
 {
-    val t = object: Thread()
+    CoroutineScope(Dispatchers.IO).launch()
     {
-        override fun run()
+        try
         {
-            try
+            if (delay > 0)
             {
-                sleep(delay)
-                block()
+                uuSleep("uuDispatch", delay)
             }
-            catch (ex: Exception)
-            {
-                // Eat it
-            }
+
+            block()
+        }
+        catch (ex: Exception)
+        {
+            // Eat it
         }
     }
-
-    t.start()
 }
 
 /**
@@ -63,20 +66,5 @@ fun uuDispatch(delay: Long, block: ()->Unit)
  */
 fun uuDispatch(block: ()->Unit)
 {
-    val t = object: Thread()
-    {
-        override fun run()
-        {
-            try
-            {
-                block()
-            }
-            catch (ex: Exception)
-            {
-                // Eat it
-            }
-        }
-    }
-
-    t.start()
+    uuDispatch(0, block)
 }
