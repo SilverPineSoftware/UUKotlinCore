@@ -8,5 +8,6 @@ plugins {
 
 ext["min_sdk"] = 26
 ext["target_sdk"] = 34
+ext["uu_test_version"] = '0.0.1.11-develop-SNAPSHOT'
 
 apply from: "./publish-common.gradle"

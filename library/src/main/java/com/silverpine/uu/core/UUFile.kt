@@ -36,7 +36,8 @@ private fun Path.uuSafeDelete()
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuSafeDelete", "", ex)
+        // Eat it
+        //UULog.d(javaClass, "uuSafeDelete", "", ex)
     }
 }
 
@@ -50,6 +51,7 @@ private fun Path.uuDeleteContents()
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuDeleteContents", "", ex)
+        // Eat it
+        //UULog.d(javaClass, "uuDeleteContents", "", ex)
     }
 }

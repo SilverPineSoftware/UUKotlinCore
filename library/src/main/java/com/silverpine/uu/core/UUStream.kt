@@ -41,8 +41,6 @@ fun InputStream.uuUnzip(destinationFolder: Path)
 {
     try
     {
-        Files.createDirectories(destinationFolder)
-
         val bos = BufferedInputStream(this)
         ZipInputStream(bos).use()
         { zis ->
@@ -52,7 +50,6 @@ fun InputStream.uuUnzip(destinationFolder: Path)
             for (entry in entries)
             {
                 val file = destinationFolder.resolve(entry.name).toFile()
-                //UULog.d(javaClass, "unzipFile", "Unzipping file: ${entry.name} to ${file.absolutePath}")
                 val pathParts = TextUtils.join("/", entry.name.split("/").dropLast(1))
                 Files.createDirectories(destinationFolder.resolve(pathParts))
 
