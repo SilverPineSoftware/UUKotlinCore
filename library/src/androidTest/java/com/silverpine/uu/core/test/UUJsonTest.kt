@@ -9,6 +9,8 @@ import com.silverpine.uu.core.test.models.GenericsConcreteModel
 import com.silverpine.uu.core.test.models.NullsModel
 import com.silverpine.uu.core.test.models.PrimitiveArraysModel
 import com.silverpine.uu.core.test.models.PrimitiveModel
+import com.silverpine.uu.core.test.models.TestEnumCamelCase
+import com.silverpine.uu.core.test.models.TestEnumSnakeCase
 import com.silverpine.uu.logging.UULog
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -102,6 +104,82 @@ class UUJsonTest
         doToFromJsonTest(EnumModel::random, LOOPS)
         doToFromJsonTest(EnumModel::min)
         doToFromJsonTest(EnumModel::max)
+    }
+
+    /**
+     * Tests an object with a nullable enum field being deserialized when the JSON string has
+     * garbage in it.
+     */
+    @Test
+    fun test_0006_nullable_lenient_enums()
+    {
+        val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":\"Garbage\",\"custom_two\":\"window_trim\",\"custom_three\":\"one\",\"custom_four\":\"tv_ladder_hat\"}"
+
+        val check = UUJson.fromString(input, EnumModel::class.java)
+        Assert.assertNotNull(check)
+        Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
+        Assert.assertEquals(null, check.customOne)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
+        Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
+        Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
+    }
+
+    /**
+     * Tests an object with a nullable enum field being deserialized when the JSON string has
+     * null in it.
+     */
+    @Test
+    fun test_0007_nullable_lenient_enum_null()
+    {
+        val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":null,\"custom_two\":\"window_trim\",\"custom_three\":\"one\",\"custom_four\":\"tv_ladder_hat\"}"
+
+        val check = UUJson.fromString(input, EnumModel::class.java)
+        Assert.assertNotNull(check)
+        Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
+        Assert.assertEquals(null, check.customOne)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
+        Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
+        Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
+    }
+
+    /**
+     * Tests an object with a non-nullable enum field being deserialized when the JSON string has
+     * garbage in it.
+     */
+    @Test
+    fun test_0008_non_nullable_lenient_enums()
+    {
+        val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":\"two\",\"custom_two\":\"window_trim\",\"custom_three\":\"FooBar\",\"custom_four\":\"tv_ladder_hat\"}"
+
+        val check = UUJson.fromString(input, EnumModel::class.java)
+        Assert.assertNotNull(check)
+        Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
+        Assert.assertEquals(TestEnumCamelCase.Two, check.customOne)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
+        Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
+        Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
+    }
+
+    /**
+     * Tests an object with a non-nullable enum field being deserialized when the JSON string has
+     * null in it.
+     */
+    @Test
+    fun test_0009_non_nullable_lenient_enum_null()
+    {
+        val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":\"Two\",\"custom_two\":\"window_trim\",\"custom_three\":null,\"custom_four\":\"tv_ladder_hat\"}"
+
+        val check = UUJson.fromString(input, EnumModel::class.java)
+        Assert.assertNotNull(check)
+        Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
+        Assert.assertEquals(TestEnumCamelCase.Two, check.customOne)
+        Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
+        Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
+        Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
     }
 
     private inline fun <reified T: Any> doToFromJsonTest(createObject: ()->T, loops: Int = 1)
