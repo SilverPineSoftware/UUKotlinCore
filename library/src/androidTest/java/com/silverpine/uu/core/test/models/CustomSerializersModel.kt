@@ -2,7 +2,7 @@ package com.silverpine.uu.core.test.models
 
 import UUDateJsonAdapter
 import androidx.annotation.Keep
-import com.silverpine.uu.core.UULongDateJsonAdapter
+import com.silverpine.uu.core.UULongDateSerializer
 import com.silverpine.uu.core.UURandom
 import kotlinx.serialization.Serializable
 import java.util.Date
@@ -11,7 +11,7 @@ import java.util.Date
 @Serializable
 open class CustomSerializersModel
 {
-    @Serializable(UULongDateJsonAdapter::class)
+    @Serializable(UULongDateSerializer::class)
     var createdAt: Long = 0
 
     @Serializable(UUDateJsonAdapter::class)

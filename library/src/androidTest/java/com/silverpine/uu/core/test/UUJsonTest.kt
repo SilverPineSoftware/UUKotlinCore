@@ -4,11 +4,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.silverpine.uu.core.UUJson
 import com.silverpine.uu.core.UUKotlinXJsonProvider
 import com.silverpine.uu.core.test.models.CustomSerializersModel
+import com.silverpine.uu.core.test.models.EnumModel
 import com.silverpine.uu.core.test.models.GenericsConcreteModel
 import com.silverpine.uu.core.test.models.NullsModel
 import com.silverpine.uu.core.test.models.PrimitiveArraysModel
 import com.silverpine.uu.core.test.models.PrimitiveModel
 import com.silverpine.uu.logging.UULog
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
 import org.junit.AfterClass
@@ -28,6 +30,7 @@ class UUJsonTest
     {
         const val LOOPS = 100
 
+        @OptIn(ExperimentalSerializationApi::class)
         @JvmStatic
         @BeforeClass
         fun beforeClass()
@@ -90,6 +93,15 @@ class UUJsonTest
         doToFromJsonTest(GenericsConcreteModel::random, LOOPS)
         doToFromJsonTest(GenericsConcreteModel::min)
         doToFromJsonTest(GenericsConcreteModel::max)
+    }
+
+    @Test
+    fun test_0005_enumModels()
+    {
+        doToFromJsonTest(EnumModel::default)
+        doToFromJsonTest(EnumModel::random, LOOPS)
+        doToFromJsonTest(EnumModel::min)
+        doToFromJsonTest(EnumModel::max)
     }
 
     private inline fun <reified T: Any> doToFromJsonTest(createObject: ()->T, loops: Int = 1)
