@@ -155,11 +155,11 @@ fun String.uuFirstCapital(): String
  *
  * @return another string
  */
-fun String.uuToSnakeCase(string: String): String
+fun String.uuToSnakeCase(): String
 {
     val regex = "(\\p{Ll})(\\p{Lu})"
     val replacement = "$1_$2"
-    return string.replace(regex.toRegex(), replacement).lowercase(Locale.getDefault())
+    return replace(regex.toRegex(), replacement).lowercase(Locale.getDefault())
 }
 
 /**
