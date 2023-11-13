@@ -3,10 +3,12 @@ package com.silverpine.uu.core
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.FontRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
@@ -218,6 +220,12 @@ object UUResources
         return resources.uuGetRawResourceBytes(id)
     }
 
+    fun getFont(@FontRes id: Int): Typeface?
+    {
+        requireResources()
+        return resources.getFont(id)
+    }
+    
     private fun requireResources()
     {
         if (!UUResources::resources.isInitialized)
