@@ -1,5 +1,6 @@
 package com.silverpine.uu.core
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
@@ -23,9 +24,35 @@ object UUResources
         resources = applicationContext.resources
     }
 
+    @SuppressLint("DiscouragedApi")
     fun getIdentifier(name: String, type: String, packageName: String = applicationContext.packageName): Int
     {
-        return resources.getIdentifier(name, type, applicationContext.packageName)
+        requireResources()
+        return resources.getIdentifier(name, type, packageName)
+    }
+
+    fun getResourceName(identifier: Int): String
+    {
+        requireResources()
+        return resources.getResourceName(identifier)
+    }
+
+    fun getResourceEntryName(identifier: Int): String
+    {
+        requireResources()
+        return resources.getResourceEntryName(identifier)
+    }
+
+    fun getResourcePackageName(identifier: Int): String
+    {
+        requireResources()
+        return resources.getResourcePackageName(identifier)
+    }
+
+    fun getResourceTypeName(identifier: Int): String
+    {
+        requireResources()
+        return resources.getResourceTypeName(identifier)
     }
 
     fun getString(@StringRes resourceId: Int?): String
