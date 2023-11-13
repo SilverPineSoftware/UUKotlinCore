@@ -23,6 +23,11 @@ object UUResources
         resources = applicationContext.resources
     }
 
+    fun getIdentifier(name: String, type: String, packageName: String = applicationContext.packageName): Int
+    {
+        return resources.getIdentifier(name, type, applicationContext.packageName)
+    }
+
     fun getString(@StringRes resourceId: Int?): String
     {
         requireResources()
