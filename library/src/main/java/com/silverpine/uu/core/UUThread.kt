@@ -1,6 +1,7 @@
 package com.silverpine.uu.core
 
 import android.os.Looper
+import com.silverpine.uu.logging.UULog
 
 /**
  * Checks to see if the currently running thread is the main thread or not
@@ -17,8 +18,8 @@ fun uuSleep(fromWhere: String, millis: Long)
     {
         Thread.sleep(millis)
     }
-    catch (_: Exception)
+    catch (ex : Exception)
     {
-        // Eat it
+        UULog.d(Thread::class.java, "uuSleep", "", ex)
     }
 }

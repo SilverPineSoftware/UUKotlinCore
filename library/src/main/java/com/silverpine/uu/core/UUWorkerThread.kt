@@ -2,6 +2,7 @@ package com.silverpine.uu.core
 
 import android.os.Handler
 import android.os.HandlerThread
+import com.silverpine.uu.logging.UULog
 
 class UUWorkerThread(name: String): HandlerThread(name)
 {
@@ -20,7 +21,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            // Eat it
+            UULog.d(javaClass, "post", "", ex)
         }
     }
 
@@ -32,7 +33,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            // Eat it
+            UULog.d(javaClass, "postDelayed", "", ex)
         }
     }
 
@@ -44,7 +45,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            // Eat it
+            UULog.d(javaClass, "postDelayed", "", ex)
         }
     }
 
@@ -68,7 +69,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            // Eat it
+            UULog.d(javaClass, "remove", "", ex)
         }
     }
 
@@ -92,7 +93,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            // Eat it
+            UULog.d(javaClass, "remove", "", ex)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.silverpine.uu.core
 
 import android.os.Handler
 import android.os.Looper
+import com.silverpine.uu.logging.UULog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,7 +53,7 @@ fun uuDispatch(delay: Long, block: ()->Unit)
         }
         catch (ex: Exception)
         {
-            // Eat it
+            UULog.d(javaClass, "uuDispatch", "", ex)
         }
     }
 }

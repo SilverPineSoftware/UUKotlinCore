@@ -100,7 +100,7 @@ object UULog
         }
         catch (t: Throwable)
         {
-            // Eat it
+            Log.e("UULog", "stackTraceToString", t)
         }
 
         try
@@ -112,7 +112,7 @@ object UULog
         }
         catch (t: Throwable)
         {
-            // Eat it
+            Log.e("UULog", "stackTraceToString", t)
         }
 
         return ""
