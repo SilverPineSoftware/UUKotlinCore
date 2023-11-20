@@ -17,6 +17,8 @@ import java.io.ByteArrayOutputStream
 
 object UUResources
 {
+    private const val INVALID_RESOURCE_ID = 0
+
     private lateinit var applicationContext: Context
     private lateinit var resources: Resources
 
@@ -33,28 +35,92 @@ object UUResources
         return resources.getIdentifier(name, type, packageName)
     }
 
-    fun getResourceName(identifier: Int): String
+    fun getResourceName(resourceId: Int): String
     {
         requireResources()
-        return resources.getResourceName(identifier)
+
+        var result: String? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getResourceName(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getString", "Error getting resource name $resourceId", ex)
+            result = null
+        }
+
+        return result ?: ""
     }
 
-    fun getResourceEntryName(identifier: Int): String
+    fun getResourceEntryName(resourceId: Int): String
     {
         requireResources()
-        return resources.getResourceEntryName(identifier)
+
+        var result: String? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getResourceEntryName(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getString", "Error getting resource entry name $resourceId", ex)
+            result = null
+        }
+
+        return result ?: ""
     }
 
-    fun getResourcePackageName(identifier: Int): String
+    fun getResourcePackageName(resourceId: Int): String
     {
         requireResources()
-        return resources.getResourcePackageName(identifier)
+
+        var result: String? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getResourcePackageName(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getString", "Error getting resource package name $resourceId", ex)
+            result = null
+        }
+
+        return result ?: ""
     }
 
-    fun getResourceTypeName(identifier: Int): String
+    fun getResourceTypeName(resourceId: Int): String
     {
         requireResources()
-        return resources.getResourceTypeName(identifier)
+
+        var result: String? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getResourceTypeName(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getString", "Error getting resource type name $resourceId", ex)
+            result = null
+        }
+
+        return result ?: ""
     }
 
     fun getString(@StringRes resourceId: Int?): String
@@ -67,14 +133,15 @@ object UUResources
         {
             resourceId?.let()
             {
-                if (resourceId != -1)
+                if (resourceId != INVALID_RESOURCE_ID)
                 {
-                    result = resources.getString(resourceId)
+                    result = resources.getString(it)
                 }
             }
         }
         catch (ex: Exception)
         {
+            UULog.d(javaClass, "getString", "Error loading string $resourceId", ex)
             result = null
         }
 
@@ -85,14 +152,18 @@ object UUResources
     {
         requireResources()
 
-        var result: String?
+        var result: String? = null
 
         try
         {
-            result = resources.getString(resourceId, *arg)
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getString(resourceId, *arg)
+            }
         }
         catch (ex: Exception)
         {
+            UULog.d(javaClass, "getString", "Error loading formatted string $resourceId", ex)
             result = null
         }
 
@@ -103,17 +174,21 @@ object UUResources
     {
         requireResources()
 
-        var result: Drawable?
+        var result: Drawable? = null
 
         try
         {
             resources.let()
-            {
-                result = ResourcesCompat.getDrawable(it, resourceId, theme)
+            { rez ->
+                if (resourceId != INVALID_RESOURCE_ID)
+                {
+                    result = ResourcesCompat.getDrawable(rez, resourceId, theme)
+                }
             }
         }
         catch (ex: Exception)
         {
+            UULog.d(javaClass, "getDrawable", "Error loading drawable $resourceId", ex)
             result = null
         }
 
@@ -124,17 +199,18 @@ object UUResources
     {
         requireResources()
 
-        var result: Int?
+        var result: Int? = null
 
         try
         {
-            resources.let()
+            if (resourceId != INVALID_RESOURCE_ID)
             {
-                result = it.getColor(resourceId, theme)
+                result = resources.getColor(resourceId, theme)
             }
         }
         catch (ex: Exception)
         {
+            UULog.d(javaClass, "getColor", "Error loading color $resourceId", ex)
             result = null
         }
 
@@ -145,17 +221,18 @@ object UUResources
     {
         requireResources()
 
-        var result: Float?
+        var result: Float? = null
 
         try
         {
-            resources.let()
+            if (resourceId != INVALID_RESOURCE_ID)
             {
-                result = it.getDimension(resourceId)
+                result = resources.getDimension(resourceId)
             }
         }
         catch (ex: Exception)
         {
+            UULog.d(javaClass, "getDimension", "Error loading dimension $resourceId", ex)
             result = null
         }
 
@@ -166,17 +243,18 @@ object UUResources
     {
         requireResources()
 
-        var result: Int?
+        var result: Int? = null
 
         try
         {
-            resources.let()
+            if (resourceId != INVALID_RESOURCE_ID)
             {
-                result = it.getDimensionPixelSize(resourceId)
+                result = resources.getDimensionPixelSize(resourceId)
             }
         }
         catch (ex: Exception)
         {
+            UULog.d(javaClass, "getDimensionPixelSize", "Error loading dimension pixel size $resourceId", ex)
             result = null
         }
 
@@ -194,7 +272,7 @@ object UUResources
             val info = manager.getPackageInfo(ctx.packageName, 0)
             return info.versionName
         }
-        catch (ex: java.lang.Exception)
+        catch (ex: Exception)
         {
             UULog.e(javaClass, "getAppVersion", "", ex)
         }
@@ -208,24 +286,72 @@ object UUResources
         return applicationContext.packageName
     }
 
-    fun getRawText(@RawRes id: Int): String?
+    fun getRawText(@RawRes resourceId: Int): String?
     {
         requireResources()
-        return resources.uuGetRawTextFile(id)
+
+        var result: String? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.uuGetRawTextFile(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getRawText", "Error loading raw text $resourceId", ex)
+            result = null
+        }
+
+        return result
     }
 
-    fun getRawBytes(@RawRes id: Int): ByteArray?
+    fun getRawBytes(@RawRes resourceId: Int): ByteArray?
     {
         requireResources()
-        return resources.uuGetRawResourceBytes(id)
+
+        var result: ByteArray? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.uuGetRawResourceBytes(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getRawBytes", "Error loading raw bytes $resourceId", ex)
+            result = null
+        }
+
+        return result
     }
 
-    fun getFont(@FontRes id: Int): Typeface?
+    fun getFont(@FontRes resourceId: Int): Typeface?
     {
         requireResources()
-        return resources.getFont(id)
+
+        var result: Typeface? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getFont(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getFont", "Error loading font $resourceId", ex)
+            result = null
+        }
+
+        return result
     }
-    
+
     private fun requireResources()
     {
         if (!UUResources::resources.isInitialized)
@@ -245,7 +371,7 @@ fun Resources.uuGetRawTextFile(@RawRes id: Int): String? =
 
 fun Resources.uuGetRawResourceBytes(@RawRes id: Int): ByteArray?
 {
-    var bos = ByteArrayOutputStream()
+    val bos = ByteArrayOutputStream()
 
     openRawResource(id).use()
     { inputStream ->

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="fraction_one">0.7</fraction>
+    <fraction name="fraction_two">13.8</fraction>
+    <fraction name="fraction_three">-22.5</fraction>
+</resources>
