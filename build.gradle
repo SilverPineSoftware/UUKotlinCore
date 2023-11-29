@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.application' version '8.1.2' apply false
-    id 'com.android.library' version '8.1.2' apply false
+    id 'com.android.application' version '8.1.4' apply false
+    id 'com.android.library' version '8.1.4' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0' apply true
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0' apply true
@@ -8,6 +8,6 @@ plugins {
 
 ext["min_sdk"] = 26
 ext["target_sdk"] = 34
-ext["uu_test_version"] = '0.0.1.11-develop-SNAPSHOT'
+ext["uu_test_version"] = '0.0.2.12-develop-SNAPSHOT'
 
 apply from: "./publish-common.gradle"
