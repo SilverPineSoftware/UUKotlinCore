@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
@@ -121,6 +122,28 @@ object UUResources
         }
 
         return result ?: ""
+    }
+
+    fun getResourceUri(resourceId: Int, resourceFolder: String): Uri?
+    {
+        var result: Uri?
+
+        try
+        {
+            result = Uri.parse("android.resource://${getResourcePackageName(resourceId)}/$resourceFolder/${getResourceEntryName(resourceId)}")
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getResourceUri", "Error getting resource uri $resourceId in folder $resourceFolder", ex)
+            result = null
+        }
+
+        return result
+    }
+
+    fun getRawResourceUri(resourceId: Int): Uri?
+    {
+        return getResourceUri(resourceId, "raw")
     }
 
     fun getString(@StringRes resourceId: Int?): String
