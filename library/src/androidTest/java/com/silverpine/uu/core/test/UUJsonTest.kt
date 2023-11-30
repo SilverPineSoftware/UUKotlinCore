@@ -8,6 +8,7 @@ import com.silverpine.uu.core.test.models.EnumModel
 import com.silverpine.uu.core.test.models.GenericsConcreteModel
 import com.silverpine.uu.core.test.models.NullsModel
 import com.silverpine.uu.core.test.models.PrimitiveArraysModel
+import com.silverpine.uu.core.test.models.PrimitiveListModel
 import com.silverpine.uu.core.test.models.PrimitiveModel
 import com.silverpine.uu.core.test.models.TestEnumCamelCase
 import com.silverpine.uu.core.test.models.TestEnumSnakeCase
@@ -180,6 +181,15 @@ class UUJsonTest
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
         Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
         Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
+    }
+
+    @Test
+    fun test_0010_primitiveListsModel()
+    {
+        doToFromJsonTest(PrimitiveListModel::default)
+        doToFromJsonTest(PrimitiveListModel::random, LOOPS)
+        doToFromJsonTest(PrimitiveListModel::min)
+        doToFromJsonTest(PrimitiveListModel::max)
     }
 
     private inline fun <reified T: Any> doToFromJsonTest(createObject: ()->T, loops: Int = 1)
