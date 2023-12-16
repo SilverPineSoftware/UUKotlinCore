@@ -8,7 +8,17 @@ import android.util.Log
  */
 object UULog
 {
-    var logger: UULogger? = null
+    private var logger: UULogger? = null
+
+    /**
+     * Configures the logger to be used by UULog
+     *
+     * @param logger a logger implementation
+     */
+    fun init(logger: UULogger)
+    {
+        this.logger = logger
+    }
     
     fun e(callingClass: Class<*>, method: String, message: String, exception: Throwable? = null)
     {

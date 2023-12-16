@@ -23,7 +23,7 @@ class UULogTests
     @Test
     fun logWithALogger()
     {
-        UULog.logger = UUConsoleLogger()
+        UULog.init(UUConsoleLogger())
         UULog.d(javaClass, "log", "test")
     }
 
