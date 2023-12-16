@@ -3,7 +3,7 @@ buildscript {
     ext.target_sdk = 34
     ext.gradle_version = '8.2.0'
     ext.kotlin_version = '1.9.21'
-    ext.uu_test_version = '0.0.2'
+    ext.uu_test_version = '0.0.3'
 }
 
 plugins {
