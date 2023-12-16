@@ -14,3 +14,6 @@
 .cxx
 local.properties
 /.idea/androidTestResultsUserPreferences.xml
+/.idea/deploymentTargetDropDown.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/codeStyles
