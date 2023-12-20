@@ -16,8 +16,19 @@ import kotlinx.coroutines.launch
  */
 fun uuDispatchMain(delay: Long, block: ()->Unit)
 {
-    Handler(Looper.getMainLooper()).postDelayed(block, delay)
+    try
+    {
+        Handler(Looper.getMainLooper()).postDelayed(
+        {
+            uuSafeInvokeBlock(block)
+        }, delay)
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(Object::class.java, "uuDispatchMain", "", ex)
+    }
 }
+
 
 /**
  * Safely runs a block of code on the main thread.
@@ -28,7 +39,17 @@ fun uuDispatchMain(delay: Long, block: ()->Unit)
  */
 fun uuDispatchMain(block: ()->Unit)
 {
-    Handler(Looper.getMainLooper()).post(block)
+    try
+    {
+        Handler(Looper.getMainLooper()).post()
+        {
+            uuSafeInvokeBlock(block)
+        }
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(Object::class.java, "uuDispatchMain", "", ex)
+    }
 }
 
 /**
@@ -40,21 +61,28 @@ fun uuDispatchMain(block: ()->Unit)
  */
 fun uuDispatch(delay: Long, block: ()->Unit)
 {
-    CoroutineScope(Dispatchers.IO).launch()
+    try
     {
-        try
+        CoroutineScope(Dispatchers.IO).launch()
         {
-            if (delay > 0)
+            try
             {
-                uuSleep("uuDispatch", delay)
-            }
+                if (delay > 0)
+                {
+                    uuSleep("uuDispatch", delay)
+                }
 
-            block()
+                block()
+            }
+            catch (ex: Exception)
+            {
+                UULog.d(javaClass, "uuDispatch", "", ex)
+            }
         }
-        catch (ex: Exception)
-        {
-            UULog.d(javaClass, "uuDispatch", "", ex)
-        }
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(Object::class.java, "uuDispatch", "", ex)
     }
 }
 
@@ -68,4 +96,17 @@ fun uuDispatch(delay: Long, block: ()->Unit)
 fun uuDispatch(block: ()->Unit)
 {
     uuDispatch(0, block)
+}
+
+private fun uuSafeInvokeBlock(block: ()->Unit)
+{
+    try
+    {
+        block()
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(Object::class.java, "uuSafeInvokeBlock", "", ex)
+
+    }
 }
