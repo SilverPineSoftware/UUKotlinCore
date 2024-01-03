@@ -6,10 +6,12 @@ import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
+import androidx.annotation.IntegerRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
@@ -373,6 +375,72 @@ object UUResources
         }
 
         return result
+    }
+
+    fun getInteger(@IntegerRes resourceId: Int, defaultValue: Int = 0): Int
+    {
+        requireResources()
+
+        var result: Int? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getInteger(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getInteger", "Error loading integer $resourceId", ex)
+            result = null
+        }
+
+        return result ?: defaultValue
+    }
+
+    fun getIntArray(@ArrayRes resourceId: Int, defaultValue: IntArray = IntArray(0)): IntArray
+    {
+        requireResources()
+
+        var result: IntArray? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getIntArray(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getIntArray", "Error loading integer $resourceId", ex)
+            result = null
+        }
+
+        return result ?: defaultValue
+    }
+
+    fun getStringArray(@ArrayRes resourceId: Int, defaultValue: Array<String> = arrayOf()): Array<String>
+    {
+        requireResources()
+
+        var result: Array<String>? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getStringArray(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getStringArray", "Error loading integer $resourceId", ex)
+            result = null
+        }
+
+        return result ?: defaultValue
     }
 
     private fun requireResources()
