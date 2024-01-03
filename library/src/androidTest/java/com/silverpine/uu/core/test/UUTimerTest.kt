@@ -47,7 +47,7 @@ class UUTimerTest
 
         // A single shot timer gets cleaned up after the timer block is invoked, so we need
         // to wait.  This is a hacky way to test, but works in this simple case
-        uuSleep("unit_test", 100)
+        uuSleep(100)
 
         Assert.assertEquals(0, UUTimer.listActiveTimers().size)
         Assert.assertNull(UUTimer.findActiveTimer(timerId))
@@ -79,7 +79,7 @@ class UUTimerTest
             //latch.countDown()
         }
 
-        uuSleep("test", 100L)
+        uuSleep(100L)
         Assert.assertEquals(1, UUTimer.listActiveTimers().size)
         val t = UUTimer.findActiveTimer(timerId)
         Assert.assertNotNull(t)
@@ -94,7 +94,7 @@ class UUTimerTest
 
         // A single shot timer gets cleaned up after the timer block is invoked, so we need
         // to wait.  This is a hacky way to test, but works in this simple case
-        uuSleep("unit_test", 100)
+        uuSleep(100)
 
         Assert.assertEquals(0, UUTimer.listActiveTimers().size)
         Assert.assertNull(UUTimer.findActiveTimer(timerId))

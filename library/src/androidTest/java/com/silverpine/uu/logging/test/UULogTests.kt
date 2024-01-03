@@ -31,7 +31,7 @@ class UULogTests
     fun onTestCaseDone()
     {
         // let UULog be flushed
-        uuSleep("onTestCaseDone", 200)
+        uuSleep(200)
     }
 
 

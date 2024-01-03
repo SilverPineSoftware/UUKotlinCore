@@ -3,8 +3,6 @@ package com.silverpine.uu.core.test
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.silverpine.uu.core.UUDispatchGroup
 import com.silverpine.uu.core.uuDispatch
-import com.silverpine.uu.core.uuDispatchMain
-import com.silverpine.uu.core.uuIsMainThread
 import com.silverpine.uu.core.uuSleep
 import com.silverpine.uu.logging.UULog
 import org.junit.Assert
@@ -45,8 +43,8 @@ class UUDispatchGroupTest
 
                 for (loop in 0 until loops)
                 {
-                    UULog.d(javaClass, "test", "Block $id sleeping")
-                    uuSleep("Block_${id}_loop_$loop", sleep)
+                    UULog.d(javaClass, "test", "Block_${id}_loop_$loop sleeping")
+                    uuSleep(sleep)
                 }
 
                 UULog.d(javaClass, "test", "Block $id finished")
