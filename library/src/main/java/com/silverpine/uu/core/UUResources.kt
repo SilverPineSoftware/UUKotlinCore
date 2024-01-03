@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
@@ -13,6 +14,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.annotation.IntegerRes
 import androidx.annotation.RawRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import com.silverpine.uu.logging.UULog
@@ -437,6 +439,29 @@ object UUResources
         catch (ex: Exception)
         {
             UULog.d(javaClass, "getStringArray", "Error loading integer $resourceId", ex)
+            result = null
+        }
+
+        return result ?: defaultValue
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun getFloat(@DimenRes resourceId: Int, defaultValue: Float = 0.0f): Float
+    {
+        requireResources()
+
+        var result: Float? = null
+
+        try
+        {
+            if (resourceId != INVALID_RESOURCE_ID)
+            {
+                result = resources.getFloat(resourceId)
+            }
+        }
+        catch (ex: Exception)
+        {
+            UULog.d(javaClass, "getFloat", "Error loading float $resourceId", ex)
             result = null
         }
 
