@@ -12,7 +12,7 @@ fun uuIsMainThread(): Boolean
 {
     return (Looper.myLooper() == Looper.getMainLooper())
 }
-fun uuSleep(fromWhere: String, millis: Long)
+fun uuSleep(millis: Long)
 {
     try
     {

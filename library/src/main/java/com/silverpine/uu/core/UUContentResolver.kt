@@ -26,7 +26,7 @@ object UUContentResolver
             { c ->
                 if (c.moveToFirst())
                 {
-                    return c.uuGetString(OpenableColumns.DISPLAY_NAME)
+                    return c.uuSafeGetString(OpenableColumns.DISPLAY_NAME)
                 }
             }
         }

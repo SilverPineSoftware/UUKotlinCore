@@ -400,7 +400,7 @@ fun Resources.uuGetRawResourceBytes(@RawRes id: Int): ByteArray?
     { inputStream ->
 
         val chunk = ByteArray(10240)
-        var bytesRead = 0
+        var bytesRead: Int
 
         while (true)
         {

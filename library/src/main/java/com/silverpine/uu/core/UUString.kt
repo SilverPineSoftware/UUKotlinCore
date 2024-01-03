@@ -34,7 +34,7 @@ fun String?.uuToHexData(): ByteArray?
 {
     val data = this ?: return null
 
-    var buffer: ByteArray? = null
+    var buffer: ByteArray?
 
     try
     {

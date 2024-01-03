@@ -69,7 +69,7 @@ fun uuDispatch(delay: Long, block: ()->Unit)
             {
                 if (delay > 0)
                 {
-                    uuSleep("uuDispatch", delay)
+                    uuSleep(delay)
                 }
 
                 block()
