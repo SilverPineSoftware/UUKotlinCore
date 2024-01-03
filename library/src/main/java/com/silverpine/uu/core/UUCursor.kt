@@ -1,6 +1,7 @@
 package com.silverpine.uu.core
 
 import android.database.Cursor
+import android.text.TextUtils
 import androidx.core.database.getBlobOrNull
 import androidx.core.database.getDoubleOrNull
 import androidx.core.database.getFloatOrNull
@@ -198,6 +199,61 @@ fun Cursor.uuGetString(column: Any, defaultValue: String? = null): String?
 fun Cursor.uuSafeGetString(column: Any, defaultValue: String = ""): String
 {
     return uuGetString(column) ?: defaultValue
+}
+
+fun <T: Enum<T>> Cursor.uuGetEnum(enumClass: Class<T>, column: Any, defaultValue: T? = null): T?
+{
+    val stringValue = uuGetString(column) ?: return defaultValue
+
+    enumClass.enumConstants?.let()
+    { values ->
+        for (e in values)
+        {
+            if (e.name == stringValue)
+            {
+                return e
+            }
+
+            if (e.name.lowercase() == stringValue.lowercase())
+            {
+                return e
+            }
+
+            if (e.name.uuToSnakeCase() == stringValue.uuToSnakeCase())
+            {
+                return e
+            }
+        }
+    }
+
+    return defaultValue
+}
+
+fun <T: Enum<T>> Cursor.uuSafeGetEnum(enumClass: Class<T>, column: Any, defaultValue: T): T
+{
+    return uuGetEnum(enumClass, column) ?: defaultValue
+}
+
+fun Cursor.uuGetStringList(column: Any, defaultValue: List<String>? = null): List<String>?
+{
+    val stringValue = uuGetString(column) ?: return defaultValue
+    return TextUtils.split(stringValue, ",").map { it.trim() }.toList()
+}
+
+fun Cursor.uuSafeGetStringList(column: Any, defaultValue: List<String> = listOf()): List<String>
+{
+    return uuGetStringList(column) ?: defaultValue
+}
+
+fun Cursor.uuGetStringSet(column: Any, defaultValue: Set<String>? = null): Set<String>?
+{
+    val list = uuGetStringList(column) ?: return defaultValue
+    return list.toSet()
+}
+
+fun Cursor.uuSafeGetStringSet(column: Any, defaultValue: Set<String> = setOf()): Set<String>
+{
+    return uuGetStringSet(column) ?: defaultValue
 }
 
 /**
