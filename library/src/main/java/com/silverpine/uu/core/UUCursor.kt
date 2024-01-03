@@ -256,15 +256,25 @@ fun Cursor.uuSafeGetStringSet(column: Any, defaultValue: Set<String> = setOf()):
     return uuGetStringSet(column) ?: defaultValue
 }
 
-/**
- * Safely gets a column value based on the cursor field type
- *
- * @param cursor a database cursor
- * @param column column name to get
- * @param defaultValue the default value
- *
- * @return an Object of type String, Long, Double, byte[], or null
- */
+fun <T: Any> Cursor.uuGetJsonObject(jsonClass: Class<T>, column: Any, defaultValue: T? = null): T?
+{
+    return UUJson.fromString(uuGetString(column), jsonClass) ?: defaultValue
+}
+
+fun <T: Any> Cursor.uuSafeGetJsonObject(jsonClass: Class<T>, column: Any, defaultValue: T): T
+{
+    return uuGetJsonObject(jsonClass, column) ?: defaultValue
+}
+
+///**
+// * Safely gets a column value based on the cursor field type
+// *
+// * @param cursor a database cursor
+// * @param column column name to get
+// * @param defaultValue the default value
+// *
+// * @return an Object of type String, Long, Double, byte[], or null
+// */
 //    @Nullable
 //    public static Object safeGet(
 //            @NonNull final Cursor cursor,
@@ -275,15 +285,15 @@ fun Cursor.uuSafeGetStringSet(column: Any, defaultValue: Set<String> = setOf()):
 //        return safeGet(cursor, index, defaultValue);
 //    }
 
-/**
- * Safely gets a column value based on the cursor field type
- *
- * @param cursor a database cursor
- * @param column column name to get
- * @param defaultValue the default value
- *
- * @return an Object of type String, Long, Double, byte[], or null
- */
+///**
+// * Safely gets a column value based on the cursor field type
+// *
+// * @param cursor a database cursor
+// * @param column column name to get
+// * @param defaultValue the default value
+// *
+// * @return an Object of type String, Long, Double, byte[], or null
+// */
 //    @Nullable
 //    public static Object safeGet(
 //            @NonNull final Cursor cursor,
@@ -296,7 +306,6 @@ fun Cursor.uuSafeGetStringSet(column: Any, defaultValue: Set<String> = setOf()):
 /**
  * Safely gets a column value based on the cursor field type
  *
- * @param cursor a database cursor
  * @param index index to get
  * @param defaultValue the default value
  *
