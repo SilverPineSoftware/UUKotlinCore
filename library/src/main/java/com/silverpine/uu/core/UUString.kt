@@ -4,6 +4,7 @@ import android.util.Base64
 import com.silverpine.uu.logging.UULog
 import java.nio.charset.Charset
 import java.util.*
+import java.util.regex.Pattern
 
 fun String?.uuSafeString(): String
 {
@@ -242,3 +243,42 @@ val String.uuFileExtension: String
     {
         return split(".").lastOrNull()?.lowercase() ?: ""
     }
+
+
+private const val UU_HAS_NUMBER_REGEX = "^.*[0-9].*"
+private const val UU_HAS_UPPER_CASE_REGEX = "^.*[A-Z].*"
+private const val UU_HAS_LOWER_CASE_REGEX = "^.*[a-z].*"
+private const val UU_PASSWORD_VALID_SYMBOLS_REGEX = "^.*[!@#\$%^&*()_+=[{]};:<>|./?,-].*"
+
+fun String.uuMatchesRegex(regexPattern: String): Boolean
+{
+    return try
+    {
+        Pattern.matches(regexPattern, this)
+    }
+    catch (ex: Exception)
+    {
+        UULog.d(javaClass, "uuMatchesRegex", "", ex)
+        false
+    }
+}
+
+fun String.uuHasUppercase(): Boolean
+{
+    return uuMatchesRegex(UU_HAS_UPPER_CASE_REGEX)
+}
+
+fun String.uuHasLowercase(): Boolean
+{
+    return uuMatchesRegex(UU_HAS_LOWER_CASE_REGEX)
+}
+
+fun String.uuHasNumber(): Boolean
+{
+    return uuMatchesRegex(UU_HAS_NUMBER_REGEX)
+}
+
+fun String.uuHasSymbol(): Boolean
+{
+    return uuMatchesRegex(UU_PASSWORD_VALID_SYMBOLS_REGEX)
+}
