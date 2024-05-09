@@ -353,6 +353,57 @@ class UUByteArrayTest
         }
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
+    @Test
+    fun test_uuReadUInt24()
+    {
+        val testInput = ArrayList<InputPair<Int>>()
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "FFFFFF", 0xFFFFFF))
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "000000", 0))
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "112233", 0x332211))
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "AABBCC", 0xCCBBAA))
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "000080", 0x800000))
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "FFFF7F", 0x7FFFFF))
+        testInput.add(InputPair(ByteOrder.LITTLE_ENDIAN, "1234AABBCCDD9876", 0xCCBBAA, 2))
+        testInput.add(InputPair(ByteOrder.BIG_ENDIAN, "1234AABBCCDD9876", 0xAABBCC, 2))
+
+        for (ti in testInput)
+        {
+            val actual: Int = ti.bytes().uuReadUInt24(ti.order, ti.index)
+            println("Input: ${ti.bytes().uuToHex()}, index: ${ti.index}, actual: ${actual.toHexString(HexFormat.UpperCase)}")
+
+            val expected = ti.expected
+            Assert.assertEquals(expected, actual)
+        }
+
+        try
+        {
+            // Index negative
+            try
+            {
+                byteArrayOf().uuReadUInt24(ByteOrder.nativeOrder(), -1)
+                Assert.fail("Should raise a ArrayIndexOutOfBoundsException")
+            }
+            catch (ignored: IndexOutOfBoundsException)
+            {
+            }
+
+            // Index greater than buffer.length
+            try
+            {
+                byteArrayOf().uuReadUInt24(ByteOrder.nativeOrder(), 2)
+                Assert.fail("Should raise a ArrayIndexOutOfBoundsException")
+            }
+            catch (ignored: IndexOutOfBoundsException)
+            {
+            }
+        }
+        catch (error: Exception)
+        {
+            Assert.fail("An exception escaped the negative test area: $error")
+        }
+    }
+
     @Test
     fun test_uuReadUInt32()
     {

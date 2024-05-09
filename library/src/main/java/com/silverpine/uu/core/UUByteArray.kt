@@ -2,11 +2,6 @@ package com.silverpine.uu.core
 
 import android.util.Base64
 import com.silverpine.uu.logging.UULog
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.charset.Charset
@@ -117,6 +112,7 @@ fun ByteArray.uuSubData(index: Int, count: Int): ByteArray?
 
 private const val UINT8_MASK = 0x000000FF
 private const val UINT16_MASK = 0x0000FFFF
+private const val UINT24_MASK = 0x00FFFFFFL
 private const val UINT32_MASK = 0xFFFFFFFFL
 private const val UINT64_MASK = -0x1L
 
@@ -151,6 +147,33 @@ fun ByteArray.uuReadUInt16(order: ByteOrder, index: Int): Int
 {
     val bb = ByteBuffer.wrap(this).order(order)
     return bb.getShort(index).toInt() and UINT16_MASK
+}
+
+/**
+ * Reads a UInt24 from a byte[] array.
+ *
+ * @param order the byte order to use for reading
+ * @param index the index to read from
+ *
+ * @throws IndexOutOfBoundsException if the index is out of bounds
+ * @throws NullPointerException if data is null
+ *
+ * @return UInt24 value at the index
+ */
+fun ByteArray.uuReadUInt24(order: ByteOrder, index: Int): Int
+{
+    return if (order == ByteOrder.LITTLE_ENDIAN)
+    {
+        uuReadUInt8(index) or
+            ((uuReadUInt8(index + 1) shl 8) and 0xFF00) or
+            ((uuReadUInt8(index + 2) shl 16) and 0xFF0000)
+    }
+    else
+    {
+        uuReadUInt8(index + 2) or
+            ((uuReadUInt8(index + 1) shl 8) and 0xFF00) or
+            ((uuReadUInt8(index + 0) shl 16) and 0xFF0000)
+    }
 }
 
 /**
