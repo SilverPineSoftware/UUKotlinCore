@@ -19,6 +19,7 @@ object UUDate
         const val hoursInOneDay : Long = 24
         const val daysInOneWeek : Long = 7
         const val millisInOneSecond : Long = 1000
+        const val millisInOneMinute : Long = millisInOneSecond * secondsInOneMinute
 
         const val secondsInOneHour : Long = secondsInOneMinute * minutesInOneHour
         const val secondsInOneDay : Long = secondsInOneHour * hoursInOneDay
