@@ -297,7 +297,7 @@ object UUResources
             val ctx = applicationContext
             val manager = ctx.packageManager
             val info = manager.getPackageInfo(ctx.packageName, 0)
-            return info.versionName
+            return info.versionName ?: "unknown"
         }
         catch (ex: Exception)
         {

@@ -30,7 +30,7 @@ fun Context.uuAppVersion(): String
     {
         val manager = packageManager
         val info = manager.getPackageInfo(packageName, 0)
-        return info.versionName
+        return info.versionName ?: "unknown"
     }
     catch (ex: Exception)
     {

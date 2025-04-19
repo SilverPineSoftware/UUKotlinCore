@@ -59,4 +59,9 @@ open class CustomSerializersModel
                 updatedAt == o.updatedAt
                 )
     }
+
+    override fun hashCode(): Int
+    {
+        return javaClass.hashCode()
+    }
 }

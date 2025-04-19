@@ -23,7 +23,6 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -41,7 +40,10 @@ class UUJsonTest
             UUJson.init(UUKotlinXJsonProvider(Json()
             {
                 ignoreUnknownKeys = true
+                explicitNulls = false
+                encodeDefaults = true
                 namingStrategy = JsonNamingStrategy.SnakeCase
+                coerceInputValues = true
             }))
         }
 
@@ -179,7 +181,7 @@ class UUJsonTest
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
         Assert.assertEquals(TestEnumCamelCase.Two, check.customOne)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
-        Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
+        Assert.assertEquals(TestEnumCamelCase.Three, check!!.customThree)
         Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
     }
 

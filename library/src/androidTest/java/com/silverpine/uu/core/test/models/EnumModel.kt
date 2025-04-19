@@ -103,4 +103,8 @@ open class EnumModel
                 customFour == o.customFour
         )
     }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
 }
