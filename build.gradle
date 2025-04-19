@@ -4,6 +4,7 @@ buildscript {
     ext.gradle_version = '8.9.1'
     ext.kotlin_version = '2.1.20'
     ext.uu_test_version = '0.0.4'
+    ext.java_version = JavaVersion.VERSION_21
 }
 
 plugins {
