@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Set up JDK 21
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: 21
+          distribution: ${{ vars.UU_JAVA_DISTRIBUTION }}
+          java-version: ${{ vars.UU_JAVA_VERSION }}
       - name: Update Version
         run: ./scripts/update_version.sh
       - name: Assemble Release
