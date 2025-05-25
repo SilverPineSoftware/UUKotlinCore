@@ -80,4 +80,19 @@ open class PrimitiveListModel
                 Objects.equals(aULong, o.aULong)
         )
     }
+
+    override fun hashCode(): Int {
+        var result = aBool.hashCode()
+        result = 31 * result + aByte.hashCode()
+        result = 31 * result + aShort.hashCode()
+        result = 31 * result + anInt.hashCode()
+        result = 31 * result + aLong.hashCode()
+        result = 31 * result + aFloat.hashCode()
+        result = 31 * result + aDouble.hashCode()
+        result = 31 * result + aUByte.hashCode()
+        result = 31 * result + aUShort.hashCode()
+        result = 31 * result + aUInt.hashCode()
+        result = 31 * result + aULong.hashCode()
+        return result
+    }
 }

@@ -1,5 +1,6 @@
 package com.silverpine.uu.core.test
 
+import androidx.annotation.Keep
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.silverpine.uu.core.UUJson
 import com.silverpine.uu.core.UUKotlinXJsonProvider
@@ -13,7 +14,11 @@ import com.silverpine.uu.core.test.models.PrimitiveModel
 import com.silverpine.uu.core.test.models.TestEnumCamelCase
 import com.silverpine.uu.core.test.models.TestEnumSnakeCase
 import com.silverpine.uu.logging.UULog
+import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
 import org.junit.AfterClass
@@ -238,5 +243,89 @@ class UUJsonTest
             return UUJson.fromString(string, T::class.java)
         }
     }
+
+
+    @Keep
+    @Serializable
+    class SerializableHashMap: HashMap<String, String>()
+
+
+    @Test
+    fun test_1000_hashMapTest()
+    {
+        val input = """
+            {
+              "06FD" : "ESS Embedded System Solutions Inc.",
+              "03BA" : "Maxscend Microelectronics Company Limited"
+            }
+        """.trimIndent()
+
+        //val obj: HashMap<String, String> = hashMapOf()
+
+        @Suppress("UNCHECKED_CAST")
+        val vendorMap = UUJson.fromString(input, SerializableHashMap::class.java) as? Map<String, String>
+        Assert.assertNotNull(vendorMap)
+
+        //Assert.assertEquals("ESS Embedded System Solutions Inc.", vendorMap["06FD"])
+        //Assert.assertEquals("Maxscend Microelectronics Company Limited", vendorMap["03BA"])
+    }
+
+    @Test
+    fun test_1001_hashMapTest()
+    {
+        val input = """
+            {
+              "06FD" : "ESS Embedded System Solutions Inc.",
+              "03BA" : "Maxscend Microelectronics Company Limited"
+            }
+        """.trimIndent()
+
+        // 2) create a Json instance; you can customize settings here if needed
+        val json = Json {
+            ignoreUnknownKeys = true    // if there might be extra fields
+        }
+
+        // 3) decode directly to a Map<String, String>
+        val vendorMap: Map<String, String> = json.decodeFromString(input)
+
+        // 4) use it!
+        vendorMap.forEach { (id, name) ->
+            println("Vendor 0x$id = $name")
+        }
+
+
+
+        //val strategy = serializer(objectClass) as DeserializationStrategy<T>
+    }
+
+    @Test
+    fun test_1002_hashMapTest()
+    {
+        // 1. A strategy for Map<String,String>:
+        val mapStrategy: DeserializationStrategy<Map<String, String>> =
+            MapSerializer(String.serializer(), String.serializer())
+
+        // 2. Then you can feed that into your UUJson (or Json) call:
+                val input = """
+            {
+              "06FD" : "ESS Embedded System Solutions Inc.",
+              "03BA" : "Maxscend Microelectronics Company Limited"
+            }
+        """.trimIndent()
+
+        // 2) create a Json instance; you can customize settings here if needed
+        val json = Json {
+            ignoreUnknownKeys = true    // if there might be extra fields
+        }
+        @Suppress("UNCHECKED_CAST")
+        val vendorMap: Map<String, String> = json.decodeFromString(mapStrategy, input)
+
+        vendorMap.forEach { (id, name) ->
+            println("Vendor 0x$id = $name")
+        }
+
+// or
+    }
+
 }
 

@@ -30,8 +30,7 @@ class UUSerializableTests
         Assert.assertNotNull(deserialized)
 
         Assert.assertEquals(b.anInt, deserialized!!.anInt)
-        Assert.assertEquals(b.aString, deserialized!!.aString)
-
+        Assert.assertEquals(b.aString, deserialized.aString)
     }
 
 }

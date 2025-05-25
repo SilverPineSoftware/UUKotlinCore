@@ -78,4 +78,19 @@ open class PrimitiveArraysModel
                 aULong.contentEquals(aULong)
         )
     }
+
+    override fun hashCode(): Int {
+        var result = aBool.contentHashCode()
+        result = 31 * result + aByte.contentHashCode()
+        result = 31 * result + aShort.contentHashCode()
+        result = 31 * result + anInt.contentHashCode()
+        result = 31 * result + aLong.contentHashCode()
+        result = 31 * result + aFloat.contentHashCode()
+        result = 31 * result + aDouble.contentHashCode()
+        result = 31 * result + aUByte.contentHashCode()
+        result = 31 * result + aUShort.contentHashCode()
+        result = 31 * result + aUInt.contentHashCode()
+        result = 31 * result + aULong.contentHashCode()
+        return result
+    }
 }

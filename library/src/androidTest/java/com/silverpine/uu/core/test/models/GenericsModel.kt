@@ -20,6 +20,12 @@ open class GenericsBaseModel<T: Any>
                 payload == o.payload
         )
     }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + (payload?.hashCode() ?: 0)
+        return result
+    }
 }
 
 @Keep
@@ -69,5 +75,11 @@ open class GenericsConcreteModel: GenericsBaseModel<String>()
 
         return (super.equals(other) &&
                 count == o.count)
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + count
+        return result
     }
 }

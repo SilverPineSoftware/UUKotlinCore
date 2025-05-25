@@ -96,4 +96,19 @@ open class NullsModel
                 aULong == o.aULong
                 )
     }
+
+    override fun hashCode(): Int {
+        var result = aBool?.hashCode() ?: 0
+        result = 31 * result + (aByte ?: 0)
+        result = 31 * result + (aShort ?: 0)
+        result = 31 * result + (anInt ?: 0)
+        result = 31 * result + (aLong?.hashCode() ?: 0)
+        result = 31 * result + (aFloat?.hashCode() ?: 0)
+        result = 31 * result + (aDouble?.hashCode() ?: 0)
+        result = 31 * result + (aUByte?.hashCode() ?: 0)
+        result = 31 * result + (aUShort?.hashCode() ?: 0)
+        result = 31 * result + (aUInt?.hashCode() ?: 0)
+        result = 31 * result + (aULong?.hashCode() ?: 0)
+        return result
+    }
 }

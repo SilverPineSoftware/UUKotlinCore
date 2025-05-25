@@ -55,7 +55,7 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.9.1'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.security:security-crypto:1.0.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "com.silverpine.uu:uu-test-ktx:${uu_test_version}"
