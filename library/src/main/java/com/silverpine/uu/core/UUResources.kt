@@ -307,6 +307,25 @@ object UUResources
         return "unknown"
     }
 
+    fun getAppBuild(): String
+    {
+        requireResources()
+
+        try
+        {
+            val ctx = applicationContext
+            val manager = ctx.packageManager
+            val info = manager.getPackageInfo(ctx.packageName, 0)
+            return info.longVersionCode.toString(10)
+        }
+        catch (ex: Exception)
+        {
+            UULog.e(javaClass, "getAppBuild", "", ex)
+        }
+
+        return "unknown"
+    }
+
     fun getAppBundleId(): String
     {
         requireResources()
