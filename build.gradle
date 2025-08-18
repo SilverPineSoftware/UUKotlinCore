@@ -4,14 +4,15 @@ buildscript {
     ext.gradle_version = '8.10.1'
     ext.kotlin_version = '2.1.20'
     ext.uu_test_version = '0.0.7'
+    ext.nexus_version = '2.0.0'
     ext.java_version = JavaVersion.VERSION_17
 }
 
 plugins {
-    id 'com.android.application' version '8.10.1' apply false
-    id 'com.android.library' version '8.10.1' apply false
+    id 'com.android.application' version "${gradle_version}" apply false
+    id 'com.android.library' version "${gradle_version}" apply false
     id 'org.jetbrains.kotlin.android' version "${kotlin_version}" apply false
-    id 'io.github.gradle-nexus.publish-plugin' version '2.0.0' apply true
+    id 'io.github.gradle-nexus.publish-plugin' version "${nexus_version}" apply true
     id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlin_version}" apply true
 }
 
