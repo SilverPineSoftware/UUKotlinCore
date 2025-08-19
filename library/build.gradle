@@ -15,40 +15,7 @@ ext {
     SCM_MODULE_NAME = 'UUKotlinCore'
 }
 
-apply from: "../uu-build-common.gradle"
-
-android {
-    defaultConfig {
-        minSdkVersion min_sdk
-        compileSdk target_sdk
-        targetSdkVersion target_sdk
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility java_version
-        targetCompatibility java_version
-    }
-
-    kotlinOptions {
-        jvmTarget = java_version
-    }
-
-    buildFeatures {
-        buildConfig true
-    }
-
-    namespace 'com.silverpine.uu.core'
-}
+apply from: "${uu_build_common}/uu-build-common.gradle"
 
 dependencies {
 

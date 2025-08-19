@@ -1,19 +1,24 @@
 buildscript {
-    ext.min_sdk = 26
-    ext.target_sdk = 36
-    ext.gradle_version = '8.10.1'
-    ext.kotlin_version = '2.1.20'
+    ext.uu_namespace = 'com.silverpine.uu.core'
+    ext.uu_min_sdk = 26
+    ext.uu_target_sdk = 36
+    ext.uu_gradle_version = '8.10.1'
+    ext.uu_kotlin_version = '2.1.20'
+    ext.uu_nexus_version = '2.0.0'
     ext.uu_test_version = '0.0.7'
-    ext.nexus_version = '2.0.0'
-    ext.java_version = JavaVersion.VERSION_17
+    ext.uu_java_version = JavaVersion.VERSION_17
+    ext.uu_build_common_version = '0.0.6'
+    ext.uu_build_common_url = 'https://raw.githubusercontent.com/SilverPineSoftware/UUKotlinBuild'
+    ext.uu_build_common = "${uu_build_common_url}/${uu_build_common_version}"
 }
+
 
 plugins {
-    id 'com.android.application' version "${gradle_version}" apply false
-    id 'com.android.library' version "${gradle_version}" apply false
-    id 'org.jetbrains.kotlin.android' version "${kotlin_version}" apply false
-    id 'io.github.gradle-nexus.publish-plugin' version "${nexus_version}" apply true
-    id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlin_version}" apply true
+    id 'com.android.application' version "${uu_gradle_version}" apply false
+    id 'com.android.library' version "${uu_gradle_version}" apply false
+    id 'org.jetbrains.kotlin.android' version "${uu_kotlin_version}" apply false
+    id 'io.github.gradle-nexus.publish-plugin' version "${uu_nexus_version}" apply true
+    id 'org.jetbrains.kotlin.plugin.serialization' version "${uu_kotlin_version}" apply true
 }
 
-apply from: "./publish-common.gradle"
+apply from: "${uu_build_common}/uu-publish-common.gradle"

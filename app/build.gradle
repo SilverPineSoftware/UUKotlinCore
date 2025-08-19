@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion target_sdk
+    compileSdkVersion uu_target_sdk
 
     defaultConfig {
         applicationId "com.silverpine.uu.sample.core"
-        minSdkVersion min_sdk
-        targetSdkVersion target_sdk
+        minSdkVersion uu_min_sdk
+        targetSdkVersion uu_target_sdk
         versionCode 1
         versionName "1.0"
 
@@ -24,12 +24,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility java_version
-        targetCompatibility java_version
+        sourceCompatibility uu_java_version
+        targetCompatibility uu_java_version
     }
 
     kotlinOptions {
-        jvmTarget = java_version
+        jvmTarget = uu_java_version
     }
 
     namespace 'com.silverpine.uu.sample.core'
