@@ -9,13 +9,7 @@ plugins {
     id 'kotlinx-serialization'
 }
 
-ext {
-    PUBLISH_ARTIFACT_ID = 'uu-core-ktx'
-    PUBLISH_DESCRIPTION = 'Useful Utilities Core'
-    SCM_MODULE_NAME = 'UUKotlinCore'
-}
-
-apply from: "${uu_build_common}/uu-build-common.gradle"
+apply from: "${uu_build_common}/uu-build-library-common.gradle"
 
 dependencies {
 

@@ -3,37 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-android {
-    compileSdkVersion uu_target_sdk
-
-    defaultConfig {
-        applicationId "com.silverpine.uu.sample.core"
-        minSdkVersion uu_min_sdk
-        targetSdkVersion uu_target_sdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility uu_java_version
-        targetCompatibility uu_java_version
-    }
-
-    kotlinOptions {
-        jvmTarget = uu_java_version
-    }
-
-    namespace 'com.silverpine.uu.sample.core'
-}
+apply from: "${uu_build_common}/uu-build-library-app-common.gradle"
 
 dependencies {
 
