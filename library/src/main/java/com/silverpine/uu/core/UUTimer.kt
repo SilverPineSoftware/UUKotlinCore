@@ -1,7 +1,28 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
-import java.util.*
+
+interface UUTimerThread
+{
+    fun postDelayed(interval: Long, runnable: Runnable)
+    fun remove(runnable: Runnable)
+}
+
+class UUWorkerTimerThread(name: String): UUTimerThread
+{
+    private val workerThread = UUWorkerThread(name)
+
+    override fun postDelayed(interval: Long, runnable: Runnable)
+    {
+        workerThread.postDelayed(interval, runnable)
+    }
+
+    override fun remove(runnable: Runnable)
+    {
+        workerThread.remove(runnable)
+    }
+
+}
 
 /**
  * A simple named timer that wraps Timer and TimerTask
@@ -113,7 +134,7 @@ class UUTimer(
     companion object
     {
         private val theActiveTimers = HashMap<String, UUTimer>()
-        private val workerThread = UUWorkerThread("UUTimer")
+        var workerThread: UUTimerThread = UUWorkerTimerThread("UUTimer")
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // Private Class Methods
