@@ -6,7 +6,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class UUNumberTest
+class UUIntTest
 {
     @Test
     fun test_uuToBcd8()

@@ -25,3 +25,25 @@ fun Int.uuIsBitSet(mask: Int): Boolean
 {
     return this and mask == mask
 }
+
+
+fun Int.uuToBcd8(): Int?
+{
+    if (this < 0 || this > 99)
+    {
+        return null
+    }
+
+    val highNibble = this / 10
+    val lowNibble = this % 10
+
+    return (highNibble shl 4) or lowNibble
+}
+
+fun Int.uuFromBcd8(): Int
+{
+    val n = this.toInt() and 0xFF
+    val highNibble = (n and 0xF0) shr 4
+    val lowNibble = n and 0x0F
+    return highNibble * 10 + lowNibble
+}
