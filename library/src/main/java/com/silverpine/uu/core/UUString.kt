@@ -120,15 +120,15 @@ fun String.uuToBase64Bytes(base64Options: Int = Base64.NO_WRAP): ByteArray?
     }
 }
 
-fun String.uuDecodeFromBase64ToUtf8String(base64options: Int = Base64.NO_WRAP): String
+fun String.uuDecodeFromBase64ToUtf8String(base64options: Int = Base64.NO_WRAP): String?
 {
     return uuFromBase64ToString(base64options, Charsets.UTF_8)
 }
 
-fun String.uuFromBase64ToString(base64options: Int, encoding: Charset): String
+fun String.uuFromBase64ToString(base64options: Int, encoding: Charset): String?
 {
-    val base64 = uuToBase64Bytes(base64options) ?: return ""
-    return base64.uuString(encoding)
+    val base64 = uuToBase64Bytes(base64options) ?: return null
+    return base64.uuString(encoding).getOrNull()
 }
 
 /**
