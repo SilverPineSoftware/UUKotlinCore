@@ -1432,3 +1432,52 @@ fun ByteArray.uuBcd32(index: Int): Result<Int>
 
     return Result.success(data1 * 10000 + data2)
 }
+
+/**
+ * Securely resets the contents of this [ByteArray] by overwriting
+ * every element with zero (`0`).
+ *
+ * Use this to clear sensitive material (e.g., cryptographic keys or
+ * passwords) from memory once it is no longer needed. This helps
+ * reduce the chance of secrets leaking if memory is later reused or
+ * inspected (e.g., via heap dumps).
+ *
+ * ⚠️ Note: On the JVM/Android, memory management is handled by the
+ * garbage collector and the JIT compiler may make optimizations.
+ * While `uuReset()` will overwrite the array in place, it cannot
+ * guarantee that:
+ *  - the JVM has not already copied the array elsewhere, or
+ *  - the compiler/runtime won’t optimize away the overwrite.
+ *
+ * For most applications this is still considered a best-effort
+ * practice and is commonly used in security-sensitive code.
+ *
+ * Example:
+ * ```
+ * val key = ByteArray(32) { it.toByte() }
+ * // ... use key for encryption ...
+ * key.uuReset() // key now contains only zeros
+ * ```
+ */
+fun ByteArray.uuReset()
+{
+    uuSetAll(0)
+}
+
+/**
+ * Overwrites every element of this [ByteArray] with the given [value].
+ *
+ * Useful for clearing sensitive material (e.g., cryptographic keys or passwords)
+ * once it is no longer needed.
+ *
+ * Example:
+ * ```
+ * val key = ByteArray(32) { it.toByte() }
+ * // ... use key ...
+ * key.uuSetAll(0xFF.toByte()) // all bytes set to 0xFF
+ * ```
+ */
+fun ByteArray.uuSetAll(value: Byte)
+{
+    fill(value)
+}

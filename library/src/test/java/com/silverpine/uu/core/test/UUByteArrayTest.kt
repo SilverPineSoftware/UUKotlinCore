@@ -19,6 +19,8 @@ import com.silverpine.uu.core.uuReadUInt24
 import com.silverpine.uu.core.uuReadUInt32
 import com.silverpine.uu.core.uuReadUInt64
 import com.silverpine.uu.core.uuReadUInt8
+import com.silverpine.uu.core.uuReset
+import com.silverpine.uu.core.uuSetAll
 import com.silverpine.uu.core.uuString
 import com.silverpine.uu.core.uuSubData
 import com.silverpine.uu.core.uuToHexData
@@ -36,6 +38,7 @@ import org.junit.Assert
 import org.junit.Test
 import java.nio.ByteOrder
 import java.util.Base64
+import kotlin.random.Random
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -1095,5 +1098,39 @@ class UUByteArrayTest
                 assertNull(actual)
             }
         }
+    }
+
+    @Test
+    fun uuReset_overwritesAllBytesWithZero()
+    {
+        val buf = ByteArray(64) { (it + 1).toByte() }
+        buf.uuReset()
+        assertTrue(buf.all { it == 0.toByte() })
+    }
+
+    @Test
+    fun uuReset_emptyArray_noop()
+    {
+        val buf = ByteArray(0)
+        buf.uuReset()
+        assertEquals(0, buf.size)
+    }
+
+    @Test
+    fun uuSetAll_setsValue_everywhere()
+    {
+        val value = 0xAB.toByte()
+        val buf = ByteArray(16) { Random.nextInt(0, 256).toByte() }
+        buf.uuSetAll(value)
+        assertTrue(buf.all { it == value })
+    }
+
+    @Test
+    fun uuSetAll_keepsLength()
+    {
+        val buf = ByteArray(10) { it.toByte() }
+        val len = buf.size
+        buf.uuSetAll(0x01)
+        assertEquals(len, buf.size)
     }
 }
