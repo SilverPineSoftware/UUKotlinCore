@@ -1481,3 +1481,72 @@ fun ByteArray.uuSetAll(value: Byte)
 {
     fill(value)
 }
+
+/**
+ * Returns a new [ByteArray] whose length is padded with `0x00` bytes
+ * up to the next multiple of [blockSize].
+ *
+ * If this array's length is already a multiple of [blockSize],
+ * the original contents are copied and returned unchanged.
+ *
+ * Example:
+ * ```
+ * val data = byteArrayOf(1, 2, 3)
+ * val padded = data.uuPadded(toBlockSize = 4)
+ * // padded.size == 4, padded == [1, 2, 3, 0]
+ * ```
+ *
+ * @param blockSize The block size to pad to (must be > 0).
+ * @return A new [ByteArray] whose length is a multiple of [blockSize].
+ */
+fun ByteArray.uuPadded(blockSize: Int): ByteArray
+{
+    if (blockSize <= 0)
+    {
+        return copyOf()
+    }
+
+    val remainder = size % blockSize
+    if (remainder == 0)
+    {
+        return copyOf()
+    }
+
+    val padCount = blockSize - remainder
+    return copyOf(size + padCount) // pads with zeros
+}
+
+/**
+ * Returns a new [ByteArray] where each byte is the XOR of the
+ * corresponding bytes in this array and [other].
+ *
+ * Both arrays must have the same length. If lengths differ,
+ * the original array is copied and returned unchanged.
+ *
+ * Example:
+ * ```
+ * val a = byteArrayOf(0x0F, 0xF0.toByte())
+ * val b = byteArrayOf(0xFF.toByte(), 0x0F)
+ * val result = a.uuXor(b)
+ * // result == [0xF0.toByte(), 0xFF.toByte()]
+ * ```
+ *
+ * @param other The [ByteArray] to XOR against.
+ * @return A new [ByteArray] containing the XOR result, or a copy of
+ *         this array if lengths differ.
+ */
+fun ByteArray.uuXor(other: ByteArray): ByteArray
+{
+    if (size != other.size)
+    {
+        return copyOf()
+    }
+
+    val out = ByteArray(size)
+    for (i in indices)
+    {
+        out[i] = (this[i].toInt() xor other[i].toInt()).toByte()
+    }
+
+    return out
+}

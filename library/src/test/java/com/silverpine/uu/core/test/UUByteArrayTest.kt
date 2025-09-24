@@ -10,6 +10,7 @@ import com.silverpine.uu.core.uuBcd32
 import com.silverpine.uu.core.uuBcd8
 import com.silverpine.uu.core.uuHighNibble
 import com.silverpine.uu.core.uuLowNibble
+import com.silverpine.uu.core.uuPadded
 import com.silverpine.uu.core.uuReadInt16
 import com.silverpine.uu.core.uuReadInt32
 import com.silverpine.uu.core.uuReadInt64
@@ -34,16 +35,19 @@ import com.silverpine.uu.core.uuWriteUInt16
 import com.silverpine.uu.core.uuWriteUInt32
 import com.silverpine.uu.core.uuWriteUInt64
 import com.silverpine.uu.core.uuWriteUInt8
+import com.silverpine.uu.core.uuXor
 import org.junit.Assert
 import org.junit.Test
 import java.nio.ByteOrder
 import java.util.Base64
 import kotlin.random.Random
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.junit.JUnitAsserter.assertNotEquals
+import org.junit.Assert.assertArrayEquals
 
 class UUByteArrayTest
 {
@@ -1132,5 +1136,122 @@ class UUByteArrayTest
         val len = buf.size
         buf.uuSetAll(0x01)
         assertEquals(len, buf.size)
+    }
+
+    // ---------- uuPadded(toBlockSize) ----------
+
+    @Test
+    fun uuPadded_whenAlreadyMultiple_returnsCopyWithSameBytes()
+    {
+        val src = byteArrayOf(0x01, 0x02, 0x03, 0x04)
+        val padded = src.uuPadded(blockSize = 4)
+
+        // content unchanged
+        assertArrayEquals(src, padded)
+        // defensive copy (ok if this is equal but distinct instance)
+        assertFalse(src === padded, "Should return a distinct instance")
+    }
+
+    @Test
+    fun uuPadded_whenNeedsPadding_appendsZerosToNextMultiple()
+    {
+        val src = byteArrayOf(0x01, 0x02, 0x03) // len=3
+        val padded = src.uuPadded(blockSize = 4)
+
+        assertEquals(4, padded.size)
+        assertArrayEquals(byteArrayOf(0x01, 0x02, 0x03, 0x00), padded)
+    }
+
+    @Test
+    fun uuPadded_withLargerBlock_padsToNearestMultiple()
+    {
+        val src = byteArrayOf(0x10, 0x20, 0x30, 0x40, 0x50) // len=5
+        val padded = src.uuPadded(blockSize = 8)
+
+        assertEquals(8, padded.size)
+        assertArrayEquals(
+            byteArrayOf(0x10, 0x20, 0x30, 0x40, 0x50, 0x00, 0x00, 0x00),
+            padded
+        )
+    }
+
+    @Test
+    fun uuPadded_emptyInput_returnsEmptyOrSizedProperly()
+    {
+        val empty = ByteArray(0)
+
+        val b1 = empty.uuPadded(blockSize = 4)
+        assertEquals(0, b1.size) // already multiple (0 % 4 == 0), returns copyOf()
+
+        val b2 = empty.uuPadded(blockSize = 1)
+        assertEquals(0, b2.size)
+    }
+
+    @Test
+    fun uuPadded_blockSizeZero_returnsSame()
+    {
+        val input = byteArrayOf(0x01)
+        val b1 = input.uuPadded(blockSize = 0)
+        assertArrayEquals(b1, input)
+    }
+
+    @Test
+    fun uuPadded_blockSizeNegative_returnsSame()
+    {
+        val input = byteArrayOf(0x01)
+        val b1 = input.uuPadded(blockSize = -8)
+        assertArrayEquals(b1, input)
+    }
+
+    // ---------- uuXor(other) ----------
+
+    @Test
+    fun uuXor_sameLength_returnsBitwiseXor()
+    {
+        val a = byteArrayOf(0x0F, 0xF0.toByte(), 0xAA.toByte(), 0x55)
+        val b = byteArrayOf(0xF0.toByte(), 0x0F, 0xFF.toByte(), 0x00)
+        val expected = byteArrayOf(0xFF.toByte(), 0xFF.toByte(), 0x55, 0x55)
+
+        val result = a.uuXor(b)
+        assertArrayEquals(expected, result)
+        // a and b remain unchanged
+        assertArrayEquals(byteArrayOf(0x0F, 0xF0.toByte(), 0xAA.toByte(), 0x55), a)
+        assertArrayEquals(byteArrayOf(0xF0.toByte(), 0x0F, 0xFF.toByte(), 0x00), b)
+    }
+
+    @Test
+    fun uuXor_mismatchedLengths_returnsCopyOfOriginalUnchanged()
+    {
+        val a = byteArrayOf(0x01, 0x02, 0x03)
+        val b = byteArrayOf(0xFF.toByte(), 0xFF.toByte()) // shorter
+
+        val result = a.uuXor(b)
+
+        // Should be a copy of 'a' per implementation
+        assertArrayEquals(a, result)
+        assertFalse(a === result, "Should be a distinct instance")
+    }
+
+    @Test
+    fun uuXor_emptyArrays_sameLength_returnsEmpty()
+    {
+        val a = ByteArray(0)
+        val b = ByteArray(0)
+
+        val result = a.uuXor(b)
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun uuXor_valuesAroundSignedBoundary()
+    {
+        // Ensure XOR works across negative (signed) byte values as well
+        val a = byteArrayOf(0x80.toByte(), 0x7F, 0x00, 0xFF.toByte())
+        val b = byteArrayOf(0x01, 0x01, 0xFF.toByte(), 0xFF.toByte())
+        // 0x80 ^ 0x01 = 0x81; 0x7F ^ 0x01 = 0x7E; 0x00 ^ 0xFF = 0xFF; 0xFF ^ 0xFF = 0x00
+        val expected = byteArrayOf(0x81.toByte(), 0x7E, 0xFF.toByte(), 0x00)
+
+        val result = a.uuXor(b)
+        assertArrayEquals(expected, result)
     }
 }
