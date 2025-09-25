@@ -1550,3 +1550,30 @@ fun ByteArray.uuXor(other: ByteArray): ByteArray
 
     return out
 }
+
+/**
+ * Splits this [ByteArray] into a list of chunks, each up to [chunkSize] bytes.
+ *
+ * @param chunkSize the maximum size of each chunk (must be > 0).
+ * @return a list of [ByteArray] chunks. The last chunk may be shorter if not divisible.
+ */
+fun ByteArray.uuSlice(chunkSize: Int): List<ByteArray>
+{
+    if (chunkSize <= 0)
+    {
+        return listOf()
+    }
+
+    val chunks = mutableListOf<ByteArray>()
+    var index = 0
+
+    while (index < this.size)
+    {
+        val end = minOf(index + chunkSize, this.size)
+        val chunk = this.copyOfRange(index, end)
+        chunks.add(chunk)
+        index += chunkSize
+    }
+
+    return chunks
+}
