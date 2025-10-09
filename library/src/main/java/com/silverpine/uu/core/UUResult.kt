@@ -107,6 +107,18 @@ sealed class UUResult<out T>
             is Failure -> onFailure(error)
         }
 
+    /**
+     * Returns the success value if this is [Success], or the result of [onFailure] if this is [Failure].
+     *
+     * @param onFailure called when this is [Failure] to produce a fallback value.
+     * @return the success value or the fallback.
+     */
+    inline fun getOrElse(onFailure: (UUError) -> @UnsafeVariance T): T = when (this)
+    {
+        is Success -> value
+        is Failure -> onFailure(error)
+    }
+
     companion object
     {
         /**
