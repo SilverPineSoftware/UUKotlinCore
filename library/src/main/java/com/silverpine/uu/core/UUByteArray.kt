@@ -1557,7 +1557,7 @@ fun ByteArray.uuXor(other: ByteArray): ByteArray
  * @param chunkSize the maximum size of each chunk (must be > 0).
  * @return a list of [ByteArray] chunks. The last chunk may be shorter if not divisible.
  */
-fun ByteArray.uuSlice(chunkSize: Int): List<ByteArray>
+fun ByteArray.uuSplitIntoChunks(chunkSize: Int): List<ByteArray>
 {
     if (chunkSize <= 0)
     {

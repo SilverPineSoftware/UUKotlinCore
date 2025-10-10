@@ -23,6 +23,7 @@ import com.silverpine.uu.core.uuReadUInt8
 import com.silverpine.uu.core.uuReset
 import com.silverpine.uu.core.uuSetAll
 import com.silverpine.uu.core.uuSlice
+import com.silverpine.uu.core.uuSplitIntoChunks
 import com.silverpine.uu.core.uuString
 import com.silverpine.uu.core.uuSubData
 import com.silverpine.uu.core.uuToHexData
@@ -1258,10 +1259,10 @@ class UUByteArrayTest
     }
 
     @Test
-    fun testSliceExactMultiple()
+    fun testSplitIntoChunksIntoChunksExactMultiple()
     {
         val data = byteArrayOf(1, 2, 3, 4, 5, 6)
-        val chunks = data.uuSlice(2)
+        val chunks = data.uuSplitIntoChunks(2)
 
         assertEquals(3, chunks.size)
         assertArrayEquals(byteArrayOf(1, 2), chunks[0])
@@ -1270,10 +1271,10 @@ class UUByteArrayTest
     }
 
     @Test
-    fun testSliceNonMultiple()
+    fun testSplitIntoChunksNonMultiple()
     {
         val data = byteArrayOf(10, 20, 30, 40, 50)
-        val chunks = data.uuSlice(2)
+        val chunks = data.uuSplitIntoChunks(2)
 
         assertEquals(3, chunks.size)
         assertArrayEquals(byteArrayOf(10, 20), chunks[0])
@@ -1282,34 +1283,34 @@ class UUByteArrayTest
     }
 
     @Test
-    fun testSliceLargerThanArray()
+    fun testSplitIntoChunksLargerThanArray()
     {
         val data = byteArrayOf(7, 8, 9)
-        val chunks = data.uuSlice(10)
+        val chunks = data.uuSplitIntoChunks(10)
 
         assertEquals(1, chunks.size)
         assertArrayEquals(byteArrayOf(7, 8, 9), chunks[0])
     }
 
     @Test
-    fun testSliceInvalidChunkSize()
+    fun testSplitIntoChunksInvalidChunkSize()
     {
         val data = byteArrayOf(1, 2, 3)
-        val chunks = data.uuSlice(0) // should throw
+        val chunks = data.uuSplitIntoChunks(0) // should throw
         assertEquals(0, chunks.size)
     }
 
     @Test
-    fun testSliceEmptyArray()
+    fun testSplitIntoChunksEmptyArray()
     {
         val data = byteArrayOf()
-        val chunks = data.uuSlice(5)
+        val chunks = data.uuSplitIntoChunks(5)
 
         assertTrue(chunks.isEmpty())
     }
 
     @Test
-    fun testUuSlice()
+    fun testSplitIntoChunks()
     {
         // Each test case: inputHex, chunkSize, expected hex string chunks
         val testData = listOf(
@@ -1322,7 +1323,7 @@ class UUByteArrayTest
         {
             val input = UUAssert.unwrap(hex.uuToHexData())
 
-            val actualChunks = input.uuSlice(chunkSize)
+            val actualChunks = input.uuSplitIntoChunks(chunkSize)
             val actualHex = actualChunks.map { it.uuToHex() }
 
             assertEquals(expectedHexChunks, actualHex, "Chunk mismatch for input=$hex size=$chunkSize", )
