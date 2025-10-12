@@ -2,13 +2,12 @@ package com.silverpine.uu.core.test
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.silverpine.uu.core.UUSecurePrefs
+import com.silverpine.uu.core.security.UUSecurePrefs
 import com.silverpine.uu.core.uuToHexData
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.FixMethodOrder

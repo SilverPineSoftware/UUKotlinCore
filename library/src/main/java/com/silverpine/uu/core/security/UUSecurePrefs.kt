@@ -1,29 +1,18 @@
-package com.silverpine.uu.core
+package com.silverpine.uu.core.security
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
+import com.silverpine.uu.core.uuToHex
+import com.silverpine.uu.core.uuToHexData
 
 object UUSecurePrefs
 {
     private lateinit var reader: SharedPreferences
     private lateinit var writer: SharedPreferences.Editor
 
-    fun init(context: Context, name: String)
+    fun init(context: Context, name: String = "com.silverpine.uu.core.security.UUSecurePrefs")
     {
-        // Step 1: Create or retrieve the Master Key for encryption/decryption
-        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-
-        // Step 2: Initialize/open an instance of EncryptedSharedPreferences
-        reader = EncryptedSharedPreferences.create(
-            name,
-            masterKeyAlias,
-            context,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-
+        reader = UUEncryptedSharedPreferences(context.getSharedPreferences(name, Context.MODE_PRIVATE))
         writer = reader.edit()
     }
 
