@@ -10,7 +10,7 @@ object UUSecurePrefs
     private lateinit var reader: SharedPreferences
     private lateinit var writer: SharedPreferences.Editor
 
-    fun init(context: Context, name: String = "com.silverpine.uu.core.security.UUSecurePrefs")
+    fun init(context: Context, name: String = "${context.packageName}-UUSecurePrefs")
     {
         reader = UUEncryptedSharedPreferences(context.getSharedPreferences(name, Context.MODE_PRIVATE))
         writer = reader.edit()
