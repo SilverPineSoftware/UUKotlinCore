@@ -33,7 +33,7 @@ object UUCrypto
 {
     private const val IV_TAG_SIZE_BITS = 128
     private const val CRYPTO_TRANSFORMATION = "AES/GCM/NoPadding"
-    private const val KEY_ALIAS = "com.silverpine.uu.core.UUCrypto"
+    private const val KEY_ALIAS = "com.silverpine.uu.core.security.UUCrypto"
 
     var secretKeyProvider: UUSecretKeyProvider = UUSecretKey
 

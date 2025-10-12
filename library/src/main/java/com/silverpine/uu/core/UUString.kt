@@ -1,9 +1,9 @@
 package com.silverpine.uu.core
 
-import android.util.Base64
 import com.silverpine.uu.logging.UULog
 import java.nio.charset.Charset
-import java.util.*
+import java.util.Base64
+import java.util.Locale
 import java.util.regex.Pattern
 
 fun String?.uuSafeString(): String
@@ -100,35 +100,41 @@ fun String.uuAsciiByteArray(): ByteArray?
     return uuToByteArray(Charsets.US_ASCII)
 }
 
-
-
 /**
- * Safelye decodes a base 64 into its byte[] representation
+ * Decodes this [String] from Base64 into a [ByteArray].
  *
- * @param base64Options Base64 flags to encode with (defaults to Base64.NO_WRAP)
- * @return a byte[] or null if an exception is caught
+ * This is a convenience extension that wraps [Base64.Decoder.decode] and returns
+ * the result inside a [Result] type to simplify error handling.
+ *
+ * ### Behavior
+ * - On success, returns a [Result.success] containing the decoded bytes.
+ * - On failure (e.g. if the string is not valid Base64), returns a [Result.failure]
+ *   wrapping the thrown [Exception].
+ *
+ * @receiver the Base64‑encoded string to decode.
+ * @param decoder the [Base64.Decoder] to use for decoding. Defaults to
+ * [Base64.getDecoder].
+ *
+ * @return a [Result] containing the decoded [ByteArray] on success, or a failure
+ * if decoding fails.
+ *
+ * ### Example
+ * ```
+ * val encoded = "SGVsbG8gd29ybGQ=" // "Hello world"
+ * val decoded = encoded.uuToBase64Bytes().getOrThrow()
+ * println(String(decoded)) // prints "Hello world"
+ * ```
  */
-fun String.uuToBase64Bytes(base64Options: Int = Base64.NO_WRAP): ByteArray?
+fun String.uuFromBase64(decoder: Base64.Decoder = Base64.getDecoder()): Result<ByteArray>
 {
     return try
     {
-        Base64.decode(this, base64Options)
+        Result.success(decoder.decode(this))
     }
     catch (ex: Exception)
     {
-        null
+        Result.failure(ex)
     }
-}
-
-fun String.uuDecodeFromBase64ToUtf8String(base64options: Int = Base64.NO_WRAP): String?
-{
-    return uuFromBase64ToString(base64options, Charsets.UTF_8)
-}
-
-fun String.uuFromBase64ToString(base64options: Int, encoding: Charset): String?
-{
-    val base64 = uuToBase64Bytes(base64options) ?: return null
-    return base64.uuString(encoding).getOrNull()
 }
 
 /**
