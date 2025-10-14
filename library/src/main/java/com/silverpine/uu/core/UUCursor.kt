@@ -258,7 +258,8 @@ fun Cursor.uuSafeGetStringSet(column: Any, defaultValue: Set<String> = setOf()):
 
 fun <T: Any> Cursor.uuGetJsonObject(jsonClass: Class<T>, column: Any, defaultValue: T? = null): T?
 {
-    return UUJson.fromString(uuGetString(column), jsonClass) ?: defaultValue
+    val json = uuGetString(column) ?: return null
+    return UUJson.fromString(json, jsonClass).getOrNull() ?: defaultValue
 }
 
 fun <T: Any> Cursor.uuSafeGetJsonObject(jsonClass: Class<T>, column: Any, defaultValue: T): T
