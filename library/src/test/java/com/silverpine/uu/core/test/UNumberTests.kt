@@ -4,7 +4,7 @@ import com.silverpine.uu.core.uuFromBcd8
 import com.silverpine.uu.core.uuIsLeapYear
 import com.silverpine.uu.core.uuSetBit
 import com.silverpine.uu.core.uuToBcd8
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
@@ -345,11 +345,13 @@ class UNumberTests
         "1, 0, false, 0",
         "0, 6, true, 64",
         "255, 6, false, 191",
-        "0, 7, true, 128",   // highest bit
+        "0, 7, true, 128",
         "128, 7, false, 0"
     )
-    fun testUByte(value: UByte, index: Int, to: Boolean, expected: UByte)
+    fun testUByte(valueStr: String, index: Int, to: Boolean, expectedStr: String)
     {
+        val value = valueStr.toUByte()
+        val expected = expectedStr.toUByte()
         assertEquals(expected, value.uuSetBit(to, index))
     }
 
@@ -358,12 +360,14 @@ class UNumberTests
         "0, 0, true, 1",
         "1, 0, false, 0",
         "0, 10, true, 1024",
-        "1023, 10, false, -1",
-        "0, 15, true, -32768",   // highest bit (sign bit)
+        "1023, 10, false, 1023",
+        "0, 15, true, -32768",
         "-32768, 15, false, 0"
     )
-    fun testShort(value: Short, index: Int, to: Boolean, expected: Short)
+    fun testShort(valueStr: String, index: Int, to: Boolean, expectedStr: String)
     {
+        val value = valueStr.toShort()
+        val expected = expectedStr.toShort()
         assertEquals(expected, value.uuSetBit(to, index))
     }
 
@@ -372,12 +376,14 @@ class UNumberTests
         "0, 0, true, 1",
         "1, 0, false, 0",
         "0, 10, true, 1024",
-        "1023, 10, false, 1023", // bit 10 not set
-        "0, 15, true, 32768",    // highest bit
+        "1023, 10, false, 1023",
+        "0, 15, true, 32768",
         "32768, 15, false, 0"
     )
-    fun testUShort(value: UShort, index: Int, to: Boolean, expected: UShort)
+    fun testUShort(valueStr: String, index: Int, to: Boolean, expectedStr: String)
     {
+        val value = valueStr.toUShort()
+        val expected = expectedStr.toUShort()
         assertEquals(expected, value.uuSetBit(to, index))
     }
 
@@ -408,21 +414,23 @@ class UNumberTests
     @ParameterizedTest(name = "uuSetBit({0}, to={2}, index={1}) = {3}")
     @CsvSource(
         // value, index, to, expected
-        "0, 0, true, 1",          // set LSB
-        "1, 0, false, 0",         // clear LSB
-        "0, 5, true, 32",         // set bit 5
-        "63, 5, false, 31",       // clear bit 5
-        "0, 7, true, 128",        // set bit 7
-        "128, 7, false, 0",       // clear bit 7
-        "0, 31, true, 2147483648",// set highest bit (0x80000000u)
-        "2147483648, 31, false, 0"// clear highest bit
+        "0, 0, true, 1",
+        "1, 0, false, 0",
+        "0, 5, true, 32",
+        "63, 5, false, 31",
+        "0, 7, true, 128",
+        "128, 7, false, 0",
+        "0, 31, true, 2147483648",
+        "2147483648, 31, false, 0"
     )
     fun `UInt - test uuSetBit with multiple scenarios`(
-        value: UInt,
+        valueStr: String,
         index: Int,
         to: Boolean,
-        expected: UInt
+        expectedStr: String
     ) {
+        val value = valueStr.toUInt()
+        val expected = expectedStr.toUInt()
         val result = value.uuSetBit(to, index)
         assertEquals(expected, result)
     }
@@ -447,11 +455,13 @@ class UNumberTests
         "1, 0, false, 0",
         "0, 40, true, 1099511627776",
         "1099511627776, 40, false, 0",
-        "0, 63, true, 9223372036854775808", // highest bit
+        "0, 63, true, 9223372036854775808",
         "9223372036854775808, 63, false, 0"
     )
-    fun testULong(value: ULong, index: Int, to: Boolean, expected: ULong)
-    {
-        assertEquals(expected, value.uuSetBit(to, index))
+    fun testULong(valueStr: String, index: Int, to: Boolean, expectedStr: String) {
+        val value = valueStr.toULong()
+        val expected = expectedStr.toULong()
+        val result = value.uuSetBit(to, index)
+        assertEquals(expected, result)
     }
 }

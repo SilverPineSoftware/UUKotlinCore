@@ -2,22 +2,20 @@ package com.silverpine.uu.core.test
 
 import android.os.Bundle
 import com.silverpine.uu.core.UUError
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertSame
-import org.junit.Assert.assertTrue
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertSame
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
 import org.mockito.MockedConstruction
 import org.mockito.Mockito.mockConstruction
 import org.mockito.Mockito.never
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.junit.MockitoRule
+import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.junit.jupiter.MockitoSettings
 import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -36,11 +34,12 @@ import org.mockito.quality.Strictness
  * - If you run these in JVM unit tests (src/test), android.os stubs must be on the classpath
  *   (they are provided by the Android Gradle Plugin).
  */
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class UUErrorMockitoTest
 {
-    @get:Rule
-    val mockito: MockitoRule? = MockitoJUnit.rule().strictness(Strictness.LENIENT)
+    //@get:Rule
+    //val mockito: MockitoRule? = MockitoJUnit.rule()//.strictness(Strictness.LENIENT)
 
     @Mock
     lateinit var mockBundle: Bundle

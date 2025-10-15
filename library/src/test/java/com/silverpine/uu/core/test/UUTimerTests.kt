@@ -2,9 +2,9 @@ package com.silverpine.uu.core.test
 
 import com.silverpine.uu.core.UUTimer
 import com.silverpine.uu.core.UUTimerThread
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -14,8 +14,8 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class UUTimerTests {
-
+class UUTimerTests
+{
     // A manual worker that queues runnables; tests trigger them explicitly
     private class ManualWorkerThread : UUTimerThread
     {
@@ -52,7 +52,7 @@ class UUTimerTests {
     private lateinit var manual: ManualWorkerThread
     private var originalWorker: UUTimerThread? = null
 
-    @Before
+    @BeforeEach
     fun setUp()
     {
         originalWorker = UUTimer.workerThread
@@ -60,7 +60,7 @@ class UUTimerTests {
         UUTimer.workerThread = manual
     }
 
-    @After
+    @AfterEach
     fun tearDown()
     {
         UUTimer.workerThread = originalWorker ?: UUTimer.workerThread

@@ -5,11 +5,10 @@ import com.silverpine.uu.core.uuHasLowercase
 import com.silverpine.uu.core.uuHasNumber
 import com.silverpine.uu.core.uuHasSymbol
 import com.silverpine.uu.core.uuHasUppercase
-import org.junit.Assert
-import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
 import java.util.Base64
 import kotlin.test.assertTrue
 
@@ -28,7 +27,7 @@ class UUStringTest
 
         for (input in inputs)
         {
-            Assert.assertEquals(input.first.uuHasNumber(), input.second)
+            assertEquals(input.first.uuHasNumber(), input.second)
         }
     }
 
@@ -47,7 +46,7 @@ class UUStringTest
 
         for (input in inputs)
         {
-            Assert.assertEquals(input.first.uuHasUppercase(), input.second)
+            assertEquals(input.first.uuHasUppercase(), input.second)
         }
     }
 
@@ -66,7 +65,7 @@ class UUStringTest
 
         for (input in inputs)
         {
-            Assert.assertEquals(input.first.uuHasLowercase(), input.second)
+            assertEquals(input.first.uuHasLowercase(), input.second)
         }
     }
 
@@ -87,7 +86,7 @@ class UUStringTest
 
         for (input in inputs)
         {
-            Assert.assertEquals(input.first.uuHasSymbol(), input.second)
+            assertEquals(input.first.uuHasSymbol(), input.second)
         }
     }
 

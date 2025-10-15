@@ -18,7 +18,13 @@ dependencies {
     implementation 'androidx.security:security-crypto:1.1.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:6.0.0'
+    testImplementation platform('org.junit:junit-bom:6.0.0') // Use the latest stable version
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'
+
     testImplementation "org.jetbrains.kotlin:kotlin-test:${uu_kotlin_version}"
     testImplementation "com.silverpine.uu:uu-test-ktx:${uu_test_version}"
     testImplementation "org.mockito:mockito-core:5.19.0"
@@ -29,4 +35,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     androidTestImplementation "com.silverpine.uu:uu-test-ktx:${uu_test_version}"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:2.1.20"
+}
+
+android {
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }

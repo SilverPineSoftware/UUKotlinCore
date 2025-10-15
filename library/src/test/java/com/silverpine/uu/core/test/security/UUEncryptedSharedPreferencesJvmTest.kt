@@ -4,20 +4,16 @@ import com.silverpine.uu.core.security.UUCrypto
 import com.silverpine.uu.core.security.UUEncryptedSharedPreferences
 import com.silverpine.uu.core.test.fakes.UUFakeSecretKeyProvider
 import com.silverpine.uu.core.test.fakes.UUFakeSharedPreferences
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class UUEncryptedSharedPreferencesJvmTest
 {
     private lateinit var delegate: UUFakeSharedPreferences
     private lateinit var prefs: UUEncryptedSharedPreferences
 
-    @Before
+    @BeforeEach
     fun setup()
     {
         // Use in-memory prefs and JVM AES/GCM crypto via FakeSecretKeyProvider
@@ -85,10 +81,13 @@ class UUEncryptedSharedPreferencesJvmTest
         assertFalse(prefs.contains("b"))
     }
 
-    @Test(expected = UnsupportedOperationException::class)
+    @Test
     fun getAll_throws()
     {
-        prefs.all
+        assertThrows(UnsupportedOperationException::class.java)
+        {
+            prefs.all
+        }
     }
 
     @Test

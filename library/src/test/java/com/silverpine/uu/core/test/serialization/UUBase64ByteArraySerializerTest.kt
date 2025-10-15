@@ -1,11 +1,11 @@
-package com.silverpine.uu.core.test
+package com.silverpine.uu.core.test.serialization
 
-import com.silverpine.uu.core.UUBase64ByteArraySerializer
+import com.silverpine.uu.core.serialization.UUBase64ByteArraySerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.junit.Assert.assertArrayEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class UUBase64ByteArraySerializerTest

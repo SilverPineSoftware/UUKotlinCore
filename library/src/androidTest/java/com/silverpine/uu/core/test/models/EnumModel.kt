@@ -1,8 +1,9 @@
 package com.silverpine.uu.core.test.models
 
 import androidx.annotation.Keep
-import com.silverpine.uu.core.UUEnumSerializer
-import com.silverpine.uu.core.UUNullableEnumSerializer
+import com.silverpine.uu.core.serialization.uuEnumSerializer
+import com.silverpine.uu.core.serialization.uuSafeEnumSerializer
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 
 @Keep
@@ -21,11 +22,11 @@ enum class TestEnumSnakeCase
     tv_ladder_hat
 }
 
-class TestEnumCamelCaseSerializer: UUEnumSerializer<TestEnumCamelCase>(TestEnumCamelCase::class.java, TestEnumCamelCase.One)
-class TestEnumSnakeCaseSerializer: UUEnumSerializer<TestEnumSnakeCase>(TestEnumSnakeCase::class.java, TestEnumSnakeCase.tv_ladder_hat)
+object TestEnumCamelCaseSerializer : KSerializer<TestEnumCamelCase> by uuSafeEnumSerializer(TestEnumCamelCase::class.java, defaultDeserializeValue = TestEnumCamelCase.One)
+object TestEnumSnakeCaseSerializer : KSerializer<TestEnumSnakeCase> by uuSafeEnumSerializer(TestEnumSnakeCase::class.java, defaultDeserializeValue = TestEnumSnakeCase.tv_ladder_hat)
 
-class NullableTestEnumCamelCaseSerializer: UUNullableEnumSerializer<TestEnumCamelCase>(TestEnumCamelCase::class.java)
-class NullableTestEnumSnakeCaseSerializer: UUNullableEnumSerializer<TestEnumSnakeCase>(TestEnumSnakeCase::class.java)
+class NullableTestEnumCamelCaseSerializer: KSerializer<TestEnumCamelCase?> by uuEnumSerializer(TestEnumCamelCase::class.java)
+class NullableTestEnumSnakeCaseSerializer: KSerializer<TestEnumSnakeCase?> by uuEnumSerializer(TestEnumSnakeCase::class.java)
 
 @Keep
 @Serializable

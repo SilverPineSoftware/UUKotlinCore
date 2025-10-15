@@ -13,7 +13,6 @@ import com.silverpine.uu.core.test.models.PrimitiveListModel
 import com.silverpine.uu.core.test.models.PrimitiveModel
 import com.silverpine.uu.core.test.models.TestEnumCamelCase
 import com.silverpine.uu.core.test.models.TestEnumSnakeCase
-import com.silverpine.uu.core.uuToByteArray
 import com.silverpine.uu.core.uuUtf8ByteArray
 import com.silverpine.uu.logging.UULog
 import com.silverpine.uu.test.UUAssert
@@ -169,7 +168,7 @@ class UUJsonTest
         Assert.assertNotNull(check)
         Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
-        Assert.assertEquals(TestEnumCamelCase.Two, check.customOne)
+        Assert.assertNull(check.customOne)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
         Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
         Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)

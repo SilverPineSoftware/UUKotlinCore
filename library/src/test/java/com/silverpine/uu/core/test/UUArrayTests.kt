@@ -1,10 +1,10 @@
 package com.silverpine.uu.core.test
 
 import com.silverpine.uu.core.uuSplitIntoChunks
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertTrue
-import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 class UUArrayTests
 {

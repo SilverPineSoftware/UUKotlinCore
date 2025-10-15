@@ -2,8 +2,10 @@ package com.silverpine.uu.core.test
 
 import com.silverpine.uu.core.UUError
 import com.silverpine.uu.core.UUResult
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 /**
  * Unit tests for [UUResult].
@@ -38,7 +40,7 @@ class UUResultTest
             assertEquals("hello", it)
         }
 
-        assertTrue("onSuccess block should be called", called)
+        assertTrue(called, "onSuccess block should be called")
     }
 
     @Test
@@ -53,7 +55,7 @@ class UUResultTest
             assertEquals(error, it)
         }
 
-        assertTrue("onFailure block should be called", called)
+        assertTrue(called, "onFailure block should be called")
     }
 
     @Test

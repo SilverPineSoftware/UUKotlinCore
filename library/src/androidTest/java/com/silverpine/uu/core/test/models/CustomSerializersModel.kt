@@ -2,7 +2,7 @@ package com.silverpine.uu.core.test.models
 
 import UUDateJsonAdapter
 import androidx.annotation.Keep
-import com.silverpine.uu.core.UULongDateSerializer
+import com.silverpine.uu.core.serialization.UULongDateSerializer
 import com.silverpine.uu.core.UURandom
 import kotlinx.serialization.Serializable
 import java.util.Date

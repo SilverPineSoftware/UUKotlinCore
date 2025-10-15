@@ -1,13 +1,13 @@
-package com.silverpine.uu.core.test
+package com.silverpine.uu.core.test.serialization
 
-import com.silverpine.uu.core.UUHexByteArraySerializer
+import com.silverpine.uu.core.serialization.UUHexByteArraySerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.junit.Assert.assertTrue
-import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 class UUHexByteArraySerializerTest
 {

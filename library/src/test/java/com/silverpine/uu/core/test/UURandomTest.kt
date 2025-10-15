@@ -2,9 +2,11 @@ package com.silverpine.uu.core.test
 
 import com.silverpine.uu.core.UURandom
 import com.silverpine.uu.core.uuToHex
-import org.junit.Assert.*
-import org.junit.Test
-import java.util.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+import java.util.UUID
 
 class UURandomTest
 {

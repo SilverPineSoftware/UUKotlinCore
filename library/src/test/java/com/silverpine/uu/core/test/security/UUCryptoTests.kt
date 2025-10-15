@@ -1,10 +1,13 @@
-package com.silverpine.uu.core.test
+package com.silverpine.uu.core.test.security
 
 import com.silverpine.uu.core.security.UUCrypto
 import com.silverpine.uu.core.security.UUSecretKeyProvider
-import org.junit.Assert.*
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
@@ -27,7 +30,7 @@ class FakeSecretKeyProvider : UUSecretKeyProvider
 
 class UUCryptoJvmTest
 {
-    @Before
+    @BeforeEach
     fun setup() {
         UUCrypto.secretKeyProvider = FakeSecretKeyProvider()
     }

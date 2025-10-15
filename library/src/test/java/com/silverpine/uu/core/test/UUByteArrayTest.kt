@@ -22,12 +22,11 @@ import com.silverpine.uu.core.uuReadUInt64
 import com.silverpine.uu.core.uuReadUInt8
 import com.silverpine.uu.core.uuReset
 import com.silverpine.uu.core.uuSetAll
-import com.silverpine.uu.core.uuSlice
 import com.silverpine.uu.core.uuSplitIntoChunks
 import com.silverpine.uu.core.uuString
 import com.silverpine.uu.core.uuSubData
-import com.silverpine.uu.core.uuToHexData
 import com.silverpine.uu.core.uuToHex
+import com.silverpine.uu.core.uuToHexData
 import com.silverpine.uu.core.uuUtf8
 import com.silverpine.uu.core.uuWriteInt16
 import com.silverpine.uu.core.uuWriteInt32
@@ -39,18 +38,17 @@ import com.silverpine.uu.core.uuWriteUInt64
 import com.silverpine.uu.core.uuWriteUInt8
 import com.silverpine.uu.core.uuXor
 import com.silverpine.uu.test.UUAssert
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import java.nio.ByteOrder
 import java.util.Base64
 import kotlin.random.Random
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
-import kotlin.test.junit.JUnitAsserter.assertNotEquals
-import org.junit.Assert.assertArrayEquals
 
 class UUByteArrayTest
 {
@@ -88,7 +86,7 @@ class UUByteArrayTest
         val input = ByteArray(4)
         val actual = input.uuToHex()
         val expected = "00000000"
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -97,7 +95,7 @@ class UUByteArrayTest
         val input = byteArrayOf(0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte())
         val actual = input.uuToHex()
         val expected = "FFFFFFFF"
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -106,7 +104,7 @@ class UUByteArrayTest
         val input = byteArrayOf(0xAB.toByte(), 0xCD.toByte(), 0xEF.toByte(), 0x12.toByte())
         val actual = input.uuToHex()
         val expected = "ABCDEF12"
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -241,18 +239,18 @@ class UUByteArrayTest
     fun test_uuSubData()
     {
         val input = "AABBCCDDEEFF00112233445566778899".uuToHexData()
-        Assert.assertNotNull(input)
+        assertNotNull(input)
 
         var sub = input?.uuSubData(0, 3)
-        Assert.assertNotNull(sub)
+        assertNotNull(sub)
 
-        Assert.assertArrayEquals(sub, byteArrayOf(0xAA.toByte(), 0xBB.toByte(), 0xCC.toByte()))
+        assertArrayEquals(sub, byteArrayOf(0xAA.toByte(), 0xBB.toByte(), 0xCC.toByte()))
         sub = input?.uuSubData(0, 500)
-        Assert.assertNotNull(sub)
-        Assert.assertArrayEquals(sub, input)
+        assertNotNull(sub)
+        assertArrayEquals(sub, input)
         sub = input?.uuSubData( 13, 7)
-        Assert.assertNotNull(sub)
-        Assert.assertArrayEquals(sub, byteArrayOf(0x77.toByte(), 0x88.toByte(), 0x99.toByte()))
+        assertNotNull(sub)
+        assertArrayEquals(sub, byteArrayOf(0x77.toByte(), 0x88.toByte(), 0x99.toByte()))
     }
 
     @Test
@@ -277,7 +275,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -312,7 +310,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -346,7 +344,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -393,7 +391,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected, actual)
+                assertEquals(expected, actual)
             }
             else
             {
@@ -430,7 +428,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -465,7 +463,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -502,7 +500,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -537,7 +535,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -584,7 +582,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected, actual)
+                assertEquals(expected, actual)
             }
             else
             {
@@ -621,17 +619,17 @@ class UUByteArrayTest
             var actual = working.uuReadInt8(ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             val tmp: Byte = 57
             var written: Int = working.uuWriteInt8(ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
+            assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
             actual = working.uuReadInt8(ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             written = working.uuWriteInt8(ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Try some negative test cases
@@ -662,17 +660,17 @@ class UUByteArrayTest
             var actual = working.uuReadInt16(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             val tmp: Short = 57
             var written: Int = working.uuWriteInt16(ti.order, ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
+            assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
             actual = working.uuReadInt16(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             written = working.uuWriteInt16(ti.order, ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Index negative
@@ -701,17 +699,17 @@ class UUByteArrayTest
             var actual = working.uuReadInt32(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             val tmp = 57
             var written: Int = working.uuWriteInt32(ti.order, ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(Integer.BYTES.toLong(), written.toLong())
+            assertEquals(Integer.BYTES.toLong(), written.toLong())
             actual = working.uuReadInt32(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             written = working.uuWriteInt32(ti.order, ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(Integer.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(Integer.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Index negative
@@ -752,17 +750,17 @@ class UUByteArrayTest
             var actual = working.uuReadInt64(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             val tmp: Long = 57
             var written: Int = working.uuWriteInt64(ti.order, ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
+            assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
             actual = working.uuReadInt64(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             written = working.uuWriteInt64(ti.order, ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Index negative
@@ -794,17 +792,17 @@ class UUByteArrayTest
             var actual = working.uuReadUInt8(ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             val tmp: UByte = 57u
             var written: Int = working.uuWriteUInt8(ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
+            assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
             actual = working.uuReadUInt8(ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             written = working.uuWriteUInt8(ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(java.lang.Byte.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Try some negative test cases
@@ -836,17 +834,17 @@ class UUByteArrayTest
             var actual = working.uuReadUInt16(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             val tmp: UShort = 57u
             var written: Int = working.uuWriteUInt16(ti.order, ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
+            assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
             actual = working.uuReadUInt16(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
             written = working.uuWriteUInt16(ti.order, ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(java.lang.Short.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Index negative
@@ -877,18 +875,18 @@ class UUByteArrayTest
             assertNotNull(actual)
 
             var expected = ti.expected
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             val tmp = 57u
             var written: Int = working.uuWriteUInt32(ti.order, ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(Integer.BYTES.toLong(), written.toLong())
+            assertEquals(Integer.BYTES.toLong(), written.toLong())
             actual = working.uuReadUInt32(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
 
             expected = tmp
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             written = working.uuWriteUInt32(ti.order, ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(Integer.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(Integer.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Index negative
@@ -932,17 +930,17 @@ class UUByteArrayTest
             var actual = working.uuReadUInt64(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             var expected = ti.expected
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             val tmp: ULong = 57u
             var written: Int = working.uuWriteUInt64(ti.order, ti.index, tmp).getOrDefault(0)
-            Assert.assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
+            assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
             actual = working.uuReadUInt64(ti.order, ti.index).getOrNull()
             assertNotNull(actual)
             expected = tmp
-            Assert.assertEquals(expected, actual)
+            assertEquals(expected, actual)
             written = working.uuWriteUInt64(ti.order, ti.index, ti.expected).getOrDefault(0)
-            Assert.assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
-            Assert.assertArrayEquals(working, original)
+            assertEquals(java.lang.Long.BYTES.toLong(), written.toLong())
+            assertArrayEquals(working, original)
         }
 
         // Index negative
@@ -969,7 +967,7 @@ class UUByteArrayTest
             val actual = td.bytes().uuHighNibble(td.index).getOrNull()
             assertNotNull(actual)
             val expected = td.expected
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
         }
     }
 
@@ -990,7 +988,7 @@ class UUByteArrayTest
             val actual = td.bytes().uuLowNibble(td.index).getOrNull()
             assertNotNull(actual)
             val expected = td.expected
-            Assert.assertEquals(expected.toLong(), actual.toLong())
+            assertEquals(expected.toLong(), actual?.toLong())
         }
     }
 
@@ -1014,7 +1012,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -1042,7 +1040,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -1070,7 +1068,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
@@ -1098,7 +1096,7 @@ class UUByteArrayTest
             if (expected != null)
             {
                 assertNotNull(actual)
-                Assert.assertEquals(expected.toLong(), actual.toLong())
+                assertEquals(expected.toLong(), actual?.toLong())
             }
             else
             {
