@@ -2,18 +2,16 @@ package com.silverpine.uu.core.test.serialization
 
 import com.silverpine.uu.core.serialization.UUEnumFormat
 import com.silverpine.uu.core.serialization.UUEnumSerializer
-import com.silverpine.uu.core.serialization.UUSafeEnumSerializer
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
-import kotlin.test.assertNull
 
 enum class TestEnum
 {
@@ -36,14 +34,14 @@ class UUEnumSerializerTest
     private fun doSerializeString(format: UUEnumFormat, fallback: TestEnum? = null, input: TestEnum, expected: String)
     {
         val serializer = serializer(format, fallback)
-        val result = Json.encodeToString(serializer, input)
+        val result = json.encodeToString(serializer, input)
         assertEquals("\"$expected\"", result)
     }
 
     private fun doSerializeInt(fallback: TestEnum? = null, input: TestEnum, expected: Int)
     {
         val serializer = serializer(UUEnumFormat.Ordinal, fallback)
-        val result = Json.encodeToString(serializer, input)
+        val result = json.encodeToString(serializer, input)
         val intResult = result.toInt()
         assertEquals(expected, intResult)
     }
@@ -55,7 +53,7 @@ class UUEnumSerializerTest
         val stringInput: String = Json.decodeFromString(quotedInput)
         assertEquals(input, stringInput)
 
-        val result = Json.decodeFromString(serializer, quotedInput)
+        val result = json.decodeFromString(serializer, quotedInput)
         assertEquals(expected, result)
     }
 

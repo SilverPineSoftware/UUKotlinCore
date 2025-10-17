@@ -4,13 +4,13 @@ import com.silverpine.uu.core.uuFromBcd8
 import com.silverpine.uu.core.uuIsLeapYear
 import com.silverpine.uu.core.uuSetBit
 import com.silverpine.uu.core.uuToBcd8
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
 
 class UNumberTests
 {
@@ -241,8 +241,8 @@ class UNumberTests
     @Test
     fun `UByte set and clear`() {
         val value: UByte = 0u
-        assertEquals(1u, value.uuSetBit(true, 0))
-        assertEquals(0u, 1u.toUByte().uuSetBit(false, 0))
+        assertEquals(1u.toUByte(), value.uuSetBit(true, 0))
+        assertEquals(0u.toUByte(), 1u.toUByte().uuSetBit(false, 0))
     }
 
     @Test
@@ -267,8 +267,8 @@ class UNumberTests
     @Test
     fun `UShort set and clear`() {
         val value: UShort = 0u
-        assertEquals(1u, value.uuSetBit(true, 0))
-        assertEquals(0u, 1u.toUShort().uuSetBit(false, 0))
+        assertEquals(1u.toUShort(), value.uuSetBit(true, 0))
+        assertEquals(0u.toUShort(), 1u.toUShort().uuSetBit(false, 0))
     }
 
     @Test

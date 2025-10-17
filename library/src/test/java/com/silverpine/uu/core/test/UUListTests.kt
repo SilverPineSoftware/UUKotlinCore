@@ -3,7 +3,7 @@ package com.silverpine.uu.core.test
 import com.silverpine.uu.core.uuSplitIntoChunks
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 
 class UUListTests
 {

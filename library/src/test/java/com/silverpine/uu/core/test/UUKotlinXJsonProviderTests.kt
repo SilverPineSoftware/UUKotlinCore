@@ -7,16 +7,16 @@ import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.io.ByteArrayInputStream
 import java.io.InputStream
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 class UUKotlinXJsonProviderTest
 {
     private lateinit var provider: UUJsonProvider
 
-    @BeforeTest
+    @BeforeEach
     fun setUp()
     {
         provider = UUKotlinXJsonProvider(Json)
