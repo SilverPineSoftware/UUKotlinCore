@@ -187,6 +187,142 @@ fun UInt.uuSetBit(to: Boolean, index: Int): UInt
     }
 }
 
+/**
+ * Returns a copy of this Byte with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [Byte.SIZE_BITS].
+ * @return A new Byte with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun Byte.uuClearBit(index: Int): Byte
+{
+    if (index !in 0 until Byte.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1 shl index).inv()
+    return (this.toInt() and mask).toByte()
+}
+
+/**
+ * Returns a copy of this UByte with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [UByte.SIZE_BITS].
+ * @return A new UByte with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun UByte.uuClearBit(index: Int): UByte
+{
+    if (index !in 0 until UByte.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1u shl index).toUByte().inv()
+    return (this and mask).toUByte()
+}
+
+/**
+ * Returns a copy of this Short with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [Short.SIZE_BITS].
+ * @return A new Short with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun Short.uuClearBit(index: Int): Short
+{
+    if (index !in 0 until Short.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1 shl index).inv()
+    return (this.toInt() and mask).toShort()
+}
+
+/**
+ * Returns a copy of this UShort with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [UShort.SIZE_BITS].
+ * @return A new UShort with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun UShort.uuClearBit(index: Int): UShort
+{
+    if (index !in 0 until UShort.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1u shl index).toUShort().inv()
+    return (this and mask).toUShort()
+}
+
+/**
+ * Returns a copy of this Int with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [Int.SIZE_BITS].
+ * @return A new Int with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun Int.uuClearBit(index: Int): Int
+{
+    if (index !in 0 until Int.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1 shl index).inv()
+    return this and mask
+}
+
+/**
+ * Returns a copy of this UInt with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [UInt.SIZE_BITS].
+ * @return A new UInt with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun UInt.uuClearBit(index: Int): UInt
+{
+    if (index !in 0 until UInt.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1u shl index).inv()
+    return this and mask
+}
+
+/**
+ * Returns a copy of this Long with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [Long.SIZE_BITS].
+ * @return A new Long with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun Long.uuClearBit(index: Int): Long
+{
+    if (index !in 0 until Long.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1L shl index).inv()
+    return this and mask
+}
+
+/**
+ * Returns a copy of this ULong with the bit at the specified [index] cleared (set to 0).
+ *
+ * @param index The bit position to clear, in 0 until [ULong.SIZE_BITS].
+ * @return A new ULong with the specified bit cleared, or the original value if index is out of bounds.
+ */
+fun ULong.uuClearBit(index: Int): ULong
+{
+    if (index !in 0 until ULong.SIZE_BITS)
+    {
+        return this
+    }
+
+    val mask = (1uL shl index).inv()
+    return this and mask
+}
+
 fun Int.uuToBcd8(): Int?
 {
     if (this < 0 || this > 99)
