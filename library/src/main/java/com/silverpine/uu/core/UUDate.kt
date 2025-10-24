@@ -14,26 +14,27 @@ object UUDate
     ////////////////////////////////////////////////////////////////////////////////////////////////
     object Constants
     {
-        const val secondsInOneMinute : Long = 60
-        const val minutesInOneHour : Long = 60
-        const val hoursInOneDay : Long = 24
-        const val daysInOneWeek : Long = 7
-        const val millisInOneSecond : Long = 1000
-        const val millisInOneMinute : Long = millisInOneSecond * secondsInOneMinute
+        const val SECONDS_IN_ONE_MINUTE : Long = 60
+        const val MINUTES_IN_ONE_HOUR : Long = 60
+        const val HOURS_IN_ONE_DAY : Long = 24
+        const val DAYS_IN_ONE_WEEK : Long = 7
+        const val MILLIS_IN_ONE_SECOND : Long = 1000
+        const val MILLIS_IN_ONE_MINUTE : Long = MILLIS_IN_ONE_SECOND * SECONDS_IN_ONE_MINUTE
 
-        const val secondsInOneHour : Long = secondsInOneMinute * minutesInOneHour
-        const val secondsInOneDay : Long = secondsInOneHour * hoursInOneDay
-        const val secondsInOneWeek : Long = secondsInOneDay * daysInOneWeek
+        const val SECONDS_IN_ONE_HOUR : Long = SECONDS_IN_ONE_MINUTE * MINUTES_IN_ONE_HOUR
+        const val SECONDS_IN_ONE_DAY : Long = SECONDS_IN_ONE_HOUR * HOURS_IN_ONE_DAY
+        const val SECONDS_IN_ONE_WEEK : Long = SECONDS_IN_ONE_DAY * DAYS_IN_ONE_WEEK
     }
 
     object TimeZones
     {
-        val utc: TimeZone
+        val UTC: TimeZone
             get()
             {
                 return TimeZone.getTimeZone("UTC")
             }
-        val local: TimeZone
+
+        val LOCAL: TimeZone
             get()
             {
                 return TimeZone.getDefault()
@@ -45,21 +46,21 @@ object UUDate
     ////////////////////////////////////////////////////////////////////////////////////////////////
     object Formats
     {
-        const val rfc3339               = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        const val rfc3339WithMillis     = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        const val iso8601DateOnly       = "yyyy-MM-dd"
-        const val iso8601TimeOnly       = "HH:mm:ss"
-        const val iso8601DateTime       = "yyyy-MM-dd HH:mm:ss"
-        const val timeOfDay             = "h:mm a"
-        const val dayOfMonth            = "d"
-        const val numericMonthOfYear    = "L"
-        const val shortMonthOfYear      = "LLL"
-        const val longMonthOfYear       = "LLLL"
-        const val shortDayOfWeek        = "EE"
-        const val longDayOfWeek         = "EEEE"
-        const val twoDigitYear          = "yy"
-        const val fourDigitYear         = "yyyy"
-        const val extendedFileNameFormat = "yyyy_MM_dd_HH_mm_ss"
+        const val RFC_3339                      = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        const val RFC_3339_WITH_MILLIS          = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        const val ISO_8601_DATE_ONLY            = "yyyy-MM-dd"
+        const val ISO_8601_TIME_ONLY            = "HH:mm:ss"
+        const val ISO_8601_DATE_AND_TIME        = "yyyy-MM-dd HH:mm:ss"
+        const val TIME_OF_DAY                   = "h:mm a"
+        const val DAY_OF_MONTH                  = "d"
+        const val NUMERIC_MONTH_OF_YEAR         = "L"
+        const val SHORT_MONTH_OF_YEAR           = "LLL"
+        const val LONG_MONTH_OF_YEAR            = "LLLL"
+        const val SHORT_DAY_OF_WEEK             = "EE"
+        const val LONG_DAY_OF_WEEK              = "EEEE"
+        const val TWO_DIGIT_YEAR                = "yy"
+        const val FOUR_DIGIT_YEAR               = "yyyy"
+        const val EXTENDED_FILE_NAME_FORMAT     = "yyyy_MM_dd_HH_mm_ss"
     }
 }
 
@@ -127,62 +128,62 @@ fun Long.uuNanoToRealTime(): Long
     return System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(SystemClock.elapsedRealtimeNanos() - this, TimeUnit.NANOSECONDS)
 }
 
-fun Long.uuFormatAsRfc3339(timeZone: TimeZone = UUDate.TimeZones.local, locale: Locale = Locale.getDefault()): String
+fun Long.uuFormatAsRfc3339(timeZone: TimeZone = UUDate.TimeZones.LOCAL, locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatDate(UUDate.Formats.rfc3339, timeZone, locale)
+    return uuFormatDate(UUDate.Formats.RFC_3339, timeZone, locale)
 }
 
-fun Long.uuFormatAsRfc3339WithMillis(timeZone: TimeZone = UUDate.TimeZones.local, locale: Locale = Locale.getDefault()): String
+fun Long.uuFormatAsRfc3339WithMillis(timeZone: TimeZone = UUDate.TimeZones.LOCAL, locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatDate(UUDate.Formats.rfc3339WithMillis, timeZone, locale)
+    return uuFormatDate(UUDate.Formats.RFC_3339_WITH_MILLIS, timeZone, locale)
 }
 
-fun Long.uuFormatAsIso8601DateOnly(timeZone: TimeZone = UUDate.TimeZones.local, locale: Locale = Locale.getDefault()): String
+fun Long.uuFormatAsIso8601DateOnly(timeZone: TimeZone = UUDate.TimeZones.LOCAL, locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatDate(UUDate.Formats.iso8601DateOnly, timeZone, locale)
+    return uuFormatDate(UUDate.Formats.ISO_8601_DATE_ONLY, timeZone, locale)
 }
 
-fun Long.uuFormatAsIso8601TimeOnly(timeZone: TimeZone = UUDate.TimeZones.local, locale: Locale = Locale.getDefault()): String
+fun Long.uuFormatAsIso8601TimeOnly(timeZone: TimeZone = UUDate.TimeZones.LOCAL, locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatDate(UUDate.Formats.iso8601TimeOnly, timeZone, locale)
+    return uuFormatDate(UUDate.Formats.ISO_8601_TIME_ONLY, timeZone, locale)
 }
 
-fun Long.uuFormatAsIso8601DateTime(timeZone: TimeZone = UUDate.TimeZones.local, locale: Locale = Locale.getDefault()): String
+fun Long.uuFormatAsIso8601DateTime(timeZone: TimeZone = UUDate.TimeZones.LOCAL, locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatDate(UUDate.Formats.iso8601DateTime, timeZone, locale)
+    return uuFormatDate(UUDate.Formats.ISO_8601_DATE_AND_TIME, timeZone, locale)
 }
 
-fun Long.uuFormatAsExtendedFileName(timeZone: TimeZone = UUDate.TimeZones.local, locale: Locale = Locale.getDefault()): String
+fun Long.uuFormatAsExtendedFileName(timeZone: TimeZone = UUDate.TimeZones.LOCAL, locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatDate(UUDate.Formats.extendedFileNameFormat, timeZone, locale)
+    return uuFormatDate(UUDate.Formats.EXTENDED_FILE_NAME_FORMAT, timeZone, locale)
 }
 
 fun Long.uuFormatAsRfc3339Utc(locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatAsRfc3339(timeZone = UUDate.TimeZones.utc, locale)
+    return uuFormatAsRfc3339(timeZone = UUDate.TimeZones.UTC, locale)
 }
 
 fun Long.uuFormatAsRfc3339WithMillisUtc(locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatAsRfc3339WithMillis(timeZone = UUDate.TimeZones.utc, locale)
+    return uuFormatAsRfc3339WithMillis(timeZone = UUDate.TimeZones.UTC, locale)
 }
 
 fun Long.uuFormatAsIso8601DateOnlyUtc(locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatAsIso8601DateOnly(timeZone = UUDate.TimeZones.utc, locale)
+    return uuFormatAsIso8601DateOnly(timeZone = UUDate.TimeZones.UTC, locale)
 }
 
 fun Long.uuFormatAsIso8601TimeOnlyUtc(locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatAsIso8601TimeOnly(timeZone = UUDate.TimeZones.utc, locale)
+    return uuFormatAsIso8601TimeOnly(timeZone = UUDate.TimeZones.UTC, locale)
 }
 
 fun Long.uuFormatAsIso8601DateTimeUtc(locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatAsIso8601DateTime(timeZone = UUDate.TimeZones.utc, locale)
+    return uuFormatAsIso8601DateTime(timeZone = UUDate.TimeZones.UTC, locale)
 }
 
 fun Long.uuFormatAsExtendedFileNameUtc(locale: Locale = Locale.getDefault()): String
 {
-    return uuFormatAsExtendedFileName(timeZone = UUDate.TimeZones.utc, locale)
+    return uuFormatAsExtendedFileName(timeZone = UUDate.TimeZones.UTC, locale)
 }

@@ -12,8 +12,8 @@ import java.util.TimeZone
 
 object UUDateJsonAdapter: KSerializer<Date>
 {
-    private val format: String = UUDate.Formats.rfc3339WithMillis
-    private val timeZone: TimeZone = UUDate.TimeZones.utc
+    private val format: String = UUDate.Formats.RFC_3339_WITH_MILLIS
+    private val timeZone: TimeZone = UUDate.TimeZones.UTC
     private val locale: Locale = Locale.US
 
     override val descriptor = PrimitiveSerialDescriptor("UUDateJsonAdapter", PrimitiveKind.LONG)

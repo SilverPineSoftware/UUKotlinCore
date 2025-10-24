@@ -54,15 +54,15 @@ class UUDateTests
     fun constants_are_correct()
     {
         with(UUDate.Constants) {
-            assertEquals(60L, secondsInOneMinute, "secondsInOneMinute")
-            assertEquals(60L, minutesInOneHour, "minutesInOneHour")
-            assertEquals(24L, hoursInOneDay, "hoursInOneDay")
-            assertEquals(7L, daysInOneWeek, "daysInOneWeek")
-            assertEquals(1000L, millisInOneSecond, "millisInOneSecond")
-            assertEquals(60_000L, millisInOneMinute, "millisInOneMinute")
-            assertEquals(3600L, secondsInOneHour, "secondsInOneHour")
-            assertEquals(86_400L, secondsInOneDay, "secondsInOneDay")
-            assertEquals(604_800L, secondsInOneWeek, "secondsInOneWeek")
+            assertEquals(60L, SECONDS_IN_ONE_MINUTE, "secondsInOneMinute")
+            assertEquals(60L, MINUTES_IN_ONE_HOUR, "minutesInOneHour")
+            assertEquals(24L, HOURS_IN_ONE_DAY, "hoursInOneDay")
+            assertEquals(7L, DAYS_IN_ONE_WEEK, "daysInOneWeek")
+            assertEquals(1000L, MILLIS_IN_ONE_SECOND, "millisInOneSecond")
+            assertEquals(60_000L, MILLIS_IN_ONE_MINUTE, "millisInOneMinute")
+            assertEquals(3600L, SECONDS_IN_ONE_HOUR, "secondsInOneHour")
+            assertEquals(86_400L, SECONDS_IN_ONE_DAY, "secondsInOneDay")
+            assertEquals(604_800L, SECONDS_IN_ONE_WEEK, "secondsInOneWeek")
         }
     }
 
@@ -73,8 +73,8 @@ class UUDateTests
     @Test
     fun timezones_return_expected_ids()
     {
-        val utc = UUDate.TimeZones.utc
-        val local = UUDate.TimeZones.local
+        val utc = UUDate.TimeZones.UTC
+        val local = UUDate.TimeZones.LOCAL
 
         assertEquals("UTC", utc.id, "UTC id")
         assertNotNull(local, "Local timezone not null")
@@ -90,21 +90,21 @@ class UUDateTests
     {
         with(UUDate.Formats)
         {
-            assertEquals("yyyy-MM-dd'T'HH:mm:ss'Z'", rfc3339, "rfc3339")
-            assertEquals("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", rfc3339WithMillis, "rfc3339WithMillis")
-            assertEquals("yyyy-MM-dd", iso8601DateOnly, "iso8601DateOnly")
-            assertEquals("HH:mm:ss", iso8601TimeOnly, "iso8601TimeOnly")
-            assertEquals("yyyy-MM-dd HH:mm:ss", iso8601DateTime, "iso8601DateTime")
-            assertEquals("h:mm a", timeOfDay, "timeOfDay")
-            assertEquals("d", dayOfMonth, "dayOfMonth")
-            assertEquals("L", numericMonthOfYear, "numericMonthOfYear")
-            assertEquals("LLL", shortMonthOfYear, "shortMonthOfYear")
-            assertEquals("LLLL", longMonthOfYear, "longMonthOfYear")
-            assertEquals("EE", shortDayOfWeek, "shortDayOfWeek")
-            assertEquals("EEEE", longDayOfWeek, "longDayOfWeek")
-            assertEquals("yy", twoDigitYear, "twoDigitYear")
-            assertEquals("yyyy", fourDigitYear, "fourDigitYear")
-            assertEquals("yyyy_MM_dd_HH_mm_ss", extendedFileNameFormat, "extendedFileNameFormat")
+            assertEquals("yyyy-MM-dd'T'HH:mm:ss'Z'", RFC_3339, "rfc3339")
+            assertEquals("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", RFC_3339_WITH_MILLIS, "rfc3339WithMillis")
+            assertEquals("yyyy-MM-dd", ISO_8601_DATE_ONLY, "iso8601DateOnly")
+            assertEquals("HH:mm:ss", ISO_8601_TIME_ONLY, "iso8601TimeOnly")
+            assertEquals("yyyy-MM-dd HH:mm:ss", ISO_8601_DATE_AND_TIME, "iso8601DateTime")
+            assertEquals("h:mm a", TIME_OF_DAY, "timeOfDay")
+            assertEquals("d", DAY_OF_MONTH, "dayOfMonth")
+            assertEquals("L", NUMERIC_MONTH_OF_YEAR, "numericMonthOfYear")
+            assertEquals("LLL", SHORT_MONTH_OF_YEAR, "shortMonthOfYear")
+            assertEquals("LLLL", LONG_MONTH_OF_YEAR, "longMonthOfYear")
+            assertEquals("EE", SHORT_DAY_OF_WEEK, "shortDayOfWeek")
+            assertEquals("EEEE", LONG_DAY_OF_WEEK, "longDayOfWeek")
+            assertEquals("yy", TWO_DIGIT_YEAR, "twoDigitYear")
+            assertEquals("yyyy", FOUR_DIGIT_YEAR, "fourDigitYear")
+            assertEquals("yyyy_MM_dd_HH_mm_ss", EXTENDED_FILE_NAME_FORMAT, "extendedFileNameFormat")
         }
     }
 
@@ -117,7 +117,7 @@ class UUDateTests
     {
         val s = "2003-01-02T04:05:06.789Z"
         val parsed = s.uuParseDate(
-            formatter = UUDate.Formats.rfc3339WithMillis,
+            formatter = UUDate.Formats.RFC_3339_WITH_MILLIS,
             timeZone = TimeZone.getTimeZone("UTC"),
             locale = Locale.US
         )
@@ -129,7 +129,7 @@ class UUDateTests
     fun string_parseDate_singleFormatter_empty_returnsNull()
     {
         val s = ""
-        val parsed = s.uuParseDate(UUDate.Formats.rfc3339)
+        val parsed = s.uuParseDate(UUDate.Formats.RFC_3339)
         assertNull(parsed, "Empty string returns null")
     }
 
@@ -137,7 +137,7 @@ class UUDateTests
     fun string_parseDate_singleFormatter_wrongPattern_returnsNull()
     {
         val s = "2003-01-02"
-        val parsed = s.uuParseDate(UUDate.Formats.rfc3339WithMillis, TimeZone.getTimeZone("UTC"))
+        val parsed = s.uuParseDate(UUDate.Formats.RFC_3339_WITH_MILLIS, TimeZone.getTimeZone("UTC"))
         assertNull(parsed, "Wrong pattern returns null")
     }
 
@@ -151,8 +151,8 @@ class UUDateTests
         val s = "2003-01-02T04:05:06.789Z"
         val parsed = s.uuParseDate(
             formatters = arrayOf(
-                UUDate.Formats.rfc3339WithMillis,
-                UUDate.Formats.rfc3339
+                UUDate.Formats.RFC_3339_WITH_MILLIS,
+                UUDate.Formats.RFC_3339
             ),
             timeZone = TimeZone.getTimeZone("UTC"),
             locale = Locale.US
@@ -165,7 +165,7 @@ class UUDateTests
     fun string_parseDate_multipleFormatters_noneMatch_returnsNull()
     {
         val s = "not-a-date"
-        val parsed = s.uuParseDate(arrayOf(UUDate.Formats.iso8601DateOnly))
+        val parsed = s.uuParseDate(arrayOf(UUDate.Formats.ISO_8601_DATE_ONLY))
         assertNull(parsed, "None match returns null")
     }
 
@@ -184,7 +184,7 @@ class UUDateTests
     fun date_formatDate_basic_utc()
     {
         val expected = fmtUTC(fixedDateUTC, "yyyy-MM-dd HH:mm:ss")
-        val actual = fixedDateUTC.uuFormatDate(UUDate.Formats.iso8601DateTime, UUDate.TimeZones.utc, Locale.US)
+        val actual = fixedDateUTC.uuFormatDate(UUDate.Formats.ISO_8601_DATE_AND_TIME, UUDate.TimeZones.UTC, Locale.US)
         assertEquals(expected, actual, "Date.uuFormatDate with iso8601DateTime UTC")
     }
 
@@ -192,7 +192,7 @@ class UUDateTests
     fun long_formatDate_basic_utc()
     {
         val expected = fmtUTC(fixedDateUTC, "HH:mm:ss")
-        val actual = fixedEpochMs.uuFormatDate(UUDate.Formats.iso8601TimeOnly, UUDate.TimeZones.utc, Locale.US)
+        val actual = fixedEpochMs.uuFormatDate(UUDate.Formats.ISO_8601_TIME_ONLY, UUDate.TimeZones.UTC, Locale.US)
         assertEquals(expected, actual, "Long.uuFormatDate with iso8601TimeOnly UTC")
     }
 
@@ -200,7 +200,7 @@ class UUDateTests
     fun date_formatDate_returnsEmpty_onFormatError()
     {
         // Use an invalid pattern to trigger the catch path
-        val actual = fixedDateUTC.uuFormatDate("invalid-pattern-[", UUDate.TimeZones.utc, Locale.US)
+        val actual = fixedDateUTC.uuFormatDate("invalid-pattern-[", UUDate.TimeZones.UTC, Locale.US)
         assertEquals("", actual, "Invalid pattern returns empty string")
     }
 
