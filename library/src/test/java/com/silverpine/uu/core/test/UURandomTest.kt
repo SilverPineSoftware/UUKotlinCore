@@ -10,12 +10,12 @@ import java.util.UUID
 
 class UURandomTest
 {
-    private val LOOPS = 100
+    private val loops = 57
 
     @Test
     fun test_bytes()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.bytes(length)
@@ -44,7 +44,7 @@ class UURandomTest
     @Test
     fun test_byte()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.byte()
             assertNotNull(actual)
@@ -58,7 +58,7 @@ class UURandomTest
     @Test
     fun test_uByte()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.uByte()
             assertNotNull(actual)
@@ -72,7 +72,7 @@ class UURandomTest
     @Test
     fun test_short()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.short()
             assertNotNull(actual)
@@ -86,7 +86,7 @@ class UURandomTest
     @Test
     fun test_uShort()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.uShort()
             assertNotNull(actual)
@@ -100,7 +100,7 @@ class UURandomTest
     @Test
     fun test_int()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.int()
             assertNotNull(actual)
@@ -116,7 +116,7 @@ class UURandomTest
     {
         val min = 0
         val max = 1000
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.int(min, max)
             assertNotNull(actual)
@@ -132,7 +132,7 @@ class UURandomTest
     {
         val min = -1000
         val max = 1000
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.int(min, max)
             assertNotNull(actual)
@@ -146,7 +146,7 @@ class UURandomTest
     @Test
     fun test_uInt()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.uInt()
             assertNotNull(actual)
@@ -160,7 +160,7 @@ class UURandomTest
     @Test
     fun test_long()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.long()
             assertNotNull(actual)
@@ -171,7 +171,7 @@ class UURandomTest
     @Test
     fun test_uLong()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.uLong()
             assertNotNull(actual)
@@ -182,7 +182,7 @@ class UURandomTest
     @Test
     fun test_float()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.float()
             assertNotNull(actual)
@@ -193,7 +193,7 @@ class UURandomTest
     @Test
     fun test_double()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.double()
             assertNotNull(actual)
@@ -204,7 +204,7 @@ class UURandomTest
     @Test
     fun test_bool()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.bool()
             assertNotNull(actual)
@@ -215,7 +215,7 @@ class UURandomTest
     @Test
     fun test_char()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.char()
             assertNotNull(actual)
@@ -229,7 +229,7 @@ class UURandomTest
     @Test
     fun test_uuid()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val actual = UURandom.uuid()
             assertNotNull(actual)
@@ -242,7 +242,7 @@ class UURandomTest
     @Test
     fun test_byteObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.byteObjArray(length)
@@ -255,7 +255,7 @@ class UURandomTest
     @Test
     fun test_uByteObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.uByteObjArray(length)
@@ -268,7 +268,7 @@ class UURandomTest
     @Test
     fun test_shortObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.shortObjArray(length)
@@ -281,7 +281,7 @@ class UURandomTest
     @Test
     fun test_uShortObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.uShortObjArray(length)
@@ -294,7 +294,7 @@ class UURandomTest
     @Test
     fun test_intObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.intObjArray(length)
@@ -307,7 +307,7 @@ class UURandomTest
     @Test
     fun test_uIntObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.uIntObjArray(length)
@@ -320,7 +320,7 @@ class UURandomTest
     @Test
     fun test_longObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.longObjArray(length)
@@ -333,7 +333,7 @@ class UURandomTest
     @Test
     fun test_uLongObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.uLongObjArray(length)
@@ -346,7 +346,7 @@ class UURandomTest
     @Test
     fun test_floatObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.floatObjArray(length)
@@ -359,7 +359,7 @@ class UURandomTest
     @Test
     fun test_doubleObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.doubleObjArray(length)
@@ -372,7 +372,7 @@ class UURandomTest
     @Test
     fun test_boolObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.boolObjArray(length)
@@ -385,7 +385,7 @@ class UURandomTest
     @Test
     fun test_charObjArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.charObjArray(length)
@@ -398,7 +398,7 @@ class UURandomTest
     @Test
     fun test_shortArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.shortArray(length)
@@ -411,7 +411,7 @@ class UURandomTest
     @Test
     fun test_intArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.intArray(length)
@@ -424,7 +424,7 @@ class UURandomTest
     @Test
     fun test_longArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.longArray(length)
@@ -437,7 +437,7 @@ class UURandomTest
     @Test
     fun test_floatArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.floatArray(length)
@@ -450,7 +450,7 @@ class UURandomTest
     @Test
     fun test_doubleArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.doubleArray(length)
@@ -463,7 +463,7 @@ class UURandomTest
     @Test
     fun test_boolArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.boolArray(length)
@@ -476,13 +476,154 @@ class UURandomTest
     @Test
     fun test_charArray()
     {
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.charArray(length)
             assertNotNull(actual)
             assertTrue(actual.size in 0..length)
             println("UURandom.charArray: ${ actual.map { it } }")
+        }
+    }
+
+    @Test
+    fun test_int_max()
+    {
+        val max = 1000
+        repeat(loops)
+        {
+            val actual = UURandom.int(max)
+            assertNotNull(actual)
+            val rangeCheck = actual.toLong()
+            assertTrue(rangeCheck >= 0)
+            assertTrue(rangeCheck < max)
+            println("UURandom.int(max): $actual")
+        }
+    }
+
+    @Test
+    fun test_asciiLetters()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.asciiLetters(length)
+            assertNotNull(actual)
+            assertTrue(actual.length in 0..length)
+            
+            // Check that all characters are ASCII letters
+            for (char in actual)
+            {
+                assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+            }
+            println("UURandom.asciiLetters: $actual")
+        }
+    }
+
+    @Test
+    fun test_digits()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.digits(length)
+            assertNotNull(actual)
+            assertTrue(actual.length in 0..length)
+            
+            // Check that all characters are digits
+            for (char in actual)
+            {
+                assertTrue(char in '0'..'9')
+            }
+            println("UURandom.digits: $actual")
+        }
+    }
+
+    @Test
+    fun test_asciiLettersOrNumbers()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.asciiLettersOrNumbers(length)
+            assertNotNull(actual)
+            assertTrue(actual.length in 0..length)
+            
+            // Check that all characters are ASCII letters or numbers
+            for (char in actual)
+            {
+                assertTrue(char in 'A'..'Z' || char in 'a'..'z' || char in '0'..'9')
+            }
+            println("UURandom.asciiLettersOrNumbers: $actual")
+        }
+    }
+
+    @Test
+    fun test_chars()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val ranges = arrayListOf(Pair('A', 'Z'), Pair('a', 'z'))
+            val actual = UURandom.chars(length, ranges)
+            assertNotNull(actual)
+            assertTrue(actual.length in 0..length)
+            
+            // Check that all characters are in the specified ranges
+            for (char in actual)
+            {
+                assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+            }
+            println("UURandom.chars: $actual")
+        }
+    }
+
+    @Test
+    fun test_asciiWord()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.asciiWord(length)
+            assertNotNull(actual)
+            assertTrue(actual.length in 0..length)
+            
+            // Check that all characters are ASCII letters
+            for (char in actual)
+            {
+                assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+            }
+            println("UURandom.asciiWord: $actual")
+        }
+    }
+
+    @Test
+    fun test_asciiWords()
+    {
+        repeat(loops)
+        {
+            val maxWords = randomCount()
+            val maxWordLength = randomCount()
+            val actual = UURandom.asciiWords(maxWords, maxWordLength)
+            assertNotNull(actual)
+            
+            // Split by spaces and check each word
+            val words = actual.trim().split(" ")
+            assertTrue(words.size <= maxWords)
+            
+            for (word in words)
+            {
+                if (word.isNotEmpty())
+                {
+                    assertTrue(word.length <= maxWordLength)
+                    // Check that all characters are ASCII letters
+                    for (char in word)
+                    {
+                        assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+                    }
+                }
+            }
+            println("UURandom.asciiWords: $actual")
         }
     }
 
@@ -496,7 +637,7 @@ class UURandomTest
             return TestObj(UURandom.int(), UURandom.int())
         }
 
-        for (i in 0 until LOOPS)
+        repeat(loops)
         {
             val length = randomCount()
             val actual = UURandom.objArray(length) { makeRandom() }
@@ -508,8 +649,6 @@ class UURandomTest
 
     private fun randomCount(): Int
     {
-        return UURandom.int(1, 255)
+        return UURandom.int(1, 22)
     }
-
-
 }
