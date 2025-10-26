@@ -647,6 +647,861 @@ class UURandomTest
         }
     }
 
+    @Test
+    fun test_bytesOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.bytesOrNull(length)
+            // actual can be null or a valid ByteArray
+            if (actual != null)
+            {
+                assertEquals(length, actual.size)
+                println("UURandom.bytesOrNull: ${actual.uuToHex()}")
+            }
+            else
+            {
+                println("UURandom.bytesOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_byteOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.byteOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.toInt()
+                assertTrue(rangeCheck >= Byte.MIN_VALUE.toInt())
+                assertTrue(rangeCheck <= Byte.MAX_VALUE.toInt())
+                println("UURandom.byteOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.byteOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uByteOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.uByteOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.toInt()
+                assertTrue(rangeCheck >= UByte.MIN_VALUE.toInt())
+                assertTrue(rangeCheck <= UByte.MAX_VALUE.toInt())
+                println("UURandom.uByteOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.uByteOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_shortOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.shortOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.toInt()
+                assertTrue(rangeCheck >= Short.MIN_VALUE.toInt())
+                assertTrue(rangeCheck <= Short.MAX_VALUE.toInt())
+                println("UURandom.shortOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.shortOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uShortOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.uShortOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.toInt()
+                assertTrue(rangeCheck >= UShort.MIN_VALUE.toInt())
+                assertTrue(rangeCheck <= UShort.MAX_VALUE.toInt())
+                println("UURandom.uShortOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.uShortOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uIntOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.uIntOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.toLong()
+                assertTrue(rangeCheck >= UInt.MIN_VALUE.toLong())
+                assertTrue(rangeCheck <= UInt.MAX_VALUE.toLong())
+                println("UURandom.uIntOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.uIntOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_longOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.longOrNull()
+            if (actual != null)
+            {
+                println("UURandom.longOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.longOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uLongOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.uLongOrNull()
+            if (actual != null)
+            {
+                println("UURandom.uLongOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.uLongOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_floatOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.floatOrNull()
+            if (actual != null)
+            {
+                println("UURandom.floatOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.floatOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_doubleOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.doubleOrNull()
+            if (actual != null)
+            {
+                println("UURandom.doubleOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.doubleOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_boolOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.boolOrNull()
+            if (actual != null)
+            {
+                println("UURandom.boolOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.boolOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_charOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.charOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.code
+                assertTrue(rangeCheck >= Char.MIN_VALUE.code)
+                assertTrue(rangeCheck <= Char.MAX_VALUE.code)
+                println("UURandom.charOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.charOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uuidOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.uuidOrNull()
+            if (actual != null)
+            {
+                val check = UUID.fromString(actual)
+                assertNotNull(check)
+                println("UURandom.uuidOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.uuidOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_intOrNull()
+    {
+        repeat(loops)
+        {
+            val actual = UURandom.intOrNull()
+            if (actual != null)
+            {
+                val rangeCheck = actual.toLong()
+                assertTrue(rangeCheck >= Integer.MIN_VALUE.toLong())
+                assertTrue(rangeCheck <= Integer.MAX_VALUE.toLong())
+                println("UURandom.intOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.intOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_intOrNull_max()
+    {
+        val max = 1000
+        repeat(loops)
+        {
+            val actual = UURandom.intOrNull(max)
+            if (actual != null)
+            {
+                val rangeCheck = actual.toLong()
+                assertTrue(rangeCheck >= 0)
+                assertTrue(rangeCheck < max)
+                println("UURandom.intOrNull(max): $actual")
+            }
+            else
+            {
+                println("UURandom.intOrNull(max): null")
+            }
+        }
+    }
+
+    @Test
+    fun test_intOrNull_min_max()
+    {
+        val min = -1000
+        val max = 1000
+        repeat(loops)
+        {
+            val actual = UURandom.intOrNull(min, max)
+            if (actual != null)
+            {
+                val rangeCheck = actual.toLong()
+                assertTrue(rangeCheck >= min.toLong())
+                assertTrue(rangeCheck <= max.toLong())
+                println("UURandom.intOrNull(min, max): $actual")
+            }
+            else
+            {
+                println("UURandom.intOrNull(min, max): null")
+            }
+        }
+    }
+
+    @Test
+    fun test_byteObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.byteObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.byteObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.byteObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uByteObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.uByteObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.uByteObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.uByteObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_shortObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.shortObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.shortObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.shortObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uShortObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.uShortObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.uShortObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.uShortObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_intObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.intObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.intObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.intObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uIntObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.uIntObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.uIntObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.uIntObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_longObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.longObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.longObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.longObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_uLongObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.uLongObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.uLongObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.uLongObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_floatObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.floatObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.floatObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.floatObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_doubleObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.doubleObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.doubleObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.doubleObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_boolObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.boolObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.boolObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.boolObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_charObjArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.charObjArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.charObjArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.charObjArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_shortArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.shortArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.shortArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.shortArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_intArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.intArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.intArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.intArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_longArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.longArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.longArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.longArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_floatArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.floatArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.floatArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.floatArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_doubleArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.doubleArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.doubleArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.doubleArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_boolArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.boolArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.boolArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.boolArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_charArrayOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.charArrayOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.charArrayOrNull: ${ actual.map { it } }")
+            }
+            else
+            {
+                println("UURandom.charArrayOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_asciiLettersOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.asciiLettersOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.length in 0..length)
+                
+                // Check that all characters are ASCII letters
+                for (char in actual)
+                {
+                    assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+                }
+                println("UURandom.asciiLettersOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.asciiLettersOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_digitsOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.digitsOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.length in 0..length)
+                
+                // Check that all characters are digits
+                for (char in actual)
+                {
+                    assertTrue(char in '0'..'9')
+                }
+                println("UURandom.digitsOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.digitsOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_asciiLettersOrNumbersOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.asciiLettersOrNumbersOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.length in 0..length)
+                
+                // Check that all characters are ASCII letters or numbers
+                for (char in actual)
+                {
+                    assertTrue(char in 'A'..'Z' || char in 'a'..'z' || char in '0'..'9')
+                }
+                println("UURandom.asciiLettersOrNumbersOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.asciiLettersOrNumbersOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_charsOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val ranges = arrayListOf(Pair('A', 'Z'), Pair('a', 'z'))
+            val actual = UURandom.charsOrNull(length, ranges)
+            if (actual != null)
+            {
+                assertTrue(actual.length in 0..length)
+                
+                // Check that all characters are in the specified ranges
+                for (char in actual)
+                {
+                    assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+                }
+                println("UURandom.charsOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.charsOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_asciiWordOrNull()
+    {
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.asciiWordOrNull(length)
+            if (actual != null)
+            {
+                assertTrue(actual.length in 0..length)
+                
+                // Check that all characters are ASCII letters
+                for (char in actual)
+                {
+                    assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+                }
+                println("UURandom.asciiWordOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.asciiWordOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_asciiWordsOrNull()
+    {
+        repeat(loops)
+        {
+            val maxWords = randomCount()
+            val maxWordLength = randomCount()
+            val actual = UURandom.asciiWordsOrNull(maxWords, maxWordLength)
+            if (actual != null)
+            {
+                // Split by spaces and check each word
+                val words = actual.trim().split(" ")
+                assertTrue(words.size <= maxWords)
+                
+                for (word in words)
+                {
+                    if (word.isNotEmpty())
+                    {
+                        assertTrue(word.length <= maxWordLength)
+                        // Check that all characters are ASCII letters
+                        for (char in word)
+                        {
+                            assertTrue(char in 'A'..'Z' || char in 'a'..'z')
+                        }
+                    }
+                }
+                println("UURandom.asciiWordsOrNull: $actual")
+            }
+            else
+            {
+                println("UURandom.asciiWordsOrNull: null")
+            }
+        }
+    }
+
+    @Test
+    fun test_objArrayOrNull()
+    {
+        data class TestObj(val a: Int, val b: Int)
+
+        fun makeRandom(): TestObj
+        {
+            return TestObj(UURandom.int(), UURandom.int())
+        }
+
+        repeat(loops)
+        {
+            val length = randomCount()
+            val actual = UURandom.objArrayOrNull(length) { makeRandom() }
+            if (actual != null)
+            {
+                assertTrue(actual.size in 0..length)
+                println("UURandom.objArrayOrNull: ${ actual.map { "${it.a}-${it.b}" } }")
+            }
+            else
+            {
+                println("UURandom.objArrayOrNull: null")
+            }
+        }
+    }
+
     private fun randomCount(): Int
     {
         return UURandom.int(1, 22)

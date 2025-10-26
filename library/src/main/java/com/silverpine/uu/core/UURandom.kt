@@ -40,6 +40,18 @@ object UURandom
     }
 
     /**
+     * Generates a random byte array or null using java.security.SecureRandom
+     *
+     * @param length length of byte array to generate
+     * @return byte array filled with data or null
+     * @see java.security.SecureRandom
+     */
+    fun bytesOrNull(length: Int): ByteArray?
+    {
+        return if (bool()) bytes(length) else null
+    }
+
+    /**
      * Generates a random integer with an upper and lower bound
      *
      * @param min minimum value
@@ -50,6 +62,18 @@ object UURandom
     {
         val range = max - min
         return secureRandom.nextInt(range) + min
+    }
+
+    /**
+     * Generates a random integer with an upper and lower bound or null
+     *
+     * @param min minimum value
+     * @param max maximum value
+     * @return a random integer or null
+     */
+    fun intOrNull(min: Int, max: Int): Int?
+    {
+        return if (bool()) int(min, max) else null
     }
 
     /**
@@ -64,6 +88,17 @@ object UURandom
     }
 
     /**
+     * Generates a random integer with an upper bound or null
+     *
+     * @param max maximum value
+     * @return a random integer or null
+     */
+    fun intOrNull(max: Int): Int?
+    {
+        return if (bool()) int(max) else null
+    }
+
+    /**
      * Generates a random integer
      *
      * @return a random integer
@@ -71,6 +106,16 @@ object UURandom
     fun int(): Int
     {
         return secureRandom.nextInt()
+    }
+
+    /**
+     * Generates a random integer or null
+     *
+     * @return a random integer or null
+     */
+    fun intOrNull(): Int?
+    {
+        return if (bool()) int() else null
     }
 
     /**
@@ -84,6 +129,16 @@ object UURandom
     }
 
     /**
+     * Generates a random unsigned integer or null
+     *
+     * @return a random unsigned integer or null
+     */
+    fun uIntOrNull(): UInt?
+    {
+        return if (bool()) uInt() else null
+    }
+
+    /**
      * Generates a random long
      *
      * @return a random long
@@ -91,6 +146,16 @@ object UURandom
     fun long(): Long
     {
         return secureRandom.nextLong()
+    }
+
+    /**
+     * Generates a random long or null
+     *
+     * @return a random long or null
+     */
+    fun longOrNull(): Long?
+    {
+        return if (bool()) long() else null
     }
 
     /**
@@ -104,6 +169,16 @@ object UURandom
     }
 
     /**
+     * Generates a random unsigned long or null
+     *
+     * @return a random unsigned long or null
+     */
+    fun uLongOrNull(): ULong?
+    {
+        return if (bool()) uLong() else null
+    }
+
+    /**
      * Generates a random double
      *
      * @return a random double
@@ -111,6 +186,16 @@ object UURandom
     fun double(): Double
     {
         return secureRandom.nextDouble()
+    }
+
+    /**
+     * Generates a random double or null
+     *
+     * @return a random double or null
+     */
+    fun doubleOrNull(): Double?
+    {
+        return if (bool()) double() else null
     }
 
     /**
@@ -124,6 +209,16 @@ object UURandom
     }
 
     /**
+     * Generates a random float or null
+     *
+     * @return a random float or null
+     */
+    fun floatOrNull(): Float?
+    {
+        return if (bool()) float() else null
+    }
+
+    /**
      * Generates a random boolean
      *
      * @return a random boolean
@@ -131,6 +226,16 @@ object UURandom
     fun bool(): Boolean
     {
         return secureRandom.nextBoolean()
+    }
+
+    /**
+     * Generates a random boolean or null
+     *
+     * @return a random boolean or null
+     */
+    fun boolOrNull(): Boolean?
+    {
+        return if (bool()) bool() else null
     }
 
     /**
@@ -145,6 +250,16 @@ object UURandom
     }
 
     /**
+     * Generates a random byte or null
+     *
+     * @return a random byte or null
+     */
+    fun byteOrNull(): Byte?
+    {
+        return if (bool()) byte() else null
+    }
+
+    /**
      * Generates a random unsigned byte
      *
      * @return a random unsigned byte
@@ -153,6 +268,16 @@ object UURandom
     {
         val result = bytes(1)
         return result[0].toUByte()
+    }
+
+    /**
+     * Generates a random unsigned byte or null
+     *
+     * @return a random unsigned byte or null
+     */
+    fun uByteOrNull(): UByte?
+    {
+        return if (bool()) uByte() else null
     }
 
     /**
@@ -168,6 +293,16 @@ object UURandom
     }
 
     /**
+     * Generates a random short or null
+     *
+     * @return a random short or null
+     */
+    fun shortOrNull(): Short?
+    {
+        return if (bool()) short() else null
+    }
+
+    /**
      * Generates a random unsigned short
      *
      * @return a random unsigned short
@@ -175,6 +310,16 @@ object UURandom
     fun uShort(): UShort
     {
         return short().toUShort()
+    }
+
+    /**
+     * Generates a random unsigned short or null
+     *
+     * @return a random unsigned short or null
+     */
+    fun uShortOrNull(): UShort?
+    {
+        return if (bool()) uShort() else null
     }
 
     /**
@@ -188,6 +333,16 @@ object UURandom
     }
 
     /**
+     * Generates a random char or null
+     *
+     * @return a random char or null
+     */
+    fun charOrNull(): Char?
+    {
+        return if (bool()) char() else null
+    }
+
+    /**
      * Generates a random UUID and returns the string form
      *
      * @return a random string
@@ -198,7 +353,16 @@ object UURandom
         return uid.toString()
     }
 
-
+    /**
+     * Generates a random UUID and returns the string form or null
+     *
+     * @return a random string or null
+     */
+    fun uuidOrNull(): String?
+    {
+        return if (bool()) uuid() else null
+    }
+    
     /**
      * Generates a random array of objects using a provided random generator function
      *
@@ -222,6 +386,19 @@ object UURandom
     }
 
     /**
+     * Generates a random array of objects using a provided random generator function or null
+     *
+     * @param T the type of objects to generate
+     * @param maxLength maximum length of the array to generate
+     * @param random function that generates a random object of type T
+     * @return array of randomly generated objects or null
+     */
+    inline fun <reified T> objArrayOrNull(maxLength: Int, random: ()->T): Array<T>?
+    {
+        return if (bool()) objArray(maxLength, random) else null
+    }
+
+    /**
      * Generates a random array of Byte objects
      *
      * @param maxLength maximum length of the array to generate
@@ -230,6 +407,17 @@ object UURandom
     fun byteObjArray(maxLength: Int): Array<Byte>
     {
         return objArray(maxLength, this::byte)
+    }
+
+    /**
+     * Generates a random array of Byte objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Byte objects or null
+     */
+    fun byteObjArrayOrNull(maxLength: Int): Array<Byte>?
+    {
+        return if (bool()) byteObjArray(maxLength) else null
     }
 
     /**
@@ -244,6 +432,17 @@ object UURandom
     }
 
     /**
+     * Generates a random array of UByte objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated UByte objects or null
+     */
+    fun uByteObjArrayOrNull(maxLength: Int): Array<UByte>?
+    {
+        return if (bool()) uByteObjArray(maxLength) else null
+    }
+
+    /**
      * Generates a random array of Short objects
      *
      * @param maxLength maximum length of the array to generate
@@ -252,6 +451,17 @@ object UURandom
     fun shortObjArray(maxLength: Int): Array<Short>
     {
         return objArray(maxLength, this::short)
+    }
+
+    /**
+     * Generates a random array of Short objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Short objects or null
+     */
+    fun shortObjArrayOrNull(maxLength: Int): Array<Short>?
+    {
+        return if (bool()) shortObjArray(maxLength) else null
     }
 
     /**
@@ -266,6 +476,17 @@ object UURandom
     }
 
     /**
+     * Generates a random array of UShort objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated UShort objects or null
+     */
+    fun uShortObjArrayOrNull(maxLength: Int): Array<UShort>?
+    {
+        return if (bool()) uShortObjArray(maxLength) else null
+    }
+
+    /**
      * Generates a random array of Int objects
      *
      * @param maxLength maximum length of the array to generate
@@ -274,6 +495,17 @@ object UURandom
     fun intObjArray(maxLength: Int): Array<Int>
     {
         return objArray(maxLength, this::int)
+    }
+
+    /**
+     * Generates a random array of Int objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Int objects or null
+     */
+    fun intObjArrayOrNull(maxLength: Int): Array<Int>?
+    {
+        return if (bool()) intObjArray(maxLength) else null
     }
 
     /**
@@ -288,6 +520,17 @@ object UURandom
     }
 
     /**
+     * Generates a random array of UInt objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated UInt objects or null
+     */
+    fun uIntObjArrayOrNull(maxLength: Int): Array<UInt>?
+    {
+        return if (bool()) uIntObjArray(maxLength) else null
+    }
+
+    /**
      * Generates a random array of Long objects
      *
      * @param maxLength maximum length of the array to generate
@@ -296,6 +539,17 @@ object UURandom
     fun longObjArray(maxLength: Int): Array<Long>
     {
         return objArray(maxLength, this::long)
+    }
+
+    /**
+     * Generates a random array of Long objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Long objects or null
+     */
+    fun longObjArrayOrNull(maxLength: Int): Array<Long>?
+    {
+        return if (bool()) longObjArray(maxLength) else null
     }
 
     /**
@@ -310,6 +564,17 @@ object UURandom
     }
 
     /**
+     * Generates a random array of ULong objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated ULong objects or null
+     */
+    fun uLongObjArrayOrNull(maxLength: Int): Array<ULong>?
+    {
+        return if (bool()) uLongObjArray(maxLength) else null
+    }
+
+    /**
      * Generates a random array of Float objects
      *
      * @param maxLength maximum length of the array to generate
@@ -318,6 +583,17 @@ object UURandom
     fun floatObjArray(maxLength: Int): Array<Float>
     {
         return objArray(maxLength, this::float)
+    }
+
+    /**
+     * Generates a random array of Float objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Float objects or null
+     */
+    fun floatObjArrayOrNull(maxLength: Int): Array<Float>?
+    {
+        return if (bool()) floatObjArray(maxLength) else null
     }
 
     /**
@@ -332,6 +608,17 @@ object UURandom
     }
 
     /**
+     * Generates a random array of Double objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Double objects or null
+     */
+    fun doubleObjArrayOrNull(maxLength: Int): Array<Double>?
+    {
+        return if (bool()) doubleObjArray(maxLength) else null
+    }
+
+    /**
      * Generates a random array of Boolean objects
      *
      * @param maxLength maximum length of the array to generate
@@ -343,6 +630,17 @@ object UURandom
     }
 
     /**
+     * Generates a random array of Boolean objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Boolean objects or null
+     */
+    fun boolObjArrayOrNull(maxLength: Int): Array<Boolean>?
+    {
+        return if (bool()) boolObjArray(maxLength) else null
+    }
+
+    /**
      * Generates a random array of Char objects
      *
      * @param maxLength maximum length of the array to generate
@@ -351,6 +649,17 @@ object UURandom
     fun charObjArray(maxLength: Int): Array<Char>
     {
         return objArray(maxLength, this::char)
+    }
+
+    /**
+     * Generates a random array of Char objects or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return array of randomly generated Char objects or null
+     */
+    fun charObjArrayOrNull(maxLength: Int): Array<Char>?
+    {
+        return if (bool()) charObjArray(maxLength) else null
     }
 
     /**
@@ -374,6 +683,17 @@ object UURandom
     }
 
     /**
+     * Generates a random ShortArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return ShortArray filled with random values or null
+     */
+    fun shortArrayOrNull(maxLength: Int): ShortArray?
+    {
+        return if (bool()) shortArray(maxLength) else null
+    }
+
+    /**
      * Generates a random IntArray
      *
      * @param maxLength maximum length of the array to generate
@@ -390,6 +710,17 @@ object UURandom
             a[i] = int()
         }
         return a
+    }
+
+    /**
+     * Generates a random IntArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return IntArray filled with random values or null
+     */
+    fun intArrayOrNull(maxLength: Int): IntArray?
+    {
+        return if (bool()) intArray(maxLength) else null
     }
 
     /**
@@ -413,6 +744,17 @@ object UURandom
     }
 
     /**
+     * Generates a random LongArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return LongArray filled with random values or null
+     */
+    fun longArrayOrNull(maxLength: Int): LongArray?
+    {
+        return if (bool()) longArray(maxLength) else null
+    }
+
+    /**
      * Generates a random FloatArray
      *
      * @param maxLength maximum length of the array to generate
@@ -429,6 +771,17 @@ object UURandom
             a[i] = float()
         }
         return a
+    }
+
+    /**
+     * Generates a random FloatArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return FloatArray filled with random values or null
+     */
+    fun floatArrayOrNull(maxLength: Int): FloatArray?
+    {
+        return if (bool()) floatArray(maxLength) else null
     }
 
     /**
@@ -452,6 +805,17 @@ object UURandom
     }
 
     /**
+     * Generates a random DoubleArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return DoubleArray filled with random values or null
+     */
+    fun doubleArrayOrNull(maxLength: Int): DoubleArray?
+    {
+        return if (bool()) doubleArray(maxLength) else null
+    }
+
+    /**
      * Generates a random BooleanArray
      *
      * @param maxLength maximum length of the array to generate
@@ -469,6 +833,17 @@ object UURandom
         }
 
         return a
+    }
+
+    /**
+     * Generates a random BooleanArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return BooleanArray filled with random values or null
+     */
+    fun boolArrayOrNull(maxLength: Int): BooleanArray?
+    {
+        return if (bool()) boolArray(maxLength) else null
     }
 
     /**
@@ -491,6 +866,17 @@ object UURandom
     }
 
     /**
+     * Generates a random CharArray or null
+     *
+     * @param maxLength maximum length of the array to generate
+     * @return CharArray filled with random values or null
+     */
+    fun charArrayOrNull(maxLength: Int): CharArray?
+    {
+        return if (bool()) charArray(maxLength) else null
+    }
+
+    /**
      * Generates a random string containing only ASCII letters (A-Z, a-z)
      *
      * @param maxLength maximum length of the string to generate
@@ -499,6 +885,17 @@ object UURandom
     fun asciiLetters(maxLength: Int): String
     {
         return chars(maxLength, arrayListOf(UPPER_CASE, LOWER_CASE))
+    }
+
+    /**
+     * Generates a random string containing only ASCII letters or null (A-Z, a-z)
+     *
+     * @param maxLength maximum length of the string to generate
+     * @return random string containing only ASCII letters or null
+     */
+    fun asciiLettersOrNull(maxLength: Int): String?
+    {
+        return if (bool()) asciiLetters(maxLength) else null
     }
 
     /**
@@ -513,6 +910,17 @@ object UURandom
     }
 
     /**
+     * Generates a random string containing only digits or null (0-9)
+     *
+     * @param maxLength maximum length of the string to generate
+     * @return random string containing only digits or null
+     */
+    fun digitsOrNull(maxLength: Int): String?
+    {
+        return if (bool()) digits(maxLength) else null
+    }
+
+    /**
      * Generates a random string containing ASCII letters and numbers (A-Z, a-z, 0-9)
      *
      * @param maxLength maximum length of the string to generate
@@ -521,6 +929,17 @@ object UURandom
     fun asciiLettersOrNumbers(maxLength: Int): String
     {
         return chars(maxLength, arrayListOf(UPPER_CASE, LOWER_CASE, NUMBERS))
+    }
+
+    /**
+     * Generates a random string containing ASCII letters and numbers or null (A-Z, a-z, 0-9)
+     *
+     * @param maxLength maximum length of the string to generate
+     * @return random string containing ASCII letters and numbers or null
+     */
+    fun asciiLettersOrNumbersOrNull(maxLength: Int): String?
+    {
+        return if (bool()) asciiLettersOrNumbers(maxLength) else null
     }
 
     /**
@@ -556,6 +975,20 @@ object UURandom
     }
 
     /**
+     * Generates a random string containing characters from specified ranges or null
+     *
+     * @param maxLength maximum length of the string to generate
+     * @param ranges list of character ranges to choose from (defaults to all characters)
+     * @return random string containing characters from the specified ranges or null
+     */
+    fun charsOrNull(
+        maxLength: Int,
+        ranges: ArrayList<Pair<Char, Char>> = arrayListOf(Pair(Char.MIN_VALUE, Char.MAX_VALUE))): String?
+    {
+        return if (bool()) chars(maxLength, ranges) else null
+    }
+
+    /**
      * Generates a random ASCII word (letters only)
      *
      * @param maxLength maximum length of the word to generate
@@ -564,6 +997,17 @@ object UURandom
     fun asciiWord(maxLength: Int): String
     {
         return asciiLetters(maxLength)
+    }
+
+    /**
+     * Generates a random ASCII word or null (letters only)
+     *
+     * @param maxLength maximum length of the word to generate
+     * @return random ASCII word containing only letters or null
+     */
+    fun asciiWordOrNull(maxLength: Int): String?
+    {
+        return if (bool()) asciiWord(maxLength) else null
     }
 
     /**
@@ -585,5 +1029,17 @@ object UURandom
         }
 
         return sb.toString()
+    }
+
+    /**
+     * Generates a random string containing multiple ASCII words separated by spaces or null
+     *
+     * @param maxNumberOfWords maximum number of words to generate
+     * @param maxWordLength maximum length of each word
+     * @return random string containing ASCII words separated by spaces or null
+     */
+    fun asciiWordsOrNull(maxNumberOfWords: Int, maxWordLength: Int): String?
+    {
+        return if (bool()) asciiWords(maxNumberOfWords, maxWordLength) else null
     }
 }
