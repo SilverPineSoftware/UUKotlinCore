@@ -63,51 +63,51 @@ object UUSecurePrefs
         return getString(key)?.uuToHexData() ?: defaultValue
     }
 
-    fun setString(key: String, value: String?)
+    fun putString(key: String, value: String?)
     {
         requireWriter()
         return writer.putString(key, value).apply()
     }
 
-    fun setStringSet(key: String, value: Set<String>?)
+    fun putStringSet(key: String, value: Set<String>?)
     {
         requireWriter()
         return writer.putStringSet(key, value).apply()
     }
 
-    fun setInt(key: String, value: Int)
+    fun putInt(key: String, value: Int)
     {
         requireWriter()
         return writer.putInt(key, value).apply()
     }
 
-    fun setLong(key: String, value: Long)
+    fun putLong(key: String, value: Long)
     {
         requireWriter()
         return writer.putLong(key, value).apply()
     }
 
-    fun setFloat(key: String, value: Float)
+    fun putFloat(key: String, value: Float)
     {
         requireWriter()
         return writer.putFloat(key, value).apply()
     }
 
-    fun setDouble(key: String, value: Double)
+    fun putDouble(key: String, value: Double)
     {
         requireWriter()
-        setLong(key, value.toBits())
+        putLong(key, value.toBits())
     }
 
-    fun setBoolean(key: String, value: Boolean)
+    fun putBoolean(key: String, value: Boolean)
     {
         requireWriter()
         return writer.putBoolean(key, value).apply()
     }
 
-    fun setData(key: String, value: ByteArray?)
+    fun putData(key: String, value: ByteArray?)
     {
-        return setString(key, value?.uuToHex())
+        return putString(key, value?.uuToHex())
     }
 
     fun remove(key: String)

@@ -92,74 +92,74 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0008_uninitialized_setString()
+    fun test_0008_uninitialized_putString()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setString("crash", "crash")
+            UUSecurePrefs.putString("crash", "crash")
         }
     }
 
     @Test()
-    fun test_0009_uninitialized_setStringSet()
+    fun test_0009_uninitialized_setStringPut()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setStringSet("crash", null)
+            UUSecurePrefs.putStringSet("crash", null)
         }
     }
 
     @Test()
-    fun test_0010_uninitialized_setInt()
+    fun test_0010_uninitialized_putInt()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setInt("crash", 123)
+            UUSecurePrefs.putInt("crash", 123)
         }
     }
 
     @Test()
-    fun test_0011_uninitialized_setLong()
+    fun test_0011_uninitialized_putLong()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setLong("crash", 456L)
+            UUSecurePrefs.putLong("crash", 456L)
         }
     }
 
     @Test()
-    fun test_0012_uninitialized_setFloat()
+    fun test_0012_uninitialized_putFloat()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setFloat("crash", 92.3f)
+            UUSecurePrefs.putFloat("crash", 92.3f)
         }
     }
 
     @Test()
-    fun test_0013_uninitialized_setDouble()
+    fun test_0013_uninitialized_putDouble()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setFloat("crash", 92.3f)
+            UUSecurePrefs.putFloat("crash", 92.3f)
         }
     }
 
     @Test()
-    fun test_0014_uninitialized_setBoolean()
+    fun test_0014_uninitialized_putBoolean()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setBoolean("crash", false)
+            UUSecurePrefs.putBoolean("crash", false)
         }
     }
 
     @Test()
-    fun test_0015_uninitialized_setData()
+    fun test_0015_uninitialized_putData()
     {
         assertThrows(RuntimeException::class.java)
         {
-            UUSecurePrefs.setData("crash", "ABCD".uuToHexData())
+            UUSecurePrefs.putData("crash", "ABCD".uuToHexData())
         }
     }
 
@@ -171,14 +171,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0101_getSetString()
+    fun test_0101_getPutString()
     {
         val key = "string_key"
         var value = UUSecurePrefs.getString(key)
         assertNull(value)
 
         val toWrite = "barbecue sauce"
-        UUSecurePrefs.setString(key, toWrite)
+        UUSecurePrefs.putString(key, toWrite)
 
         value = UUSecurePrefs.getString(key)
         assertEquals(toWrite, value)
@@ -190,14 +190,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0102_getSetInt()
+    fun test_0102_getPutInt()
     {
         val key = "int_key"
         var value = UUSecurePrefs.getInt(key)
         assertEquals(0, value)
 
         val toWrite = 300
-        UUSecurePrefs.setInt(key, toWrite)
+        UUSecurePrefs.putInt(key, toWrite)
 
         value = UUSecurePrefs.getInt(key)
         assertEquals(toWrite, value)
@@ -209,14 +209,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0103_getSetLong()
+    fun test_0103_getPutLong()
     {
         val key = "long_key"
         var value = UUSecurePrefs.getLong(key)
         assertEquals(0L, value)
 
         val toWrite = 8675309L
-        UUSecurePrefs.setLong(key, toWrite)
+        UUSecurePrefs.putLong(key, toWrite)
 
         value = UUSecurePrefs.getLong(key)
         assertEquals(toWrite, value)
@@ -228,14 +228,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0104_getSetFloat()
+    fun test_0104_getPutFloat()
     {
         val key = "float_key"
         var value = UUSecurePrefs.getFloat(key)
         assertEquals(0.0f, value)
 
         val toWrite = 101.6f
-        UUSecurePrefs.setFloat(key, toWrite)
+        UUSecurePrefs.putFloat(key, toWrite)
 
         value = UUSecurePrefs.getFloat(key)
         assertEquals(toWrite, value)
@@ -247,14 +247,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0105_getSetDouble()
+    fun test_0105_getPutDouble()
     {
         val key = "double_key"
         var value = UUSecurePrefs.getDouble(key)
         assertEquals(0.0, value, 0.0)
 
         val toWrite = 9509.7611
-        UUSecurePrefs.setDouble(key, toWrite)
+        UUSecurePrefs.putDouble(key, toWrite)
 
         value = UUSecurePrefs.getDouble(key)
         assertEquals(toWrite, value, 0.0)
@@ -266,14 +266,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0105_getSetBoolean()
+    fun test_0105_getPutBoolean()
     {
         val key = "boolean_key"
         var value = UUSecurePrefs.getBoolean(key)
         assertEquals(false, value)
 
         val toWrite = true
-        UUSecurePrefs.setBoolean(key, toWrite)
+        UUSecurePrefs.putBoolean(key, toWrite)
 
         value = UUSecurePrefs.getBoolean(key)
         assertEquals(toWrite, value)
@@ -285,14 +285,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0106_getSetData()
+    fun test_0106_getPutData()
     {
         val key = "data_key"
         var value = UUSecurePrefs.getData(key)
         assertNull(value)
 
         val toWrite = "ABCDEF1234".uuToHexData()
-        UUSecurePrefs.setData(key, toWrite)
+        UUSecurePrefs.putData(key, toWrite)
 
         value = UUSecurePrefs.getData(key)
         assertArrayEquals(toWrite, value)
@@ -304,14 +304,14 @@ class UUSecurePrefsTest
     }
 
     @Test()
-    fun test_0107_getSetStringSet()
+    fun test_0107_getSetStringPut()
     {
         val key = "string_set_key"
         var value = UUSecurePrefs.getStringSet(key)
         assertNull(value)
 
         val toWrite = setOf("one", "two")
-        UUSecurePrefs.setStringSet(key, toWrite)
+        UUSecurePrefs.putStringSet(key, toWrite)
 
         value = UUSecurePrefs.getStringSet(key)
         assertNotNull(value)
