@@ -187,6 +187,32 @@ object UUSecurePrefs: UUPrefs
     }
 
     /**
+     * Retrieves an encrypted enum value from secure preferences.
+     * 
+     * The enum is stored as a string (using the enum's `name` property) and automatically
+     * decrypted when retrieved. The string is then converted back to the enum type using
+     * the provided `enumClass`. If the stored string doesn't match any enum value,
+     * the `defaultValue` is returned.
+     * 
+     * @param T The enum type to retrieve
+     * @param key The key identifying the preference
+     * @param enumClass The class of the enum type to retrieve
+     * @param defaultValue The value to return if the key doesn't exist, is null, or doesn't match any enum value
+     * @return The decrypted enum value, or `defaultValue` if not found or invalid
+     * @throws RuntimeException if [init] has not been called
+     */
+    override fun <T: Enum<T>> getEnum(key: String, enumClass: Class<T>, defaultValue: T?): T?
+    {
+        requireReader()
+        val storedString = getString(key, null) ?: return defaultValue
+        
+        return runCatching()
+        {
+            enumClass.enumConstants?.firstOrNull { it.name == storedString }
+        }.getOrDefault(defaultValue)
+    }
+
+    /**
      * Stores a string value in secure preferences with encryption.
      * 
      * The value is automatically encrypted before being stored.
@@ -307,6 +333,23 @@ object UUSecurePrefs: UUPrefs
     override fun putData(key: String, value: ByteArray?)
     {
         return putString(key, value?.uuToHex())
+    }
+
+    /**
+     * Stores an enum value in secure preferences with encryption.
+     * 
+     * The enum is stored as a string using its `name` property and automatically
+     * encrypted before being stored. If `value` is `null`, the key will be removed
+     * from storage.
+     * 
+     * @param T The enum type to store
+     * @param key The key identifying the preference
+     * @param value The enum value to encrypt and store, or `null` to remove the key
+     * @throws RuntimeException if [init] has not been called
+     */
+    override fun <T: Enum<T>> putEnum(key: String, value: T?)
+    {
+        return putString(key, value?.name)
     }
 
     /**

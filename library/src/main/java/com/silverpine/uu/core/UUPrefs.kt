@@ -104,7 +104,33 @@ interface UUPrefs
      * @return The byte array associated with the key, or `defaultValue` if not found
      */
     fun getData(key: String, defaultValue: ByteArray? = null): ByteArray?
-
+    
+    /**
+     * Retrieves an enum value from preferences.
+     * 
+     * The enum is stored as a string (using the enum's `name` property) and converted back
+     * to the enum type when retrieved. If the stored string doesn't match any enum value,
+     * the `defaultValue` is returned.
+     * 
+     * @param T The enum type to retrieve
+     * @param key The key identifying the preference
+     * @param enumClass The class of the enum type to retrieve
+     * @param defaultValue The value to return if the key doesn't exist, is null, or doesn't match any enum value. Defaults to `null`
+     * @return The enum value associated with the key, or `defaultValue` if not found or invalid
+     * 
+     * @sample
+     * ```kotlin
+     * enum class Theme { LIGHT, DARK, AUTO }
+     * 
+     * // Store enum
+     * prefs.putEnum("theme", Theme.DARK)
+     * 
+     * // Retrieve enum
+     * val theme = prefs.getEnum("theme", Theme::class.java, Theme.LIGHT)
+     * // Returns Theme.DARK if stored, or Theme.LIGHT if not found
+     * ```
+     */
+    fun <T: Enum<T>> getEnum(key: String, enumClass: Class<T>, defaultValue: T? = null): T?
     /**
      * Stores a string value in preferences.
      * 
@@ -174,6 +200,29 @@ interface UUPrefs
      * @param value The byte array to store, or `null` to remove the key
      */
     fun putData(key: String, value: ByteArray?)
+    
+    /**
+     * Stores an enum value in preferences.
+     * 
+     * The enum is stored as a string using its `name` property. If `value` is `null`,
+     * the key will typically be removed from storage.
+     * 
+     * @param T The enum type to store
+     * @param key The key identifying the preference
+     * @param value The enum value to store, or `null` to remove the key
+     * 
+     * @sample
+     * ```kotlin
+     * enum class Theme { LIGHT, DARK, AUTO }
+     * 
+     * prefs.putEnum("theme", Theme.DARK)
+     * // Stores "DARK" as a string
+     * 
+     * prefs.putEnum("theme", null)
+     * // Removes the "theme" key
+     * ```
+     */
+    fun <T: Enum<T>> putEnum(key: String, value: T?)
     
     /**
      * Removes a preference entry by its key.
