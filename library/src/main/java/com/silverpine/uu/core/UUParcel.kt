@@ -3,6 +3,9 @@ package com.silverpine.uu.core
 import android.os.Parcel
 import android.os.Parcelable
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUParcel"
 
 /**
  * Safely serializes a parcelable into a byte array
@@ -24,7 +27,7 @@ fun Parcelable.uuSerializeParcel(): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.e(javaClass, "uuSerializeParcel", "",  ex)
+        UULog.logException(LOG_TAG, "uuSerializeParcel", ex)
         result = null
     }
     finally
@@ -57,7 +60,7 @@ fun <T : Parcelable?> ByteArray.uuDeserializeParcel(parcelableCreator: Parcelabl
     }
     catch (ex: Exception)
     {
-        UULog.e(javaClass, "uuDeserializeParcel", "",  ex)
+        UULog.logException(LOG_TAG, "uuDeserializeParcel", ex)
         result = null
     }
     finally
@@ -80,6 +83,6 @@ fun Parcel.uuSafeRecycle()
     }
     catch (ex: Exception)
     {
-        UULog.e(javaClass, "uuSafeRecycle", "", ex)
+        UULog.logException(LOG_TAG, "uuSafeRecycle", ex)
     }
 }

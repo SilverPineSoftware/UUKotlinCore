@@ -1,6 +1,9 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUTimer"
 
 interface UUTimerThread
 {
@@ -79,7 +82,7 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "safeStartTimer", "", ex)
+            UULog.logException(LOG_TAG, "safeStartTimer", ex)
         }
     }
 
@@ -94,11 +97,11 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "safeCancelTimer", "", ex)
+            UULog.logException(LOG_TAG, "safeCancelTimer", ex)
         }
     }
 
-    private fun handlerTimerFired()
+    private fun handleTimerFired()
     {
         try
         {
@@ -106,7 +109,7 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "handlerTimerFired", "", ex)
+            UULog.logException(LOG_TAG, "handleTimerFired", ex)
         }
     }
 
@@ -114,7 +117,7 @@ class UUTimer(
     {
         try
         {
-            handlerTimerFired()
+            handleTimerFired()
 
             if (repeat)
             {
@@ -127,7 +130,7 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "safeInvokeRun", "", ex)
+            UULog.logException(LOG_TAG, "safeInvokeRun", ex)
         }
     }
 
@@ -150,7 +153,7 @@ class UUTimer(
             }
             catch (ex: Exception)
             {
-                UULog.e(UUTimer::class.java, "addTimer", "", ex)
+                UULog.logException(LOG_TAG, "addTimer", ex)
             }
         }
 
@@ -165,7 +168,7 @@ class UUTimer(
             }
             catch (ex: Exception)
             {
-                UULog.e(UUTimer::class.java, "removeTimer", "", ex)
+                UULog.logException(LOG_TAG, "removeTimer", ex)
             }
         }
 

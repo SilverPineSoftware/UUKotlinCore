@@ -1,10 +1,15 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.nio.charset.Charset
 import java.util.Base64
 import java.util.Locale
 import java.util.regex.Pattern
+
+private const val LOG_TAG = "UUString"
 
 fun String?.uuSafeString(): String
 {
@@ -75,7 +80,7 @@ fun String.uuToByteArray(encoding: Charset): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuToByteArray", "", ex)
+        UULog.logException(LOG_TAG, "uuToByteArray", ex)
         null
     }
 }
@@ -264,7 +269,7 @@ fun String.uuMatchesRegex(regexPattern: String): Boolean
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuMatchesRegex", "", ex)
+        UULog.logException(LOG_TAG, "uuMatchesRegex", ex)
         false
     }
 }
@@ -287,4 +292,18 @@ fun String.uuHasNumber(): Boolean
 fun String.uuHasSymbol(): Boolean
 {
     return uuMatchesRegex(UU_PASSWORD_VALID_SYMBOLS_REGEX)
+}
+
+fun Throwable.uuStackTrace(): String
+{
+    return runCatching()
+    {
+        val sw = StringWriter()
+        printStackTrace(PrintWriter(sw))
+        return sw.toString()
+
+    }.getOrElse()
+    {
+        uuSafeToString()
+    }
 }

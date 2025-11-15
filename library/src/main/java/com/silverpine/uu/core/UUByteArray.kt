@@ -1,11 +1,14 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.charset.Charset
 import java.util.Base64
 import java.util.Locale
+
+private const val LOG_TAG = "UUByteArray"
 
 /**
  * Converts this [ByteArray] into a hexadecimal string representation.
@@ -79,7 +82,7 @@ fun ByteArray.uuString(encoding: Charset): Result<String>
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuString", "", ex)
+        UULog.logException(LOG_TAG, "uuString" ,ex)
         Result.failure(ex)
     }
 }
@@ -183,7 +186,7 @@ fun ByteArray.uuBase64(encoder: Base64.Encoder = Base64.getEncoder()): Result<St
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuBase64", "", ex)
+        UULog.logException(LOG_TAG, "uuBase64" ,ex)
         Result.failure(ex)
     }
 }

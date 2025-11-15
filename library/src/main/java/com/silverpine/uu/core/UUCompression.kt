@@ -1,9 +1,12 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.io.BufferedOutputStream
 import java.io.ByteArrayOutputStream
 import java.util.zip.GZIPOutputStream
+
+private const val LOG_TAG = "UUCompression"
 
 /**
  * Compresses the Byte Array using GZIP
@@ -24,7 +27,7 @@ fun ByteArray.uuGzip(): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGzip", "", ex)
+        UULog.logException(LOG_TAG, "uuGzip" ,ex)
     }
     finally
     {

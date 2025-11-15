@@ -3,9 +3,12 @@ package com.silverpine.uu.core
 import android.os.Handler
 import android.os.Looper
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+private const val LOG_TAG = "UUDispatch"
 
 /**
  * Safely runs a block of code on the main thread.
@@ -25,7 +28,7 @@ fun uuDispatchMain(delay: Long, block: ()->Unit)
     }
     catch (ex: Exception)
     {
-        UULog.d(Object::class.java, "uuDispatchMain", "", ex)
+        UULog.logException(LOG_TAG, "uuDispatchMain", ex)
     }
 }
 
@@ -48,7 +51,7 @@ fun uuDispatchMain(block: ()->Unit)
     }
     catch (ex: Exception)
     {
-        UULog.d(Object::class.java, "uuDispatchMain", "", ex)
+        UULog.logException(LOG_TAG, "uuDispatchMain", ex)
     }
 }
 
@@ -76,13 +79,13 @@ fun uuDispatch(delay: Long, block: ()->Unit)
             }
             catch (ex: Exception)
             {
-                UULog.d(javaClass, "uuDispatch", "", ex)
+                UULog.logException(LOG_TAG, "uuDispatch.inner", ex)
             }
         }
     }
     catch (ex: Exception)
     {
-        UULog.d(Object::class.java, "uuDispatch", "", ex)
+        UULog.logException(LOG_TAG, "uuDispatch", ex)
     }
 }
 
@@ -106,7 +109,6 @@ private fun uuSafeInvokeBlock(block: ()->Unit)
     }
     catch (ex: Exception)
     {
-        UULog.d(Object::class.java, "uuSafeInvokeBlock", "", ex)
-
+        UULog.logException(LOG_TAG, "uuSafeInvokeBlock", ex)
     }
 }

@@ -129,15 +129,15 @@ class UUDispatchTest
         {
             uuDispatch()
             {
-                UULog.d(javaClass, "test", "Block $id starting")
+                //UULog.d(javaClass, "test", "Block $id starting")
 
                 for (loop in 0 until loops)
                 {
-                    UULog.d(javaClass, "test", "Block_${id}_loop_$loop sleeping")
+                    //UULog.d(javaClass, "test", "Block_${id}_loop_$loop sleeping")
                     uuSleep(sleep)
                 }
 
-                UULog.d(javaClass, "test", "Block $id finished")
+                //UULog.d(javaClass, "test", "Block $id finished")
                 latch.countDown()
             }
         }

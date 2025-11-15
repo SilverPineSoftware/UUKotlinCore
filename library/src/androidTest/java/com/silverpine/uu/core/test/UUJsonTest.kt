@@ -209,7 +209,7 @@ class UUJsonTest
             val source = createObject()
 
             val json = UUAssert.unwrap(UUJson.toJson(source, source.javaClass).getOrNull())
-            UULog.d(javaClass, "doToFromJsonTest-$i", "JSON Object: $json")
+            //UULog.d(javaClass, "doToFromJsonTest-$i", "JSON Object: $json")
 
             val check = TestObject(source)
             val checkJson = check.encodeToJson()

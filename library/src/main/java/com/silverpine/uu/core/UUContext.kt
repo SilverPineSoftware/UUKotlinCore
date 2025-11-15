@@ -7,7 +7,10 @@ import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.util.Locale
+
+private const val LOG_TAG = "UUContext"
 
 fun uuPlatformString(): String
 {
@@ -34,7 +37,23 @@ fun Context.uuAppVersion(): String
     }
     catch (ex: Exception)
     {
-        UULog.e(javaClass, "uuAppVersion", "", ex)
+        UULog.logException(LOG_TAG, "uuAppVersion" ,ex)
+    }
+
+    return "unknown"
+}
+
+fun Context.uuAppVersionCode(): String
+{
+    try
+    {
+        val manager = packageManager
+        val info = manager.getPackageInfo(packageName, 0)
+        return info.longVersionCode.toString(10)
+    }
+    catch (ex: Exception)
+    {
+        UULog.logException(LOG_TAG, "uuAppVersion" ,ex)
     }
 
     return "unknown"
@@ -55,7 +74,7 @@ fun Context.uuScreenSize(): String
     }
     catch (ex: Exception)
     {
-        UULog.e(javaClass, "getScreenSize", "", ex)
+        UULog.logException(LOG_TAG, "uuScreenSize" ,ex)
     }
 
     return "unknown"

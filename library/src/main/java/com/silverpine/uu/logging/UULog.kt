@@ -115,3 +115,29 @@ object UULog
         logger?.fatal(tag, message)
     }
 }
+
+/**
+ * Logs an exception at debug level with contextual information.
+ * 
+ * This convenience extension function formats and logs exception information
+ * at the debug level. The log message includes the location where the exception
+ * was caught and the exception's string representation.
+ * 
+ * @param logTag A short identifier for the source of the log message (e.g., class name or component).
+ * @param where A description of where the exception was caught (e.g., method name or operation).
+ * @param exception The exception that was caught and should be logged.
+ * 
+ * @sample
+ * ```kotlin
+ * try {
+ *     performRiskyOperation()
+ * } catch (e: IOException) {
+ *     UULog.logException("FileService", "saveFile", e)
+ *     // Logs: "Caught exception in saveFile: java.io.IOException: File not found"
+ * }
+ * ```
+ */
+fun UULog.logException(logTag: String, where: String, exception: Exception)
+{
+    debug(logTag, "Caught exception in $where: $exception")
+}

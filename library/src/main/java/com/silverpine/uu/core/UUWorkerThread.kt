@@ -3,6 +3,9 @@ package com.silverpine.uu.core
 import android.os.Handler
 import android.os.HandlerThread
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUWorkerThread"
 
 class UUWorkerThread(name: String): HandlerThread(name)
 {
@@ -21,7 +24,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "post", "", ex)
+            UULog.logException(LOG_TAG, "post", ex)
         }
     }
 
@@ -33,7 +36,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "postDelayed", "", ex)
+            UULog.logException(LOG_TAG, "postDelayed", ex)
         }
     }
 
@@ -45,7 +48,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "postDelayed", "", ex)
+            UULog.logException(LOG_TAG, "postDelayed", ex)
         }
     }
 
@@ -56,7 +59,7 @@ class UUWorkerThread(name: String): HandlerThread(name)
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
 //            {
 //                val hasCallback = handler.hasCallbacks(block)
-//                UULog.d(javaClass, "remove", "BEFORE remove, hasCallback: $hasCallback")
+//                //UULog.d(javaClass, "remove", "BEFORE remove, hasCallback: $hasCallback")
 //            }
 
             handler.removeCallbacks(block)
@@ -64,12 +67,12 @@ class UUWorkerThread(name: String): HandlerThread(name)
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
 //            {
 //                val hasCallback = handler.hasCallbacks(block)
-//                UULog.d(javaClass, "remove", "AFTER remove, hasCallback: $hasCallback")
+//                //UULog.d(javaClass, "remove", "AFTER remove, hasCallback: $hasCallback")
 //            }
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "remove", "", ex)
+            UULog.logException(LOG_TAG, "remove", ex)
         }
     }
 
@@ -77,23 +80,11 @@ class UUWorkerThread(name: String): HandlerThread(name)
     {
         try
         {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-//            {
-//                val hasCallback = handler.hasCallbacks(runnable)
-//                UULog.d(javaClass, "remove", "BEFORE remove, hasRunnable: $hasCallback")
-//            }
-
             handler.removeCallbacks(runnable)
-
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-//            {
-//                val hasCallback = handler.hasCallbacks(runnable)
-//                UULog.d(javaClass, "remove", "AFTER remove, hasRunnable: $hasCallback")
-//            }
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "remove", "", ex)
+            UULog.logException(LOG_TAG, "remove", ex)
         }
     }
 }

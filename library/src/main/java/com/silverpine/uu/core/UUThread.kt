@@ -2,6 +2,9 @@ package com.silverpine.uu.core
 
 import android.os.Looper
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUThread"
 
 /**
  * Checks to see if the currently running thread is the main thread or not
@@ -20,6 +23,6 @@ fun uuSleep(millis: Long)
     }
     catch (ex : Exception)
     {
-        UULog.d(Thread::class.java, "uuSleep", "", ex)
+        UULog.logException(LOG_TAG, "uuSleep", ex)
     }
 }

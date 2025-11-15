@@ -2,6 +2,7 @@ package com.silverpine.uu.core
 
 import android.text.TextUtils
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
@@ -10,6 +11,8 @@ import java.io.OutputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.zip.ZipInputStream
+
+private const val LOG_TAG = "UUStream"
 
 fun InputStream.uuCopyTo(outputStream: OutputStream, bufferSize: Int = 10240)
 {
@@ -34,7 +37,7 @@ fun InputStream.uuCopyTo(outputStream: OutputStream, bufferSize: Int = 10240)
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuCopyTo", "", ex)
+        UULog.logException(LOG_TAG, "uuCopyTo", ex)
     }
 }
 
@@ -62,11 +65,11 @@ fun InputStream.uuUnzip(destinationFolder: Path)
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuUnzip", "", ex)
+        UULog.logException(LOG_TAG, "uuUnzip", ex)
     }
 }
 
-fun InputStream.uuReadAll(): ByteArray?
+fun InputStream.uuReadAll(chunkSize: Int = 10240): ByteArray?
 {
     var result: ByteArray? = null
 
@@ -76,7 +79,7 @@ fun InputStream.uuReadAll(): ByteArray?
         outputStream.use()
         { os ->
 
-            val buffer = ByteArray(10240)
+            val buffer = ByteArray(chunkSize)
             var length = 1
 
             while (length > 0)
@@ -94,7 +97,7 @@ fun InputStream.uuReadAll(): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuReadAll", "", ex)
+        UULog.logException(LOG_TAG, "uuReadAll", ex)
     }
 
     return result
