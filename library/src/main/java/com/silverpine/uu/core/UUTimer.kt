@@ -29,6 +29,8 @@ class UUWorkerTimerThread(name: String): UUTimerThread
 
 /**
  * A simple named timer that wraps Timer and TimerTask
+ *
+ * @since 1.0.0
  */
 class UUTimer(
     val timerId: String,
@@ -42,6 +44,7 @@ class UUTimer(
     /**
      * Gets the last time this timer was fired
      *
+     * @since 1.0.0
      * @return a long
      */
     var lastFireTime: Long = 0
@@ -49,6 +52,8 @@ class UUTimer(
 
     /**
      * Starts the timer
+     *
+     * @since 1.0.0
      */
     fun start()
     {
@@ -58,6 +63,8 @@ class UUTimer(
 
     /**
      * Cancels the timer
+     *
+     * @since 1.0.0
      */
     fun cancel()
     {
@@ -178,6 +185,7 @@ class UUTimer(
         /**
          * Finds an active timer by ID
          *
+         * @since 1.0.0
          * @param timerId the timer ID to lookup
          *
          * @return a timer or null if not found
@@ -193,6 +201,7 @@ class UUTimer(
         /**
          * Lists all active timers
          *
+         * @since 1.0.0
          * @return a list of UUTimer's
          */
         fun listActiveTimers(): ArrayList<UUTimer>
@@ -213,6 +222,7 @@ class UUTimer(
         /**
          * Fires a named timer
          *
+         * @since 1.0.0
          * @param timerId timer ID
          * @param timeoutMilliseconds timout in milliseconds
          * @param userInfo optional user context
@@ -236,6 +246,7 @@ class UUTimer(
         /**
          * Cancels a named timer
          *
+         * @since 1.0.0
          * @param timerId timer ID
          */
         fun cancelActiveTimer(timerId: String)

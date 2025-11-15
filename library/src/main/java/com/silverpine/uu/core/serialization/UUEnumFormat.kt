@@ -23,6 +23,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * - `STRING` for [Name], [NameLower], and [NameSnakeCase]
  * - `INT` for [Ordinal]
  *
+ * @since 1.0.0
  * @property primitiveKind The KotlinX [PrimitiveKind] associated with this format.
  */
 enum class UUEnumFormat
@@ -36,6 +37,8 @@ enum class UUEnumFormat
      * The [PrimitiveKind] used for serialization based on the format.
      * - `STRING` for name-based formats
      * - `INT` for ordinal format
+     *
+     * @since 1.0.0
      */
     val primitiveKind: PrimitiveKind
         get()
@@ -52,6 +55,8 @@ enum class UUEnumFormat
         /**
          * The default format used when none is explicitly specified.
          * Defaults to [Name].
+         *
+         * @since 1.0.0
          */
         val Default = Name
     }

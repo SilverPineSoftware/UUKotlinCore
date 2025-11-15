@@ -10,6 +10,8 @@ package com.silverpine.uu.core
  * All get operations return a default value if the key doesn't exist or if retrieval fails.
  * Setting a value to `null` typically removes the key from storage.
  * 
+ * @since 1.0.0
+ * 
  * @sample
  * ```kotlin
  * val prefs: UUPrefs = // implementation
@@ -36,6 +38,8 @@ interface UUPrefs
     /**
      * Retrieves a string value from preferences.
      * 
+     * @since 1.0.0
+     *
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist or is null. Defaults to `null`
      * @return The string value associated with the key, or `defaultValue` if not found
@@ -45,6 +49,7 @@ interface UUPrefs
     /**
      * Retrieves a set of strings from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist or is null. Defaults to `null`
      * @return The set of strings associated with the key, or `defaultValue` if not found
@@ -54,6 +59,7 @@ interface UUPrefs
     /**
      * Retrieves an integer value from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0`
      * @return The integer value associated with the key, or `defaultValue` if not found
@@ -63,6 +69,7 @@ interface UUPrefs
     /**
      * Retrieves a long value from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0`
      * @return The long value associated with the key, or `defaultValue` if not found
@@ -72,6 +79,7 @@ interface UUPrefs
     /**
      * Retrieves a float value from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0.0f`
      * @return The float value associated with the key, or `defaultValue` if not found
@@ -81,6 +89,7 @@ interface UUPrefs
     /**
      * Retrieves a double value from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0.0`
      * @return The double value associated with the key, or `defaultValue` if not found
@@ -90,6 +99,7 @@ interface UUPrefs
     /**
      * Retrieves a boolean value from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `false`
      * @return The boolean value associated with the key, or `defaultValue` if not found
@@ -99,6 +109,7 @@ interface UUPrefs
     /**
      * Retrieves a byte array from preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist or is null. Defaults to `null`
      * @return The byte array associated with the key, or `defaultValue` if not found
@@ -112,6 +123,7 @@ interface UUPrefs
      * to the enum type when retrieved. If the stored string doesn't match any enum value,
      * the `defaultValue` is returned.
      * 
+     * @since 1.0.0
      * @param T The enum type to retrieve
      * @param key The key identifying the preference
      * @param enumClass The class of the enum type to retrieve
@@ -136,6 +148,7 @@ interface UUPrefs
      * 
      * If `value` is `null`, the key will typically be removed from storage.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The string value to store, or `null` to remove the key
      */
@@ -146,6 +159,7 @@ interface UUPrefs
      * 
      * If `value` is `null`, the key will typically be removed from storage.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The set of strings to store, or `null` to remove the key
      */
@@ -154,6 +168,7 @@ interface UUPrefs
     /**
      * Stores an integer value in preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The integer value to store
      */
@@ -162,6 +177,7 @@ interface UUPrefs
     /**
      * Stores a long value in preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The long value to store
      */
@@ -170,6 +186,7 @@ interface UUPrefs
     /**
      * Stores a float value in preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The float value to store
      */
@@ -178,6 +195,7 @@ interface UUPrefs
     /**
      * Stores a double value in preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The double value to store
      */
@@ -186,6 +204,7 @@ interface UUPrefs
     /**
      * Stores a boolean value in preferences.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The boolean value to store
      */
@@ -196,6 +215,7 @@ interface UUPrefs
      * 
      * If `value` is `null`, the key will typically be removed from storage.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The byte array to store, or `null` to remove the key
      */
@@ -207,6 +227,7 @@ interface UUPrefs
      * The enum is stored as a string using its `name` property. If `value` is `null`,
      * the key will typically be removed from storage.
      * 
+     * @since 1.0.0
      * @param T The enum type to store
      * @param key The key identifying the preference
      * @param value The enum value to store, or `null` to remove the key
@@ -229,6 +250,7 @@ interface UUPrefs
      * 
      * If the key doesn't exist, this operation is typically a no-op.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference to remove
      */
     fun remove(key: String)
@@ -238,6 +260,8 @@ interface UUPrefs
      * 
      * This operation clears all key-value pairs stored by this preferences instance.
      * Use with caution as this cannot be undone.
+     *
+     * @since 1.0.0
      */
     fun clear()
 }

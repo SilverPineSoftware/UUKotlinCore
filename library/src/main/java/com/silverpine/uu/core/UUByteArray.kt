@@ -25,6 +25,8 @@ private const val LOG_TAG = "UUByteArray"
  * ```
  *
  * @receiver the [ByteArray] to convert.
+ *
+ * @since 1.0.0
  * @return a [String] containing the uppercase hexadecimal representation of the bytes.
  */
 fun ByteArray.uuToHex(): String
@@ -70,6 +72,8 @@ fun ByteArray.uuToHex(): String
  * ```
  *
  * @receiver the [ByteArray] to decode.
+ *
+ * @since 1.0.0
  * @param encoding the [Charset] to use when decoding.
  * @return a [Result] containing the decoded [String] on success,
  *         or the thrown [Exception] on failure.
@@ -107,6 +111,8 @@ fun ByteArray.uuString(encoding: Charset): Result<String>
  * ```
  *
  * @receiver the [ByteArray] to decode as UTF-8.
+ *
+ * @since 1.0.0
  * @return a [Result] containing the decoded [String] on success,
  *         or the thrown [Exception] on failure.
  */
@@ -136,6 +142,8 @@ fun ByteArray.uuUtf8(): Result<String>
  * ```
  *
  * @receiver the [ByteArray] to decode as US-ASCII.
+ *
+ * @since 1.0.0
  * @return a [Result] containing the decoded [String] on success,
  *         or the thrown [Exception] on failure.
  */
@@ -173,6 +181,8 @@ fun ByteArray.uuAscii(): Result<String>
  * ```
  *
  * @receiver the [ByteArray] to encode as Base64.
+ *
+ * @since 1.0.0
  * @param encoder the [Base64.Encoder] to use for encoding. Defaults to
  *                [Base64.getEncoder].
  * @return a [Result] containing the Base64-encoded [String] on success,
@@ -194,6 +204,7 @@ fun ByteArray.uuBase64(encoder: Base64.Encoder = Base64.getEncoder()): Result<St
 /**
  * Extracts a set of bytes from a byte array
  *
+ * @since 1.0.0
  * @param index starting index to copy
  * @param count number of bytes to copy
  * @return a byte array, or null if index and count are not in bounds
@@ -245,6 +256,8 @@ private const val UINT8_MASK = 0x000000FF
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param index the position of the byte to read.
  * @return a [Result] containing the [UByte] if successful, or an [Exception] if an error occurs.
  */
@@ -287,6 +300,8 @@ fun ByteArray.uuReadUInt8(index: Int): Result<UByte>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] to use when interpreting the 2 bytes.
  * @param index the starting position in the [ByteArray].
  * @return a [Result] containing the unsigned 16-bit integer as a [UShort] on success,
@@ -336,6 +351,8 @@ fun ByteArray.uuReadUInt16(order: ByteOrder, index: Int): Result<UShort>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (little or big endian).
  * @param index the starting position of the three-byte sequence.
  * @return a [Result] containing the unsigned 24-bit integer as an [Int] on success,
@@ -394,6 +411,8 @@ fun ByteArray.uuReadUInt24(order: ByteOrder, index: Int): Result<UInt>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] to use when interpreting the 4 bytes.
  * @param index the starting position in the [ByteArray].
  * @return a [Result] containing the unsigned 32-bit integer as a [UInt] on success,
@@ -444,6 +463,8 @@ fun ByteArray.uuReadUInt32(order: ByteOrder, index: Int): Result<UInt>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] to use when interpreting the bytes.
  * @param index the starting position in the [ByteArray].
  * @return a [Result] containing the unsigned 64-bit value as a [ULong] on success,
@@ -488,6 +509,8 @@ fun ByteArray.uuReadUInt64(order: ByteOrder, index: Int): Result<ULong>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param index the position in the [ByteArray] to read.
  * @return a [Result] containing the signed 8-bit integer as a [Byte] on success,
  *         or an [Exception] if reading fails.
@@ -535,6 +558,8 @@ fun ByteArray.uuReadInt8(index: Int): Result<Byte>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] to use when interpreting the two bytes.
  * @param index the starting position in the [ByteArray].
  * @return a [Result] containing the [Short] if successful, or an [Exception] if an error occurs.
@@ -580,6 +605,8 @@ fun ByteArray.uuReadInt16(order: ByteOrder, index: Int): Result<Short>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] to use when interpreting the 4 bytes.
  * @param index the starting position in the [ByteArray].
  * @return a [Result] containing the signed 32-bit integer as an [Int] on success,
@@ -629,6 +656,8 @@ fun ByteArray.uuReadInt32(order: ByteOrder, index: Int): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] to use when interpreting the 8 bytes.
  * @param index the starting position in the [ByteArray].
  * @return a [Result] containing the signed 64-bit integer as a [Long] on success,
@@ -671,6 +700,8 @@ fun ByteArray.uuReadInt64(order: ByteOrder, index: Int): Result<Long>
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param index the position in the [ByteArray] where the value should be written.
  * @param value the [UByte] value to store.
  * @return a [Result] containing the number of bytes written (1) on success,
@@ -722,6 +753,8 @@ fun ByteArray.uuWriteUInt8(index: Int, value: UByte): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (big-endian or little-endian) used to write the 2 bytes.
  * @param index the starting position in the [ByteArray].
  * @param value the [UShort] value to write.
@@ -777,6 +810,8 @@ fun ByteArray.uuWriteUInt16(order: ByteOrder, index: Int, value: UShort): Result
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (big-endian or little-endian) used to write the 4 bytes.
  * @param index the starting position in the [ByteArray].
  * @param value the [UInt] value to write.
@@ -833,6 +868,8 @@ fun ByteArray.uuWriteUInt32(order: ByteOrder, index: Int, value: UInt): Result<I
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (big-endian or little-endian) used to write the 8 bytes.
  * @param index the starting position in the [ByteArray].
  * @param value the [ULong] value to write.
@@ -879,6 +916,8 @@ fun ByteArray.uuWriteUInt64(order: ByteOrder, index: Int, value: ULong): Result<
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param index the position in the [ByteArray] where the value should be written.
  * @param value the signed 8-bit integer ([Byte]) to write.
  * @return a [Result] containing the number of bytes written (1) on success,
@@ -933,6 +972,8 @@ fun ByteArray.uuWriteInt8(index: Int, value: Byte): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (big-endian or little-endian) used to write the 2 bytes.
  * @param index the starting position in the [ByteArray].
  * @param value the signed 16-bit integer ([Short]) to write.
@@ -989,6 +1030,8 @@ fun ByteArray.uuWriteInt16(order: ByteOrder, index: Int, value: Short): Result<I
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (big-endian or little-endian) used to write the 4 bytes.
  * @param index the starting position in the [ByteArray].
  * @param value the signed 32-bit integer ([Int]) to write.
@@ -1045,6 +1088,8 @@ fun ByteArray.uuWriteInt32(order: ByteOrder, index: Int, value: Int): Result<Int
  * ```
  *
  * @receiver the [ByteArray] to write into.
+ *
+ * @since 1.0.0
  * @param order the [ByteOrder] (big-endian or little-endian) used to write the 8 bytes.
  * @param index the starting position in the [ByteArray].
  * @param value the signed 64-bit integer ([Long]) to write.
@@ -1095,6 +1140,8 @@ fun ByteArray.uuWriteInt64(order: ByteOrder, index: Int, value: Long): Result<In
  * ```
  *
  * @receiver the [ByteArray] into which [value] will be written.
+ *
+ * @since 1.0.0
  * @param index the starting position in this [ByteArray].
  * @param value the [ByteArray] whose contents should be written.
  * @return a [Result] containing the number of bytes written on success,
@@ -1139,6 +1186,8 @@ fun ByteArray.uuWriteData(index: Int, value: ByteArray): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] into which the encoded string will be written.
+ *
+ * @since 1.0.0
  * @param index the starting position in this [ByteArray].
  * @param value the [String] to encode and write.
  * @param charset the [Charset] used to encode the string.
@@ -1176,6 +1225,8 @@ fun ByteArray.uuWriteString(index: Int, value: String, charset: Charset): Result
  * ```
  *
  * @receiver the [ByteArray] into which the UTF-8 encoded string will be written.
+ *
+ * @since 1.0.0
  * @param index the starting position in this [ByteArray].
  * @param value the [String] to encode and write in UTF-8.
  * @return a [Result] containing the number of bytes written on success,
@@ -1210,6 +1261,8 @@ fun ByteArray.uuWriteUtf8(index: Int, value: String): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param index the position of the byte whose high nibble is to be extracted.
  * @return a [Result] containing the high nibble (0–15) on success,
  *         or an [Exception] if the read fails.
@@ -1246,6 +1299,8 @@ fun ByteArray.uuHighNibble(index: Int): Result<Byte>
  * ```
  *
  * @receiver the [ByteArray] to read from.
+ *
+ * @since 1.0.0
  * @param index the position of the byte whose low nibble is to be extracted.
  * @return a [Result] containing the low nibble (0–15) on success,
  *         or an [Exception] if the read fails.
@@ -1284,6 +1339,8 @@ fun ByteArray.uuLowNibble(index: Int): Result<Byte>
  * ```
  *
  * @receiver the [ByteArray] containing the BCD-encoded byte.
+ *
+ * @since 1.0.0
  * @param index the position of the byte to decode.
  * @return a [Result] containing the decimal value (0–99) on success,
  *         or an [Exception] if the nibble values are invalid or if the index is out of bounds.
@@ -1332,6 +1389,8 @@ fun ByteArray.uuBcd8(index: Int): Result<Int>
  * ```
  *
  * @receiver The byte array containing the BCD-encoded value.
+ *
+ * @since 1.0.0
  * @param index The starting position of the 2-byte BCD value.
  * @return A [Result] containing the decoded integer (0..9999) on success,
  *         or an [Exception] if decoding fails or invalid BCD digits are encountered.
@@ -1373,6 +1432,8 @@ fun ByteArray.uuBcd16(index: Int): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] containing the BCD-encoded value
+ *
+ * @since 1.0.0
  * @param index the starting position of the 3-byte BCD sequence
  * @return a [Result] containing the decoded integer (0..999999) on success,
  *         or an [Exception] if decoding fails or the digits are invalid
@@ -1419,6 +1480,8 @@ fun ByteArray.uuBcd24(index: Int): Result<Int>
  * ```
  *
  * @receiver the [ByteArray] containing the BCD-encoded value
+ *
+ * @since 1.0.0
  * @param index the starting position of the 4-byte BCD sequence
  * @return a [Result] containing the decoded integer (0..99,999,999) on success,
  *         or an [Exception] if decoding fails or the digits are invalid
@@ -1461,6 +1524,8 @@ fun ByteArray.uuBcd32(index: Int): Result<Int>
  * // ... use key for encryption ...
  * key.uuReset() // key now contains only zeros
  * ```
+ *
+ * @since 1.0.0
  */
 fun ByteArray.uuReset()
 {
@@ -1479,6 +1544,8 @@ fun ByteArray.uuReset()
  * // ... use key ...
  * key.uuSetAll(0xFF.toByte()) // all bytes set to 0xFF
  * ```
+ *
+ * @since 1.0.0
  */
 fun ByteArray.uuSetAll(value: Byte)
 {
@@ -1499,6 +1566,7 @@ fun ByteArray.uuSetAll(value: Byte)
  * // padded.size == 4, padded == [1, 2, 3, 0]
  * ```
  *
+ * @since 1.0.0
  * @param blockSize The block size to pad to (must be > 0).
  * @return A new [ByteArray] whose length is a multiple of [blockSize].
  */
@@ -1534,6 +1602,7 @@ fun ByteArray.uuPadded(blockSize: Int): ByteArray
  * // result == [0xF0.toByte(), 0xFF.toByte()]
  * ```
  *
+ * @since 1.0.0
  * @param other The [ByteArray] to XOR against.
  * @return A new [ByteArray] containing the XOR result, or a copy of
  *         this array if lengths differ.
@@ -1557,6 +1626,7 @@ fun ByteArray.uuXor(other: ByteArray): ByteArray
 /**
  * Splits this [ByteArray] into a list of chunks, each up to [chunkSize] bytes.
  *
+ * @since 1.0.0
  * @param chunkSize the maximum size of each chunk (must be > 0).
  * @return a list of [ByteArray] chunks. The last chunk may be shorter if not divisible.
  */

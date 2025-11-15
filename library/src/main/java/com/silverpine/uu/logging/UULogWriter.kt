@@ -8,11 +8,15 @@ package com.silverpine.uu.logging
  *
  * This abstraction allows decoupling of the logging destination (e.g. console,
  * file, network, or remote analytics) from the rest of the application code.
+ *
+ * @since 1.0.0
  */
 interface UULogWriter
 {
     /**
      * Writes a log entry with the given severity level, tag, and message.
+     *
+     * @since 1.0.0
      *
      * @param level The severity of the log message, represented by [UULogLevel].
      *              Common levels include [UULogLevel.Verbose], [UULogLevel.Debug],

@@ -37,6 +37,8 @@ import javax.crypto.SecretKey
  * @constructor This is an `object` singleton and cannot be instantiated directly.
  *
  * @see UUSecretKeyProvider for the abstraction this class implements.
+ *
+ * @since 1.0.0
  */
 object UUSecretKey: UUSecretKeyProvider
 {
@@ -49,6 +51,7 @@ object UUSecretKey: UUSecretKeyProvider
      * Otherwise, a new key is generated with the specified [keySizeBits] and stored
      * under that alias for future use.
      *
+     * @since 1.0.0
      * @param alias the unique identifier under which the key is stored.
      * @param keySizeBits the size of the AES key in bits (default is 256).
      *

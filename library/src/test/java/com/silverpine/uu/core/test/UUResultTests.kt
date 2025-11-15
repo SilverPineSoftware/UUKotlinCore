@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test
 
 /**
  * Unit tests for [UUResult].
+ *
+ * @since 1.0.0
  */
 class UUResultTest
 {

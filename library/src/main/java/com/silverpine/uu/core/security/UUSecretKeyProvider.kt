@@ -9,6 +9,8 @@ import javax.crypto.SecretKey
  * a secret key suitable for AES/GCM/NoPadding encryption and decryption.
  * This allows production code to use a secure, hardware‑backed keystore
  * implementation, while tests can supply a fake or in‑memory provider.
+ *
+ * @since 1.0.0
  */
 interface UUSecretKeyProvider {
 
@@ -19,6 +21,7 @@ interface UUSecretKeyProvider {
      * Otherwise, a new key is generated with the specified [keySizeBits] and stored
      * under that alias for future use.
      *
+     * @since 1.0.0
      * @param alias the unique identifier under which the key is stored.
      * @param keySizeBits the size of the AES key in bits (default is 256).
      *

@@ -20,6 +20,7 @@ import com.silverpine.uu.core.uuToHexData
  * The default storage name is based on the application package name, but can be customized
  * via the [init] method.
  * 
+ * @since 1.0.0
  * @sample
  * ```kotlin
  * // Initialize with default name
@@ -48,6 +49,7 @@ object UUSecurePrefs: UUPrefs
      * This method must be called before any get or put operations. If not initialized,
      * all operations will throw a [RuntimeException].
      * 
+     * @since 1.0.0
      * @param context The Android application context
      * @param name The name of the SharedPreferences file. Defaults to `"{packageName}-UUSecurePrefs"`
      */
@@ -62,6 +64,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist or is null
      * @return The decrypted string value, or `defaultValue` if not found
@@ -78,6 +81,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The values are automatically decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist or is null
      * @return The decrypted set of strings, or `defaultValue` if not found
@@ -94,6 +98,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0`
      * @return The decrypted integer value, or `defaultValue` if not found
@@ -110,6 +115,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0`
      * @return The decrypted long value, or `defaultValue` if not found
@@ -126,6 +132,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0.0f`
      * @return The decrypted float value, or `defaultValue` if not found
@@ -143,6 +150,7 @@ object UUSecurePrefs: UUPrefs
      * The value is stored as a long (using [Double.toBits]) and automatically
      * decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `0.0`
      * @return The decrypted double value, or `defaultValue` if not found
@@ -159,6 +167,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically decrypted when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist. Defaults to `false`
      * @return The decrypted boolean value, or `defaultValue` if not found
@@ -176,6 +185,7 @@ object UUSecurePrefs: UUPrefs
      * The data is stored as a hex-encoded string and automatically decrypted
      * and decoded when retrieved.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param defaultValue The value to return if the key doesn't exist or is null
      * @return The decrypted byte array, or `defaultValue` if not found
@@ -194,6 +204,7 @@ object UUSecurePrefs: UUPrefs
      * the provided `enumClass`. If the stored string doesn't match any enum value,
      * the `defaultValue` is returned.
      * 
+     * @since 1.0.0
      * @param T The enum type to retrieve
      * @param key The key identifying the preference
      * @param enumClass The class of the enum type to retrieve
@@ -218,6 +229,7 @@ object UUSecurePrefs: UUPrefs
      * The value is automatically encrypted before being stored.
      * If `value` is `null`, the key will be removed from storage.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The string value to encrypt and store, or `null` to remove the key
      * @throws RuntimeException if [init] has not been called
@@ -234,6 +246,7 @@ object UUSecurePrefs: UUPrefs
      * The values are automatically encrypted before being stored.
      * If `value` is `null`, the key will be removed from storage.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The set of strings to encrypt and store, or `null` to remove the key
      * @throws RuntimeException if [init] has not been called
@@ -249,6 +262,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically encrypted before being stored.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The integer value to encrypt and store
      * @throws RuntimeException if [init] has not been called
@@ -264,6 +278,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically encrypted before being stored.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The long value to encrypt and store
      * @throws RuntimeException if [init] has not been called
@@ -279,6 +294,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically encrypted before being stored.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The float value to encrypt and store
      * @throws RuntimeException if [init] has not been called
@@ -295,6 +311,7 @@ object UUSecurePrefs: UUPrefs
      * The value is stored as a long (using [Double.toBits]) and automatically
      * encrypted before being stored.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The double value to encrypt and store
      * @throws RuntimeException if [init] has not been called
@@ -310,6 +327,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * The value is automatically encrypted before being stored.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The boolean value to encrypt and store
      * @throws RuntimeException if [init] has not been called
@@ -326,6 +344,7 @@ object UUSecurePrefs: UUPrefs
      * The data is hex-encoded and then encrypted before being stored.
      * If `value` is `null`, the key will be removed from storage.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference
      * @param value The byte array to encrypt and store, or `null` to remove the key
      * @throws RuntimeException if [init] has not been called
@@ -342,6 +361,7 @@ object UUSecurePrefs: UUPrefs
      * encrypted before being stored. If `value` is `null`, the key will be removed
      * from storage.
      * 
+     * @since 1.0.0
      * @param T The enum type to store
      * @param key The key identifying the preference
      * @param value The enum value to encrypt and store, or `null` to remove the key
@@ -357,6 +377,7 @@ object UUSecurePrefs: UUPrefs
      * 
      * If the key doesn't exist, this operation is typically a no-op.
      * 
+     * @since 1.0.0
      * @param key The key identifying the preference to remove
      * @throws RuntimeException if [init] has not been called
      */
@@ -372,6 +393,7 @@ object UUSecurePrefs: UUPrefs
      * This operation clears all key-value pairs stored by this secure preferences instance.
      * Use with caution as this cannot be undone.
      * 
+     * @since 1.0.0
      * @throws RuntimeException if [init] has not been called
      */
     override fun clear()
@@ -383,6 +405,7 @@ object UUSecurePrefs: UUPrefs
     /**
      * Ensures that the reader has been initialized.
      * 
+     * @since 1.0.0
      * @throws RuntimeException if [init] has not been called
      */
     private fun requireReader()
@@ -396,6 +419,7 @@ object UUSecurePrefs: UUPrefs
     /**
      * Ensures that the writer has been initialized.
      * 
+     * @since 1.0.0
      * @throws RuntimeException if [init] has not been called
      */
     private fun requireWriter()

@@ -9,6 +9,7 @@ private const val LOG_TAG = "UUThread"
 /**
  * Checks to see if the currently running thread is the main thread or not
  *
+ * @since 1.0.0
  * @return true if the main thread, false otherwise
  */
 fun uuIsMainThread(): Boolean

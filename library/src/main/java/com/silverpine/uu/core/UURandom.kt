@@ -11,6 +11,8 @@ import java.util.UUID
  * License:
  * You are free to use this code for whatever purposes you desire.
  * The only requirement is that you smile everytime you use it. :-)
+ *
+ * @since 1.0.0
  */
 object UURandom
 {
@@ -23,6 +25,7 @@ object UURandom
     /**
      * Generates a random byte array using java.security.SecureRandom
      *
+     * @since 1.0.0
      * @param length length of byte array to generate
      * @return byte array filled with data.
      * @see java.security.SecureRandom
@@ -42,6 +45,7 @@ object UURandom
     /**
      * Generates a random byte array or null using java.security.SecureRandom
      *
+     * @since 1.0.0
      * @param length length of byte array to generate
      * @return byte array filled with data or null
      * @see java.security.SecureRandom
@@ -54,6 +58,7 @@ object UURandom
     /**
      * Generates a random integer with an upper and lower bound
      *
+     * @since 1.0.0
      * @param min minimum value
      * @param max maximum value
      * @return a random integer
@@ -67,6 +72,7 @@ object UURandom
     /**
      * Generates a random integer with an upper and lower bound or null
      *
+     * @since 1.0.0
      * @param min minimum value
      * @param max maximum value
      * @return a random integer or null
@@ -79,6 +85,7 @@ object UURandom
     /**
      * Generates a random integer with an upper bound
      *
+     * @since 1.0.0
      * @param max maximum value
      * @return a random integer
      */
@@ -90,6 +97,7 @@ object UURandom
     /**
      * Generates a random integer with an upper bound or null
      *
+     * @since 1.0.0
      * @param max maximum value
      * @return a random integer or null
      */
@@ -101,6 +109,7 @@ object UURandom
     /**
      * Generates a random integer
      *
+     * @since 1.0.0
      * @return a random integer
      */
     fun int(): Int
@@ -111,6 +120,7 @@ object UURandom
     /**
      * Generates a random integer or null
      *
+     * @since 1.0.0
      * @return a random integer or null
      */
     fun intOrNull(): Int?
@@ -121,6 +131,7 @@ object UURandom
     /**
      * Generates a random unsigned integer
      *
+     * @since 1.0.0
      * @return a random unsigned integer
      */
     fun uInt(): UInt
@@ -131,6 +142,7 @@ object UURandom
     /**
      * Generates a random unsigned integer or null
      *
+     * @since 1.0.0
      * @return a random unsigned integer or null
      */
     fun uIntOrNull(): UInt?
@@ -141,6 +153,7 @@ object UURandom
     /**
      * Generates a random long
      *
+     * @since 1.0.0
      * @return a random long
      */
     fun long(): Long
@@ -151,6 +164,7 @@ object UURandom
     /**
      * Generates a random long or null
      *
+     * @since 1.0.0
      * @return a random long or null
      */
     fun longOrNull(): Long?
@@ -161,6 +175,7 @@ object UURandom
     /**
      * Generates a random unsigned long
      *
+     * @since 1.0.0
      * @return a random unsigned long
      */
     fun uLong(): ULong
@@ -171,6 +186,7 @@ object UURandom
     /**
      * Generates a random unsigned long or null
      *
+     * @since 1.0.0
      * @return a random unsigned long or null
      */
     fun uLongOrNull(): ULong?
@@ -181,6 +197,7 @@ object UURandom
     /**
      * Generates a random double
      *
+     * @since 1.0.0
      * @return a random double
      */
     fun double(): Double
@@ -191,6 +208,7 @@ object UURandom
     /**
      * Generates a random double or null
      *
+     * @since 1.0.0
      * @return a random double or null
      */
     fun doubleOrNull(): Double?
@@ -201,6 +219,7 @@ object UURandom
     /**
      * Generates a random float
      *
+     * @since 1.0.0
      * @return a random float
      */
     fun float(): Float
@@ -211,6 +230,7 @@ object UURandom
     /**
      * Generates a random float or null
      *
+     * @since 1.0.0
      * @return a random float or null
      */
     fun floatOrNull(): Float?
@@ -221,6 +241,7 @@ object UURandom
     /**
      * Generates a random boolean
      *
+     * @since 1.0.0
      * @return a random boolean
      */
     fun bool(): Boolean
@@ -231,6 +252,7 @@ object UURandom
     /**
      * Generates a random boolean or null
      *
+     * @since 1.0.0
      * @return a random boolean or null
      */
     fun boolOrNull(): Boolean?
@@ -241,6 +263,7 @@ object UURandom
     /**
      * Generates a random byte
      *
+     * @since 1.0.0
      * @return a random byte
      */
     fun byte(): Byte
@@ -252,6 +275,7 @@ object UURandom
     /**
      * Generates a random byte or null
      *
+     * @since 1.0.0
      * @return a random byte or null
      */
     fun byteOrNull(): Byte?
@@ -262,6 +286,7 @@ object UURandom
     /**
      * Generates a random unsigned byte
      *
+     * @since 1.0.0
      * @return a random unsigned byte
      */
     fun uByte(): UByte
@@ -273,6 +298,7 @@ object UURandom
     /**
      * Generates a random unsigned byte or null
      *
+     * @since 1.0.0
      * @return a random unsigned byte or null
      */
     fun uByteOrNull(): UByte?
@@ -283,6 +309,7 @@ object UURandom
     /**
      * Generates a random short
      *
+     * @since 1.0.0
      * @return a random short
      */
     fun short(): Short
@@ -295,6 +322,7 @@ object UURandom
     /**
      * Generates a random short or null
      *
+     * @since 1.0.0
      * @return a random short or null
      */
     fun shortOrNull(): Short?
@@ -305,6 +333,7 @@ object UURandom
     /**
      * Generates a random unsigned short
      *
+     * @since 1.0.0
      * @return a random unsigned short
      */
     fun uShort(): UShort
@@ -315,6 +344,7 @@ object UURandom
     /**
      * Generates a random unsigned short or null
      *
+     * @since 1.0.0
      * @return a random unsigned short or null
      */
     fun uShortOrNull(): UShort?
@@ -325,6 +355,7 @@ object UURandom
     /**
      * Generates a random byte
      *
+     * @since 1.0.0
      * @return a random byte
      */
     fun char(): Char
@@ -335,6 +366,7 @@ object UURandom
     /**
      * Generates a random char or null
      *
+     * @since 1.0.0
      * @return a random char or null
      */
     fun charOrNull(): Char?
@@ -345,6 +377,7 @@ object UURandom
     /**
      * Generates a random UUID and returns the string form
      *
+     * @since 1.0.0
      * @return a random string
      */
     fun uuid(): String
@@ -356,6 +389,7 @@ object UURandom
     /**
      * Generates a random UUID and returns the string form or null
      *
+     * @since 1.0.0
      * @return a random string or null
      */
     fun uuidOrNull(): String?
@@ -366,6 +400,7 @@ object UURandom
     /**
      * Generates a random array of objects using a provided random generator function
      *
+     * @since 1.0.0
      * @param T the type of objects to generate
      * @param maxLength maximum length of the array to generate
      * @param random function that generates a random object of type T
@@ -388,6 +423,7 @@ object UURandom
     /**
      * Generates a random array of objects using a provided random generator function or null
      *
+     * @since 1.0.0
      * @param T the type of objects to generate
      * @param maxLength maximum length of the array to generate
      * @param random function that generates a random object of type T
@@ -401,6 +437,7 @@ object UURandom
     /**
      * Generates a random array of Byte objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Byte objects
      */
@@ -412,6 +449,7 @@ object UURandom
     /**
      * Generates a random array of Byte objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Byte objects or null
      */
@@ -423,6 +461,7 @@ object UURandom
     /**
      * Generates a random array of UByte objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated UByte objects
      */
@@ -434,6 +473,7 @@ object UURandom
     /**
      * Generates a random array of UByte objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated UByte objects or null
      */
@@ -445,6 +485,7 @@ object UURandom
     /**
      * Generates a random array of Short objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Short objects
      */
@@ -456,6 +497,7 @@ object UURandom
     /**
      * Generates a random array of Short objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Short objects or null
      */
@@ -467,6 +509,7 @@ object UURandom
     /**
      * Generates a random array of UShort objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated UShort objects
      */
@@ -478,6 +521,7 @@ object UURandom
     /**
      * Generates a random array of UShort objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated UShort objects or null
      */
@@ -489,6 +533,7 @@ object UURandom
     /**
      * Generates a random array of Int objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Int objects
      */
@@ -500,6 +545,7 @@ object UURandom
     /**
      * Generates a random array of Int objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Int objects or null
      */
@@ -511,6 +557,7 @@ object UURandom
     /**
      * Generates a random array of UInt objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated UInt objects
      */
@@ -522,6 +569,7 @@ object UURandom
     /**
      * Generates a random array of UInt objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated UInt objects or null
      */
@@ -533,6 +581,7 @@ object UURandom
     /**
      * Generates a random array of Long objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Long objects
      */
@@ -544,6 +593,7 @@ object UURandom
     /**
      * Generates a random array of Long objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Long objects or null
      */
@@ -555,6 +605,7 @@ object UURandom
     /**
      * Generates a random array of ULong objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated ULong objects
      */
@@ -566,6 +617,7 @@ object UURandom
     /**
      * Generates a random array of ULong objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated ULong objects or null
      */
@@ -577,6 +629,7 @@ object UURandom
     /**
      * Generates a random array of Float objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Float objects
      */
@@ -588,6 +641,7 @@ object UURandom
     /**
      * Generates a random array of Float objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Float objects or null
      */
@@ -599,6 +653,7 @@ object UURandom
     /**
      * Generates a random array of Double objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Double objects
      */
@@ -610,6 +665,7 @@ object UURandom
     /**
      * Generates a random array of Double objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Double objects or null
      */
@@ -621,6 +677,7 @@ object UURandom
     /**
      * Generates a random array of Boolean objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Boolean objects
      */
@@ -632,6 +689,7 @@ object UURandom
     /**
      * Generates a random array of Boolean objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Boolean objects or null
      */
@@ -643,6 +701,7 @@ object UURandom
     /**
      * Generates a random array of Char objects
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Char objects
      */
@@ -654,6 +713,7 @@ object UURandom
     /**
      * Generates a random array of Char objects or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return array of randomly generated Char objects or null
      */
@@ -665,6 +725,7 @@ object UURandom
     /**
      * Generates a random ShortArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return ShortArray filled with random values
      */
@@ -685,6 +746,7 @@ object UURandom
     /**
      * Generates a random ShortArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return ShortArray filled with random values or null
      */
@@ -696,6 +758,7 @@ object UURandom
     /**
      * Generates a random IntArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return IntArray filled with random values
      */
@@ -715,6 +778,7 @@ object UURandom
     /**
      * Generates a random IntArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return IntArray filled with random values or null
      */
@@ -726,6 +790,7 @@ object UURandom
     /**
      * Generates a random LongArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return LongArray filled with random values
      */
@@ -746,6 +811,7 @@ object UURandom
     /**
      * Generates a random LongArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return LongArray filled with random values or null
      */
@@ -757,6 +823,7 @@ object UURandom
     /**
      * Generates a random FloatArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return FloatArray filled with random values
      */
@@ -776,6 +843,7 @@ object UURandom
     /**
      * Generates a random FloatArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return FloatArray filled with random values or null
      */
@@ -787,6 +855,7 @@ object UURandom
     /**
      * Generates a random DoubleArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return DoubleArray filled with random values
      */
@@ -807,6 +876,7 @@ object UURandom
     /**
      * Generates a random DoubleArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return DoubleArray filled with random values or null
      */
@@ -818,6 +888,7 @@ object UURandom
     /**
      * Generates a random BooleanArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return BooleanArray filled with random values
      */
@@ -838,6 +909,7 @@ object UURandom
     /**
      * Generates a random BooleanArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return BooleanArray filled with random values or null
      */
@@ -849,6 +921,7 @@ object UURandom
     /**
      * Generates a random CharArray
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return CharArray filled with random values
      */
@@ -868,6 +941,7 @@ object UURandom
     /**
      * Generates a random CharArray or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the array to generate
      * @return CharArray filled with random values or null
      */
@@ -879,6 +953,7 @@ object UURandom
     /**
      * Generates a random string containing only ASCII letters (A-Z, a-z)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @return random string containing only ASCII letters
      */
@@ -890,6 +965,7 @@ object UURandom
     /**
      * Generates a random string containing only ASCII letters or null (A-Z, a-z)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @return random string containing only ASCII letters or null
      */
@@ -901,6 +977,7 @@ object UURandom
     /**
      * Generates a random string containing only digits (0-9)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @return random string containing only digits
      */
@@ -912,6 +989,7 @@ object UURandom
     /**
      * Generates a random string containing only digits or null (0-9)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @return random string containing only digits or null
      */
@@ -923,6 +1001,7 @@ object UURandom
     /**
      * Generates a random string containing ASCII letters and numbers (A-Z, a-z, 0-9)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @return random string containing ASCII letters and numbers
      */
@@ -934,6 +1013,7 @@ object UURandom
     /**
      * Generates a random string containing ASCII letters and numbers or null (A-Z, a-z, 0-9)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @return random string containing ASCII letters and numbers or null
      */
@@ -945,6 +1025,7 @@ object UURandom
     /**
      * Generates a random string containing characters from specified ranges
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @param ranges list of character ranges to choose from (defaults to all characters)
      * @return random string containing characters from the specified ranges
@@ -977,6 +1058,7 @@ object UURandom
     /**
      * Generates a random string containing characters from specified ranges or null
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the string to generate
      * @param ranges list of character ranges to choose from (defaults to all characters)
      * @return random string containing characters from the specified ranges or null
@@ -991,6 +1073,7 @@ object UURandom
     /**
      * Generates a random ASCII word (letters only)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the word to generate
      * @return random ASCII word containing only letters
      */
@@ -1002,6 +1085,7 @@ object UURandom
     /**
      * Generates a random ASCII word or null (letters only)
      *
+     * @since 1.0.0
      * @param maxLength maximum length of the word to generate
      * @return random ASCII word containing only letters or null
      */
@@ -1013,6 +1097,7 @@ object UURandom
     /**
      * Generates a random string containing multiple ASCII words separated by spaces
      *
+     * @since 1.0.0
      * @param maxNumberOfWords maximum number of words to generate
      * @param maxWordLength maximum length of each word
      * @return random string containing ASCII words separated by spaces
@@ -1034,6 +1119,7 @@ object UURandom
     /**
      * Generates a random string containing multiple ASCII words separated by spaces or null
      *
+     * @since 1.0.0
      * @param maxNumberOfWords maximum number of words to generate
      * @param maxWordLength maximum length of each word
      * @return random string containing ASCII words separated by spaces or null

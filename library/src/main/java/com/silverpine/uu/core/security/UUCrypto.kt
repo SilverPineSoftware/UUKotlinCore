@@ -27,6 +27,7 @@ import javax.crypto.spec.GCMParameterSpec
  * Keys are obtained from [secretKeyProvider], which defaults to [UUSecretKey] (backed by
  * the Android Keystore). For testing, this provider can be swapped with a fake or mock.
  *
+ * @since 1.0.0
  * @property secretKeyProvider the provider used to load or generate AES keys.
  */
 object UUCrypto
@@ -40,6 +41,7 @@ object UUCrypto
     /**
      * Encrypts the given [value] using AES/GCM/NoPadding with a key from [secretKeyProvider].
      *
+     * @since 1.0.0
      * @param value the plaintext bytes to encrypt. `null` returns `null`, empty returns empty.
      * @param keyAlias the alias under which the key is stored in the keystore.
      * @return a [Result] containing the ciphertext buffer on success, or a failure if
@@ -92,6 +94,7 @@ object UUCrypto
     /**
      * Decrypts the given [value] using AES/GCM/NoPadding with a key from [secretKeyProvider].
      *
+     * @since 1.0.0
      * @param value the ciphertext buffer to decrypt. `null` returns `null`, empty returns empty.
      *              The buffer must be in the format produced by [gcmEncrypt].
      * @param keyAlias the alias under which the key is stored in the keystore.

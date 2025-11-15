@@ -34,6 +34,7 @@ fun String?.uuIsNotEmpty(): Boolean
 /**
  * Converts a hex string into a byte array
  *
+ * @since 1.0.0
  * @return a byte array or null if the string has invalid hex characters
  */
 fun String?.uuToHexData(): ByteArray?
@@ -69,6 +70,7 @@ fun String?.uuToHexData(): ByteArray?
 /**
  * Safely creates a ByteArray from a string
  *
+ * @since 1.0.0
  * @param encoding the character encoding to use
  * @return a ByteArray or null if an error occurs
  */
@@ -88,6 +90,7 @@ fun String.uuToByteArray(encoding: Charset): ByteArray?
 /**
  * Safely creates a UTF8 byte array
  *
+ * @since 1.0.0
  * @return a byte[] or null if an error occurs
  */
 fun String.uuUtf8ByteArray(): ByteArray?
@@ -98,6 +101,7 @@ fun String.uuUtf8ByteArray(): ByteArray?
 /**
  * Safely creates a ASCII byte array
  *
+ * @since 1.0.0
  * @return a byte[] or null if an error occurs
  */
 fun String.uuAsciiByteArray(): ByteArray?
@@ -117,6 +121,8 @@ fun String.uuAsciiByteArray(): ByteArray?
  *   wrapping the thrown [Exception].
  *
  * @receiver the Base64‑encoded string to decode.
+ *
+ * @since 1.0.0
  * @param decoder the [Base64.Decoder] to use for decoding. Defaults to
  * [Base64.getDecoder].
  *
@@ -145,6 +151,7 @@ fun String.uuFromBase64(decoder: Base64.Decoder = Base64.getDecoder()): Result<B
 /**
  * Capitalizes the first letter of a string
  *
+ * @since 1.0.0
  * @return A string with the first letter capitalized, or the string itself if the length is
  * less than zero or null.
  */
@@ -163,6 +170,7 @@ fun String.uuFirstCapital(): String
 /**
  * Converts a string to snake_case
  *
+ * @since 1.0.0
  * @param string a string
  *
  * @return another string
@@ -177,6 +185,7 @@ fun String.uuToSnakeCase(): String
 /**
  * Safely truncates a string to a given length
  *
+ * @since 1.0.0
  * @return another string
  */
 fun String.uuTruncate(length: Int): String
@@ -194,6 +203,7 @@ fun String.uuTruncate(length: Int): String
 /**
  * Checks to see if all characters in a string are a numerical digit
  *
+ * @since 1.0.0
  * @return true or false
  */
 fun String.uuIsDigits(): Boolean
@@ -212,6 +222,7 @@ fun String.uuIsDigits(): Boolean
 /**
  * Checks to see if all characters in a string are alphabetic
  *
+ * @since 1.0.0
  * @return true or false
  */
 val String.uuIsAlphabeticOnly: Boolean
@@ -221,6 +232,7 @@ val String.uuIsAlphabeticOnly: Boolean
 /**
  * Checks to see if all characters in a string are alphabetic or numeric
  *
+ * @since 1.0.0
  * @return true or false
  */
 val String.uuIsAlphanumericOnly: Boolean
@@ -230,6 +242,7 @@ val String.uuIsAlphanumericOnly: Boolean
 /**
  * Applies a simple transform to each element in an array
  *
+ * @since 1.0.0
  * @param input the input array
  * @param transformMethod the transform method
  * @return the output array

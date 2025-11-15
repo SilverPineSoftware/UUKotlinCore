@@ -10,6 +10,8 @@ private const val LOG_TAG = "UUCompression"
 
 /**
  * Compresses the Byte Array using GZIP
+ *
+ * @since 1.0.0
  */
 fun ByteArray.uuGzip(): ByteArray?
 {

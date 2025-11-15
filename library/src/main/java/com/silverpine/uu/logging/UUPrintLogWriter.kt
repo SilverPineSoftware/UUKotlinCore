@@ -18,11 +18,15 @@ import java.util.Date
  * ```
  * 2025-10-23T20:50:48.466-0700 DEBUG UnitTest Hello World
  * ```
+ *
+ * @since 1.0.0
  */
 class UUPrintLogWriter : UULogWriter
 {
     /**
      * Writes a log entry using Kotlin println.
+     *
+     * @since 1.0.0
      *
      * @param level The severity level of the log message (e.g., [UULogLevel.DEBUG], [UULogLevel.INFO]).
      * @param tag A short identifier or category for the source of the message.
@@ -45,6 +49,8 @@ class UUPrintLogWriter : UULogWriter
      * ```
      * 2025-10-23T20:50:48.466-0700 DEBUG UnitTest Hello World
      * ```
+     *
+     * @since 1.0.0
      *
      * @param level The log level (e.g., debug, info, error).
      * @param tag The tag or component name associated with the log entry.

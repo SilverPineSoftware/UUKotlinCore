@@ -273,6 +273,7 @@ fun <T: Any> Cursor.uuSafeGetJsonObject(jsonClass: Class<T>, column: Any, defaul
 /**
  * Safely gets a column value based on the cursor field type
  *
+ * @since 1.0.0
  * @param index index to get
  * @param defaultValue the default value
  *

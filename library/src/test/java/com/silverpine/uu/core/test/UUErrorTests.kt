@@ -33,6 +33,8 @@ import org.mockito.quality.Strictness
  *
  * - If you run these in JVM unit tests (src/test), android.os stubs must be on the classpath
  *   (they are provided by the Android Gradle Plugin).
+ *
+ * @since 1.0.0
  */
 @ExtendWith(MockitoExtension::class)
 @MockitoSettings(strictness = Strictness.LENIENT)

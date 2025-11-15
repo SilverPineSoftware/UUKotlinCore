@@ -10,6 +10,7 @@ private const val LOG_TAG = "UUParcel"
 /**
  * Safely serializes a parcelable into a byte array
  *
+ * @since 1.0.0
  * @param parcelable the object to serialize
  *
  * @return an array of bytes on success or null if an error occurs
@@ -41,6 +42,7 @@ fun Parcelable.uuSerializeParcel(): ByteArray?
 /**
  * Safely deserializes an array of bytes into a Parcelable object
  *
+ * @since 1.0.0
  * @param parcelableCreator the object creator
  * @param bytes the raw bytes to deserialize
  * @param <T> type of object to be returned
@@ -74,6 +76,7 @@ fun <T : Parcelable?> ByteArray.uuDeserializeParcel(parcelableCreator: Parcelabl
 /**
  * Safely calls the Parcel.recycle method
  *
+ * @since 1.0.0
  */
 fun Parcel.uuSafeRecycle()
 {

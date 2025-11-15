@@ -18,6 +18,7 @@ private const val LOG_TAG = "UUKotlinXJsonProvider"
  * This class provides type-safe serialization and deserialization of objects to and from JSON,
  * supporting multiple input formats including strings, byte arrays, and input streams.
  *
+ * @since 1.0.0
  * @param json The [Json] instance used for encoding and decoding. Defaults to [Json.Default].
  */
 class UUKotlinXJsonProvider(private val json: Json = Json.Default) : UUJsonProvider
@@ -25,6 +26,7 @@ class UUKotlinXJsonProvider(private val json: Json = Json.Default) : UUJsonProvi
     /**
      * Serializes the given object into a JSON string using the provided runtime class.
      *
+     * @since 1.0.0
      * @param obj The object to serialize.
      * @param objectClass The runtime class of the object, used to resolve the appropriate [kotlinx.serialization.SerializationStrategy].
      * @return A [Result] containing the JSON string if successful, or a failure with the encountered exception.
@@ -46,6 +48,7 @@ class UUKotlinXJsonProvider(private val json: Json = Json.Default) : UUJsonProvi
     /**
      * Deserializes a JSON string into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The JSON string to parse.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.
@@ -68,6 +71,7 @@ class UUKotlinXJsonProvider(private val json: Json = Json.Default) : UUJsonProvi
     /**
      * Deserializes JSON content from an [InputStream] into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The input stream containing JSON data.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.
@@ -93,6 +97,7 @@ class UUKotlinXJsonProvider(private val json: Json = Json.Default) : UUJsonProvi
      *
      * Internally delegates to [fromStream] using a [ByteArrayInputStream].
      *
+     * @since 1.0.0
      * @param source The byte array containing JSON data.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.

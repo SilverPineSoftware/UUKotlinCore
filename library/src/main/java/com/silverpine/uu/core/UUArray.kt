@@ -44,6 +44,7 @@ fun <T> Array<T>.uuGetOrNull(index: Int): T?
  * The final chunk may contain fewer elements if the array size is not evenly divisible.
  * If [chunkSize] is zero or negative, an empty list is returned.
  *
+ * @since 1.0.0
  * @param chunkSize The maximum number of elements per chunk.
  * @return A list of arrays, each containing up to [chunkSize] elements.
  *

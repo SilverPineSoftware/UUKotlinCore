@@ -7,12 +7,15 @@ import java.io.InputStream
  *
  * This interface abstracts JSON handling to support pluggable implementations (e.g., kotlinx.serialization, Gson, Moshi)
  * and enables testable, type-safe conversion between structured data and textual representations.
+ *
+ * @since 1.0.0
  */
 interface UUJsonProvider
 {
     /**
      * Serializes the given object into a JSON string.
      *
+     * @since 1.0.0
      * @param obj The object to serialize.
      * @param objectClass The runtime class of the object, used to resolve the correct serialization strategy.
      * @return A [Result] containing the JSON string if successful, or a failure with the encountered exception.
@@ -22,6 +25,7 @@ interface UUJsonProvider
     /**
      * Deserializes a JSON string into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The JSON string to parse.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.
@@ -31,6 +35,7 @@ interface UUJsonProvider
     /**
      * Deserializes JSON content from an [InputStream] into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The input stream containing JSON data.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.
@@ -40,6 +45,7 @@ interface UUJsonProvider
     /**
      * Deserializes JSON content from a [ByteArray] into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The byte array containing JSON data.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.

@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Provides a simple key-value cache abstraction where objects can be stored and retrieved
  * using string-based identifiers. Setting a value to `null` will remove it from the cache.
  * 
+ * @since 1.0.0
  * @param T The type of objects stored in the cache
  * 
  * @sample
@@ -24,6 +25,7 @@ interface UUObjectCache<T>
     /**
      * Retrieves an object from the cache by its identifier.
      * 
+     * @since 1.0.0
      * @param identifier The string key used to identify the cached object
      * @return The cached object if found, `null` otherwise
      */
@@ -34,6 +36,7 @@ interface UUObjectCache<T>
      * 
      * If `obj` is `null`, the entry for `identifier` will be removed from the cache.
      * 
+     * @since 1.0.0
      * @param identifier The string key to associate with the object
      * @param obj The object to cache, or `null` to remove the entry
      */
@@ -57,6 +60,7 @@ interface UUObjectCache<T>
  * If you need more advanced caching features (size limits, TTL, eviction policies), consider
  * using a third-party library like Caffeine, Guava Cache, or Kotlin Multiplatform alternatives.
  * 
+ * @since 1.0.0
  * @param T The type of objects stored in the cache
  * 
  * @sample
@@ -76,6 +80,7 @@ open class UUInMemoryObjectCache<T>: UUObjectCache<T>
     /**
      * Retrieves an object from the cache by its identifier.
      * 
+     * @since 1.0.0
      * @param identifier The string key used to identify the cached object
      * @return The cached object if found, `null` otherwise
      */
@@ -90,6 +95,7 @@ open class UUInMemoryObjectCache<T>: UUObjectCache<T>
      * If `obj` is `null`, the entry for `identifier` will be removed from the cache.
      * This allows for convenient cache entry removal using `cache["key"] = null`.
      * 
+     * @since 1.0.0
      * @param identifier The string key to associate with the object
      * @param obj The object to cache, or `null` to remove the entry
      */

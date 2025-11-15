@@ -10,6 +10,8 @@ import com.silverpine.uu.logging.UULog.setLogger
  * to a configured [UULogger] instance. If no logger is configured,
  * all log calls are silently ignored.
  *
+ * @since 1.0.0
+ *
  * ### Usage Example
  * ```
  * // Create a console logger instance.
@@ -33,11 +35,17 @@ import com.silverpine.uu.logging.UULog.setLogger
  */
 object UULog
 {
-    /** The active logger instance used to handle log messages. */
+    /**
+     * The active logger instance used to handle log messages.
+     *
+     * @since 1.0.0
+     */
     private var logger: UULogger? = null
 
     /**
      * Sets the global logger instance used by [UULog].
+     *
+     * @since 1.0.0
      *
      * @param logger The [UULogger] instance to use for handling log messages.
      *               If `null`, all log calls will be ignored.
@@ -50,6 +58,8 @@ object UULog
     /**
      * Logs a verbose message.
      *
+     * @since 1.0.0
+     *
      * @param tag A short identifier for the source of the log message.
      * @param message The message to be logged.
      */
@@ -60,6 +70,8 @@ object UULog
 
     /**
      * Logs a debug message.
+     *
+     * @since 1.0.0
      *
      * @param tag A short identifier for the source of the log message.
      * @param message The message to be logged.
@@ -72,6 +84,8 @@ object UULog
     /**
      * Logs an informational message.
      *
+     * @since 1.0.0
+     *
      * @param tag A short identifier for the source of the log message.
      * @param message The message to be logged.
      */
@@ -83,6 +97,8 @@ object UULog
     /**
      * Logs a warning message.
      *
+     * @since 1.0.0
+     *
      * @param tag A short identifier for the source of the log message.
      * @param message The message to be logged.
      */
@@ -93,6 +109,8 @@ object UULog
 
     /**
      * Logs an error message.
+     *
+     * @since 1.0.0
      *
      * @param tag A short identifier for the source of the log message.
      * @param message The message to be logged.
@@ -106,6 +124,8 @@ object UULog
      * Logs a fatal (critical) message.
      *
      * Use this for unrecoverable conditions that may lead to application termination.
+     *
+     * @since 1.0.0
      *
      * @param tag A short identifier for the source of the log message.
      * @param message The message to be logged.
@@ -122,6 +142,8 @@ object UULog
  * This convenience extension function formats and logs exception information
  * at the debug level. The log message includes the location where the exception
  * was caught and the exception's string representation.
+ *
+ * @since 1.0.0
  * 
  * @param logTag A short identifier for the source of the log message (e.g., class name or component).
  * @param where A description of where the exception was caught (e.g., method name or operation).

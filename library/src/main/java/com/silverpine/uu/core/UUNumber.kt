@@ -21,6 +21,7 @@ val Int.uuPx: Int
 /**
  * Evaluates two values to determine if one contains bits from the other
  *
+ * @since 1.0.0
  * @param mask the mask of bits to check
  * @return true if the bits are found in the value, false otherwise
  */
@@ -34,6 +35,7 @@ fun Int.uuIsBitSet(mask: Int): Boolean
  *
  * If [index] is outside the valid range (0 until [Byte.SIZE_BITS]), the original value is returned unchanged.
  *
+ * @since 1.0.0
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @param index The bit position to modify (0 until [Byte.SIZE_BITS]).
  * @return A new [Byte] with the specified bit modified, or the original value if [index] is out of bounds.
@@ -52,6 +54,7 @@ fun Byte.uuSetBit(to: Boolean, index: Int): Byte
  *
  * If [index] is outside the valid range (0 until [UByte.SIZE_BITS]), the original value is returned unchanged.
  *
+ * @since 1.0.0
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @param index The bit position to modify (0 until [UByte.SIZE_BITS]).
  * @return A new [UByte] with the specified bit modified, or the original value if [index] is out of bounds.
@@ -70,6 +73,7 @@ fun UByte.uuSetBit(to: Boolean, index: Int): UByte
  *
  * If [index] is outside the valid range (0 until [Short.SIZE_BITS]), the original value is returned unchanged.
  *
+ * @since 1.0.0
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @param index The bit position to modify (0 until [Short.SIZE_BITS]).
  * @return A new [Short] with the specified bit modified, or the original value if [index] is out of bounds.
@@ -88,6 +92,7 @@ fun Short.uuSetBit(to: Boolean, index: Int): Short
  *
  * If [index] is outside the valid range (0 until [UShort.SIZE_BITS]), the original value is returned unchanged.
  *
+ * @since 1.0.0
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @param index The bit position to modify (0 until [UShort.SIZE_BITS]).
  * @return A new [UShort] with the specified bit modified, or the original value if [index] is out of bounds.
@@ -106,6 +111,7 @@ fun UShort.uuSetBit(to: Boolean, index: Int): UShort
  *
  * If [index] is outside the valid range (0 until [Long.SIZE_BITS]), the original value is returned unchanged.
  *
+ * @since 1.0.0
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @param index The bit position to modify (0 until [Long.SIZE_BITS]).
  * @return A new [Long] with the specified bit modified, or the original value if [index] is out of bounds.
@@ -124,6 +130,7 @@ fun Long.uuSetBit(to: Boolean, index: Int): Long
  *
  * If [index] is outside the valid range (0 until [ULong.SIZE_BITS]), the original value is returned unchanged.
  *
+ * @since 1.0.0
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @param index The bit position to modify (0 until [ULong.SIZE_BITS]).
  * @return A new [ULong] with the specified bit modified, or the original value if [index] is out of bounds.
@@ -140,6 +147,7 @@ fun ULong.uuSetBit(to: Boolean, index: Int): ULong
 /**
  * Returns a copy of this integer with the bit at [index] set or cleared.
  *
+ * @since 1.0.0
  * @param index The bit position to modify (0 until [Int.SIZE_BITS]).
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @return A new integer with that bit modified, or the original value if [index] is out of bounds.
@@ -165,6 +173,7 @@ fun Int.uuSetBit(to: Boolean, index: Int): Int
 /**
  * Returns a copy of this unsigned integer with the bit at [index] set or cleared.
  *
+ * @since 1.0.0
  * @param index The bit position to modify (0 until [UInt.SIZE_BITS]).
  * @param to Pass `true` to set the bit (1), or `false` to clear it (0).
  * @return A new [UInt] with that bit modified, or the original value if [index] is out of bounds.
@@ -190,6 +199,7 @@ fun UInt.uuSetBit(to: Boolean, index: Int): UInt
 /**
  * Returns a copy of this Byte with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [Byte.SIZE_BITS].
  * @return A new Byte with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -207,6 +217,7 @@ fun Byte.uuClearBit(index: Int): Byte
 /**
  * Returns a copy of this UByte with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [UByte.SIZE_BITS].
  * @return A new UByte with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -224,6 +235,7 @@ fun UByte.uuClearBit(index: Int): UByte
 /**
  * Returns a copy of this Short with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [Short.SIZE_BITS].
  * @return A new Short with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -241,6 +253,7 @@ fun Short.uuClearBit(index: Int): Short
 /**
  * Returns a copy of this UShort with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [UShort.SIZE_BITS].
  * @return A new UShort with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -258,6 +271,7 @@ fun UShort.uuClearBit(index: Int): UShort
 /**
  * Returns a copy of this Int with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [Int.SIZE_BITS].
  * @return A new Int with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -275,6 +289,7 @@ fun Int.uuClearBit(index: Int): Int
 /**
  * Returns a copy of this UInt with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [UInt.SIZE_BITS].
  * @return A new UInt with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -292,6 +307,7 @@ fun UInt.uuClearBit(index: Int): UInt
 /**
  * Returns a copy of this Long with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [Long.SIZE_BITS].
  * @return A new Long with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -309,6 +325,7 @@ fun Long.uuClearBit(index: Int): Long
 /**
  * Returns a copy of this ULong with the bit at the specified [index] cleared (set to 0).
  *
+ * @since 1.0.0
  * @param index The bit position to clear, in 0 until [ULong.SIZE_BITS].
  * @return A new ULong with the specified bit cleared, or the original value if index is out of bounds.
  */
@@ -361,6 +378,8 @@ fun Int.uuFromBcd8(): Int
  * ```
  *
  * This property is typically used on year values (e.g., `Calendar.getInstance().get(Calendar.YEAR)`).
+ *
+ * @since 1.0.0
  */
 val Int.uuIsLeapYear: Boolean
     get() = when {

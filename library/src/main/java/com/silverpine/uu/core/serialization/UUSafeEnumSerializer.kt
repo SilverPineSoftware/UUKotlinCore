@@ -27,6 +27,7 @@ import kotlinx.serialization.encoding.Encoder
  * - Deserialization attempts to match the input using [UUEnumSerialization.deserialize].
  * - If no match is found, [defaultDeserializeValue] is returned.
  *
+ * @since 1.0.0
  * @param T The enum type being serialized.
  * @param enumClass The Java class reference for the enum.
  * @param format The format to use during serialization. Defaults to [UUEnumFormat.Default].
@@ -55,6 +56,7 @@ abstract class UUSafeEnumSerializer<T : Enum<T>>(
 /**
  * Factory for creating a UUSafeEnumSerializer with the given format and fallback.
  *
+ * @since 1.0.0
  * @param T The enum type.
  * @param enumClass The enum class reference.
  * @param format The format to use for serialization. Defaults to NameSnakeCase.

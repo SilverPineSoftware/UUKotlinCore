@@ -4,10 +4,16 @@ package com.silverpine.uu.logging
  * A logger that routes structured log messages to a [UULogWriter], with support for:
  * - A minimum [logLevel] threshold
  * - Inclusive and exclusive tag filtering
+ *
+ * @since 1.0.0
  */
 open class UULogger(
 
-    /** The log writer that handles the actual output (file/console/remote/etc.). */
+    /**
+     * The log writer that handles the actual output (file/console/remote/etc.).
+     *
+     * @since 1.0.0
+     */
     var logWriter: UULogWriter
 ) {
 
@@ -17,18 +23,24 @@ open class UULogger(
      * Only messages whose [UULogLevel.value] is **less than or equal to** this [logLevel]'s value
      * will be emitted. For example, if `logLevel == INFO`, then `INFO`, `WARN`, `ERROR`, and
      * `FATAL` are written; `DEBUG` and `VERBOSE` are ignored.
+     *
+     * @since 1.0.0
      */
     var logLevel: UULogLevel = UULogLevel.OFF
 
     /**
      * Tags that are explicitly allowed. If non-empty, only messages whose tag is present here
      * will be logged (subject to [excludedTags] and [logLevel]).
+     *
+     * @since 1.0.0
      */
     var includedTags: MutableList<String> = mutableListOf()
 
     /**
      * Tags that are explicitly suppressed. If a tag appears here, it will not be logged
      * even if it is present in [includedTags].
+     *
+     * @since 1.0.0
      */
     var excludedTags: MutableList<String> = mutableListOf()
 
@@ -39,6 +51,8 @@ open class UULogger(
     /**
      * Returns true if [level] meets or exceeds the configured [logLevel] threshold.
      * Lower numeric values indicate higher severity (e.g., FATAL < ERROR < WARN ...).
+     *
+     * @since 1.0.0
      */
     fun shouldLog(level: UULogLevel): Boolean
     {
@@ -51,6 +65,8 @@ open class UULogger(
      * - If [excludedTags] contains [tag], returns false.
      * - If [includedTags] is non-empty, returns true only if [tag] is included.
      * - Otherwise returns true.
+     *
+     * @since 1.0.0
      */
     fun shouldLog(tag: String): Boolean
     {
@@ -73,6 +89,8 @@ open class UULogger(
 
     /**
      * Writes a log entry if it passes level and tag filters.
+     *
+     * @since 1.0.0
      *
      * @param level   Severity of the message.
      * @param tag     Short categorization label (component/module/etc.).
@@ -99,6 +117,8 @@ open class UULogger(
      * useful during active debugging or development. Verbose messages are
      * usually the lowest priority and may be filtered out in production builds.
      *
+     * @since 1.0.0
+     *
      * @param tag A short identifier that categorizes the log message, such as
      *            a component or module name.
      * @param message The message text to record.
@@ -113,6 +133,8 @@ open class UULogger(
      *
      * Use this for general debugging information that helps trace normal
      * program flow or internal state changes.
+     *
+     * @since 1.0.0
      *
      * @param tag A short identifier that categorizes the log message.
      * @param message The message text to record.
@@ -129,6 +151,8 @@ open class UULogger(
      * milestones. These messages confirm that the application is working as
      * intended.
      *
+     * @since 1.0.0
+     *
      * @param tag A short identifier that categorizes the log message.
      * @param message The message text to record.
      */
@@ -144,6 +168,8 @@ open class UULogger(
      * prevent the application from continuing, but may require attention or
      * investigation.
      *
+     * @since 1.0.0
+     *
      * @param tag A short identifier that categorizes the log message.
      * @param message The message text to record.
      */
@@ -157,6 +183,8 @@ open class UULogger(
      *
      * Use this to record errors or problems that occurred during execution but
      * from which the application can recover.
+     *
+     * @since 1.0.0
      *
      * @param tag A short identifier that categorizes the log message.
      * @param message The message text to record.
@@ -172,6 +200,8 @@ open class UULogger(
      * Use this for severe conditions that cause the application or component
      * to stop functioning correctly. Fatal logs should indicate unrecoverable
      * failures that may require immediate attention.
+     *
+     * @since 1.0.0
      *
      * @param tag A short identifier that categorizes the log message.
      * @param message The message text to record.

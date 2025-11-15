@@ -39,6 +39,7 @@ fun <T : Serializable?> ByteArray.uuDeserialize(type: Class<T>): T?
 /**
  * Safely serializes an object
  *
+ * @since 1.0.0
  * @return an array of bytes
  */
 fun Serializable.uuSerialize(): ByteArray?

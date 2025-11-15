@@ -5,6 +5,7 @@ package com.silverpine.uu.core
  * containing a [UUError]. This is similar in spirit to [kotlin.Result], but uses a fixed error type
  * instead of [Throwable].
  *
+ * @since 1.0.0
  * @param T the type of the success value.
  */
 sealed class UUResult<out T>
@@ -12,6 +13,7 @@ sealed class UUResult<out T>
     /**
      * Represents a successful result containing [value].
      *
+     * @since 1.0.0
      * @param T the type of the success value.
      * @property value the wrapped successful value.
      */
@@ -20,23 +22,29 @@ sealed class UUResult<out T>
     /**
      * Represents a failed result containing a [UUError].
      *
+     * @since 1.0.0
      * @property error the error associated with the failure.
      */
     data class Failure(val error: UUError) : UUResult<Nothing>()
 
     /**
      * Returns the success value if this is a [Success], or `null` if it is a [Failure].
+     *
+     * @since 1.0.0
      */
     fun getOrNull(): T? = (this as? Success)?.value
 
     /**
      * Returns the [UUError] if this is a [Failure], or `null` if it is a [Success].
+     *
+     * @since 1.0.0
      */
     fun errorOrNull(): UUError? = (this as? Failure)?.error
 
     /**
      * Executes the given [block] if this is a [Success], passing the success value.
      *
+     * @since 1.0.0
      * @param block the lambda to execute on success.
      * @return this [UUResult] instance for call chaining.
      */
@@ -47,6 +55,7 @@ sealed class UUResult<out T>
     /**
      * Executes the given [block] if this is a [Failure], passing the [UUError].
      *
+     * @since 1.0.0
      * @param block the lambda to execute on failure.
      * @return this [UUResult] instance for call chaining.
      */
@@ -58,6 +67,7 @@ sealed class UUResult<out T>
      * Maps the success value to a new [UUResult] of type [R] using [transform].
      * If this is a [Failure], the error is propagated unchanged.
      *
+     * @since 1.0.0
      * @param R the new result type.
      * @param transform the mapping function applied to the success value.
      * @return a new [UUResult] containing the transformed value or the original error.
@@ -71,6 +81,7 @@ sealed class UUResult<out T>
      * Flat-maps the success value to another [UUResult] of type [R] using [transform].
      * This allows chaining operations that may themselves return [UUResult].
      *
+     * @since 1.0.0
      * @param R the new result type.
      * @param transform the transformation function returning another [UUResult].
      * @return the result of applying [transform], or the original failure.
@@ -84,6 +95,7 @@ sealed class UUResult<out T>
      * Recovers from a failure by providing a fallback value via [recover].
      * If this is a [Success], the value is returned unchanged.
      *
+     * @since 1.0.0
      * @param recover the recovery function producing a fallback value from [UUError].
      * @return a [Success] containing either the original or fallback value.
      */
@@ -96,6 +108,7 @@ sealed class UUResult<out T>
      * Folds the result into a single value by applying [onSuccess] if this is a success,
      * or [onFailure] if this is a failure.
      *
+     * @since 1.0.0
      * @param R the type of the folded result.
      * @param onSuccess the function applied to the success value.
      * @param onFailure the function applied to the error.
@@ -110,6 +123,7 @@ sealed class UUResult<out T>
     /**
      * Returns the success value if this is [Success], or the result of [onFailure] if this is [Failure].
      *
+     * @since 1.0.0
      * @param onFailure called when this is [Failure] to produce a fallback value.
      * @return the success value or the fallback.
      */
@@ -124,6 +138,7 @@ sealed class UUResult<out T>
         /**
          * Creates a [Success] result containing the given [value].
          *
+         * @since 1.0.0
          * @param value the success value.
          */
         fun <T> success(value: T): UUResult<T> = Success(value)
@@ -131,6 +146,7 @@ sealed class UUResult<out T>
         /**
          * Creates a [Failure] result containing the given [error].
          *
+         * @since 1.0.0
          * @param error the failure error.
          */
         fun <T> failure(error: UUError): UUResult<T> = Failure(error)

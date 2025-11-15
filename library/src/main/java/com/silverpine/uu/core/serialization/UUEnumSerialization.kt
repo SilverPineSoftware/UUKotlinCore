@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Encoder
  * - [UUEnumFormat.NameLower] — lowercase name (e.g. `"red_blue"`)
  * - [UUEnumFormat.NameSnakeCase] — snake_case conversion (e.g. `"red_blue"`)
  * - [UUEnumFormat.Ordinal] — ordinal index (e.g. `0`, `1`, `2`)
+ *
+ * @since 1.0.0
  */
 object UUEnumSerialization
 {
@@ -30,6 +32,7 @@ object UUEnumSerialization
      * - `NameSnakeCase` → `value.name.uuToSnakeCase()`
      * - `Ordinal` → `value.ordinal`
      *
+     * @since 1.0.0
      * @param encoder The KotlinX encoder to write to.
      * @param format The format to use for serialization.
      * @param value The enum value to serialize, or `null`.
@@ -73,6 +76,7 @@ object UUEnumSerialization
      * - `NameSnakeCase` → match on `uuToSnakeCase()` transformation
      * - `Ordinal` → match on `ordinal`
      *
+     * @since 1.0.0
      * @param decoder The KotlinX decoder to read from.
      * @param format The format to use for deserialization.
      * @param enumClass The enum class to match against.

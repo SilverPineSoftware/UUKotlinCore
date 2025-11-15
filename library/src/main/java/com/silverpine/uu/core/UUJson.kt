@@ -14,6 +14,8 @@ import java.io.InputStream
  *
  * The default provider is [UUKotlinXJsonProvider] backed by [Json.Default], but can be replaced via [init]
  * to support alternative implementations (e.g., for testing or using different serialization frameworks).
+ *
+ * @since 1.0.0
  */
 object UUJson
 {
@@ -25,6 +27,7 @@ object UUJson
      * This allows swapping out the default implementation with a custom or mock provider.
      * Should be called early in application setup if customization is needed.
      *
+     * @since 1.0.0
      * @param provider The [UUJsonProvider] implementation to delegate all JSON operations to.
      */
     fun init(provider: UUJsonProvider)
@@ -35,6 +38,7 @@ object UUJson
     /**
      * Serializes the given object into a JSON string.
      *
+     * @since 1.0.0
      * @param obj The object to serialize.
      * @param objectClass The runtime class of the object, used to resolve the correct serialization strategy.
      * @return A [Result] containing the JSON string if successful, or a failure with the encountered exception.
@@ -47,6 +51,7 @@ object UUJson
     /**
      * Deserializes a JSON string into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The JSON string to parse.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.
@@ -59,6 +64,7 @@ object UUJson
     /**
      * Deserializes JSON content from an [InputStream] into an object of the specified type.
      *
+     * @since 1.0.0
      * @param source The input stream containing JSON data.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.
@@ -73,6 +79,7 @@ object UUJson
      *
      * Internally delegates to [fromStream] using a [java.io.ByteArrayInputStream].
      *
+     * @since 1.0.0
      * @param source The byte array containing JSON data.
      * @param objectClass The target class to deserialize into.
      * @return A [Result] containing the parsed object if successful, or a failure with the encountered exception.

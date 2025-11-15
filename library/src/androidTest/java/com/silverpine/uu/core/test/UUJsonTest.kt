@@ -120,6 +120,8 @@ class UUJsonTest
     /**
      * Tests an object with a nullable enum field being deserialized when the JSON string has
      * garbage in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0006_nullable_lenient_enums()
@@ -139,6 +141,8 @@ class UUJsonTest
     /**
      * Tests an object with a nullable enum field being deserialized when the JSON string has
      * null in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0007_nullable_lenient_enum_null()
@@ -158,6 +162,8 @@ class UUJsonTest
     /**
      * Tests an object with a non-nullable enum field being deserialized when the JSON string has
      * garbage in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0008_non_nullable_lenient_enums()
@@ -177,6 +183,8 @@ class UUJsonTest
     /**
      * Tests an object with a non-nullable enum field being deserialized when the JSON string has
      * null in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0009_non_nullable_lenient_enum_null()

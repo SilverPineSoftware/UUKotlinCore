@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit
  * - Standard **format strings** (RFC-3339, ISO-8601, file-name safe)
  * - Extensions to **parse** and **format** dates
  * - A helper to convert a **monotonic** timestamp to wall-clock time
+ *
+ * @since 1.0.0
  */
 object UUDate
 {
@@ -25,6 +27,8 @@ object UUDate
     /**
      * Common time-amount constants (seconds, minutes, hours, days, weeks and their millisecond/second
      * conversions). These are provided as [Long] to avoid accidental integer overflow in arithmetic.
+     *
+     * @since 1.0.0
      */
     object Constants
     {
@@ -58,6 +62,8 @@ object UUDate
 
     /**
      * Commonly used time zone references.
+     *
+     * @since 1.0.0
      */
     object TimeZones
     {
@@ -80,8 +86,9 @@ object UUDate
      * These patterns are compatible with [SimpleDateFormat]. All RFC-3339 patterns here use a
      * literal `'Z'` designator, so they should be formatted with a UTC [TimeZone] for canonical
      * output.
+     *
+     * @since 1.0.0
      */
-
     object Formats
     {
         /** RFC-3339 without milliseconds, e.g. `2025-10-23T12:34:56Z`. */
@@ -143,6 +150,8 @@ object UUDate
  * @param timeZone The time zone assumed for parsing (defaults to [TimeZone.getDefault]).
  * @param locale The locale used for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return A parsed [Date], or `null` on failure.
+ *
+ * @since 1.0.0
  */
 fun String.uuParseDate(
     formatter: String,
@@ -169,6 +178,7 @@ fun String.uuParseDate(
  * The first successful parse result is returned. If all formats fail or [formatters] is `null`,
  * `null` is returned.
  *
+ * @since 1.0.0
  * @param formatters An array of [SimpleDateFormat] patterns to try in order.
  * @param timeZone The time zone assumed for parsing (defaults to [TimeZone.getDefault]).
  * @param locale The locale used for language-sensitive fields (defaults to [Locale.getDefault]).
@@ -199,6 +209,7 @@ fun String.uuParseDate(
  *
  * This is a convenience wrapper around [Date.uuFormatDate].
  *
+ * @since 1.0.0
  * @param formatter The [SimpleDateFormat] pattern to use.
  * @param timeZone The time zone applied for formatting (defaults to [TimeZone.getDefault]).
  * @param locale The locale used for language-sensitive formatting (defaults to [Locale.getDefault]).
@@ -218,6 +229,7 @@ fun Long.uuFormatDate(
  *
  * If formatting throws, an empty string is returned.
  *
+ * @since 1.0.0
  * @param formatter The [SimpleDateFormat] pattern to use.
  * @param timeZone The time zone applied for formatting (defaults to [TimeZone.getDefault]).
  * @param locale The locale used for language-sensitive formatting (defaults to [Locale.getDefault]).
@@ -245,6 +257,7 @@ fun Date.uuFormatDate(
  * [SystemClock.elapsedRealtimeNanos]. The conversion uses the current wall clock to align
  * monotonic elapsed time to epoch time.
  *
+ * @since 1.0.0
  * @return Corresponding wall-clock time in **milliseconds** since epoch.
  */
 fun Long.uuNanoToRealTime(): Long
@@ -256,6 +269,7 @@ fun Long.uuNanoToRealTime(): Long
 /**
  * Formats this epoch timestamp as RFC-3339 without milliseconds using the provided [timeZone] and [locale].
  *
+ * @since 1.0.0
  * @param timeZone The time zone to format in (defaults to [UUDate.TimeZones.LOCAL]).
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return An RFC-3339 string like `2025-10-23T12:34:56Z` (when [timeZone] is UTC).
@@ -271,6 +285,7 @@ fun Long.uuFormatAsRfc3339(
 /**
  * Formats this epoch timestamp as RFC-3339 **with milliseconds** using the provided [timeZone] and [locale].
  *
+ * @since 1.0.0
  * @param timeZone The time zone to format in (defaults to [UUDate.TimeZones.LOCAL]).
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return An RFC-3339 string like `2025-10-23T12:34:56.789Z` (when [timeZone] is UTC).
@@ -286,6 +301,7 @@ fun Long.uuFormatAsRfc3339WithMillis(
 /**
  * Formats this epoch timestamp as ISO-8601 **date only**, e.g. `2025-10-23`.
  *
+ * @since 1.0.0
  * @param timeZone The time zone to format in (defaults to [UUDate.TimeZones.LOCAL]).
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted date string.
@@ -301,6 +317,7 @@ fun Long.uuFormatAsIso8601DateOnly(
 /**
  * Formats this epoch timestamp as ISO-8601 **time only**, e.g. `12:34:56`.
  *
+ * @since 1.0.0
  * @param timeZone The time zone to format in (defaults to [UUDate.TimeZones.LOCAL]).
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted time string.
@@ -317,6 +334,7 @@ fun Long.uuFormatAsIso8601TimeOnly(
  * Formats this epoch timestamp as ISO-8601 **date and time** with a space separator,
  * e.g. `2025-10-23 12:34:56`.
  *
+ * @since 1.0.0
  * @param timeZone The time zone to format in (defaults to [UUDate.TimeZones.LOCAL]).
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted date-time string.
@@ -332,6 +350,7 @@ fun Long.uuFormatAsIso8601DateTime(
 /**
  * Formats this epoch timestamp as a file-name-safe string, e.g. `2025_10_23_12_34_56`.
  *
+ * @since 1.0.0
  * @param timeZone The time zone to format in (defaults to [UUDate.TimeZones.LOCAL]).
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted file-name-safe string.
@@ -349,6 +368,7 @@ fun Long.uuFormatAsExtendedFileName(
  *
  * Equivalent to [uuFormatAsRfc3339] with [UUDate.TimeZones.UTC].
  *
+ * @since 1.0.0
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return A UTC RFC-3339 string like `2025-10-23T12:34:56Z`.
  */
@@ -362,6 +382,7 @@ fun Long.uuFormatAsRfc3339Utc(locale: Locale = Locale.getDefault()): String
  *
  * Equivalent to [uuFormatAsRfc3339WithMillis] with [UUDate.TimeZones.UTC].
  *
+ * @since 1.0.0
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return A UTC RFC-3339 string like `2025-10-23T12:34:56.789Z`.
  */
@@ -375,6 +396,7 @@ fun Long.uuFormatAsRfc3339WithMillisUtc(locale: Locale = Locale.getDefault()): S
  *
  * Equivalent to [uuFormatAsIso8601DateOnly] with [UUDate.TimeZones.UTC].
  *
+ * @since 1.0.0
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted UTC date string.
  */
@@ -388,6 +410,7 @@ fun Long.uuFormatAsIso8601DateOnlyUtc(locale: Locale = Locale.getDefault()): Str
  *
  * Equivalent to [uuFormatAsIso8601TimeOnly] with [UUDate.TimeZones.UTC].
  *
+ * @since 1.0.0
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted UTC time string.
  */
@@ -402,6 +425,7 @@ fun Long.uuFormatAsIso8601TimeOnlyUtc(locale: Locale = Locale.getDefault()): Str
  *
  * Equivalent to [uuFormatAsIso8601DateTime] with [UUDate.TimeZones.UTC].
  *
+ * @since 1.0.0
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted UTC date-time string.
  */
@@ -415,6 +439,7 @@ fun Long.uuFormatAsIso8601DateTimeUtc(locale: Locale = Locale.getDefault()): Str
  *
  * Equivalent to [uuFormatAsExtendedFileName] with [UUDate.TimeZones.UTC].
  *
+ * @since 1.0.0
  * @param locale The locale for language-sensitive fields (defaults to [Locale.getDefault]).
  * @return The formatted UTC file-name-safe string.
  */

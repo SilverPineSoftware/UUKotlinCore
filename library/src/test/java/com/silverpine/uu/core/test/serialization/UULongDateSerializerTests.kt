@@ -89,6 +89,8 @@ class UULongDateSerializerTests
     /**
      * A derived serializer that still encodes a Long epoch millis as RFC3339-with-millis (UTC),
      * but can decode from multiple string formats (in order) to maximize compatibility.
+     *
+     * @since 1.0.0
      */
     object UULongDateSerializerMulti : UULongDateSerializer(
         encodeFormat = UUDate.Formats.RFC_3339_WITH_MILLIS,

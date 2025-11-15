@@ -24,6 +24,7 @@ import kotlinx.serialization.encoding.Encoder
  * - If [value] is `null`, serialization will encode a JSON `null`.
  * - If deserialization fails to match any enum constant, [defaultDeserializeValue] is returned.
  *
+ * @since 1.0.0
  * @param T The enum type being serialized.
  * @param enumClass The Java class reference for the enum.
  * @param format The format to use during serialization. Defaults to [UUEnumFormat.Default].
@@ -52,6 +53,7 @@ abstract class UUEnumSerializer<T : Enum<T>>(
 /**
  * Factory for creating a UUEnumSerializer with the given format and fallback.
  *
+ * @since 1.0.0
  * @param T The enum type.
  * @param enumClass The enum class reference.
  * @param format The format to use for serialization. Defaults to NameSnakeCase.

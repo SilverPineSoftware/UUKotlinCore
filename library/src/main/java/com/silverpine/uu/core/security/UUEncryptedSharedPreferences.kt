@@ -19,6 +19,8 @@ import java.nio.charset.StandardCharsets
  *
  * This allows you to use the familiar [SharedPreferences] API while ensuring
  * sensitive values are protected at rest.
+ *
+ * @since 1.0.0
  */
 class UUEncryptedSharedPreferences(
     private val delegate: SharedPreferences,

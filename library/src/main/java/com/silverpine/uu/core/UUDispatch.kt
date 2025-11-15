@@ -13,6 +13,7 @@ private const val LOG_TAG = "UUDispatch"
 /**
  * Safely runs a block of code on the main thread.
  *
+ * @since 1.0.0
  * @param delay the amount of delay before running the block
  * @param block the block to run
  *
@@ -36,6 +37,7 @@ fun uuDispatchMain(delay: Long, block: ()->Unit)
 /**
  * Safely runs a block of code on the main thread.
  *
+ * @since 1.0.0
  * @param block the block to run
  *
  * Runs immediately
@@ -58,6 +60,7 @@ fun uuDispatchMain(block: ()->Unit)
 /**
  * Safely runs a block of code on a background thread using the IO coroutine scope
  *
+ * @since 1.0.0
  * @param delay the amount of delay before running the block
  * @param block the block to run
  *
@@ -92,6 +95,7 @@ fun uuDispatch(delay: Long, block: ()->Unit)
 /**
  * Safely runs a block of code on a background thread.
  *
+ * @since 1.0.0
  * @param block the block to run
  *
  * Runs immediately
