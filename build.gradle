@@ -11,11 +11,11 @@ buildscript {
     ext.uu_nexus_version = '2.0.0'
     ext.uu_java_version = JavaVersion.VERSION_17
 
-    ext.uu_build_common_version = '0.0.10'
+    ext.uu_build_common_version = '0.0.15'
     ext.uu_build_common_url = 'https://raw.githubusercontent.com/SilverPineSoftware/UUKotlinBuild'
     ext.uu_build_common = "${uu_build_common_url}/${uu_build_common_version}"
 
-    ext.uu_test_version = '0.0.8'
+    ext.uu_test_version = '0.0.9.63-develop-SNAPSHOT'
 }
 
 plugins {

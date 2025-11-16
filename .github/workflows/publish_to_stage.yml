@@ -1,4 +1,4 @@
-name: PublishToStage
+name: Publish To Stage
 
 on:
   push:
@@ -6,31 +6,22 @@ on:
         - develop
 
 jobs:
-  publish:
-    name: Release build and publish
-    runs-on: macos-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: ${{ vars.UU_JAVA_DISTRIBUTION }}
-          java-version: ${{ vars.UU_JAVA_VERSION }}
-      - name: Update Version
-        run: ./scripts/update_version.sh
-        env:
-          BUILD_NUMBER: ${{github.run_number}}
-      - name: Assemble Release
-        run: ./gradlew clean :library:test :library:assembleRelease
-      - name: Publish to Maven Staging
-        run: ./gradlew publishToSonatype --max-workers 1
-        env:
-          MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
-          MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+
+  run-instrumented-tests:
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@main
+    with:
+      configuration: 'quickGroup'
+
+  library-snapshot:
+    needs: [run-instrumented-tests]
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_publish_to_stage.yml@main
+    secrets:
+      MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
+      MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+      
