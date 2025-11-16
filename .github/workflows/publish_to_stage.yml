@@ -14,9 +14,9 @@ jobs:
     needs: [run-tests]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@main
 
-  publish-snapshot:
+  publish-library-snapshot:
     needs: [run-instrumented-tests]
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_publish_snapshot.yml@main
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_library_publish_snapshot.yml@main
     secrets:
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
@@ -26,4 +26,5 @@ jobs:
       SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+      
       
