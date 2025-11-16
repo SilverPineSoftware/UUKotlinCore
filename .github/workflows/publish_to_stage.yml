@@ -7,12 +7,16 @@ on:
 
 jobs:
 
+  run-tests:
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_tests.yml@main
+    
   run-instrumented-tests:
+    needs: [run-tests]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@main
 
-  library-snapshot:
+  publish-snapshot:
     needs: [run-instrumented-tests]
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_publish_to_stage.yml@main
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_publish_snapshot.yml@main
     secrets:
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
