@@ -10,8 +10,11 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.FixMethodOrder
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestName
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 
@@ -19,6 +22,40 @@ import org.junit.runners.MethodSorters
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class UUSecurePrefsTest
 {
+    @get:Rule
+    val testName = TestName()
+
+    companion object
+    {
+        @Volatile
+        private var initialized = false
+    }
+
+    @Before
+    fun ensureInitialized()
+    {
+        // Only initialize for tests that need it (tests numbered 0100+)
+        // Skip initialization for uninitialized tests (0000-0015)
+        val currentTestName = testName.methodName
+        if (currentTestName.startsWith("test_01"))
+        {
+            // Only initialize once per test class instance
+            // This ensures initialization happens before any test that needs it
+            // even when tests run in parallel across devices
+            if (!initialized)
+            {
+                synchronized(UUSecurePrefsTest::class.java)
+                {
+                    if (!initialized)
+                    {
+                        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+                        UUSecurePrefs.init(appContext, "UUSecurePrefsTest")
+                        initialized = true
+                    }
+                }
+            }
+        }
+    }
     @Test()
     fun test_0000_uninitialized_getString()
     {
