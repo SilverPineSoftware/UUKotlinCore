@@ -19,7 +19,7 @@ fun uuPlatformString(): String
 
 fun uuOSVersionString(): String
 {
-    return Build.VERSION.RELEASE.toString()
+    return Build.VERSION.RELEASE
 }
 
 fun Context.uuAppName(): String
@@ -49,11 +49,16 @@ fun Context.uuAppVersionCode(): String
     {
         val manager = packageManager
         val info = manager.getPackageInfo(packageName, 0)
-        return info.longVersionCode.toString(10)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        {
+            info.longVersionCode
+        } else {
+            info.versionCode.toLong()
+        }.toString(10)
     }
     catch (ex: Exception)
     {
-        UULog.logException(LOG_TAG, "uuAppVersion" ,ex)
+        UULog.logException(LOG_TAG, "uuAppVersionCode" ,ex)
     }
 
     return "unknown"
