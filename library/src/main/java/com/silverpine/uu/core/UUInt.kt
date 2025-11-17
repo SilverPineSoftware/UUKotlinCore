@@ -23,5 +23,5 @@ val Int.uuPx: Int
  */
 fun Int.uuIsBitSet(mask: Int): Boolean
 {
-    return this and mask == mask
+    return (this and mask) == mask
 }
