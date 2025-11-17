@@ -57,8 +57,9 @@ fun InputStream.uuUnzip(destinationFolder: Path)
                 val destDir = destinationFolder.toAbsolutePath().normalize()
                 val resolvedPath = destinationFolder.resolve(entry.name).toAbsolutePath().normalize()
 
-                if (!resolvedPath.startsWith(destDir)) {
-                    UULog.e(LOG_TAG, "Potential Zip Slip attempt: " + entry.name)
+                if (!resolvedPath.startsWith(destDir))
+                {
+                    UULog.error(LOG_TAG, "Potential Zip Slip attempt: " + entry.name)
                     continue
                 }
 
