@@ -53,11 +53,19 @@ fun InputStream.uuUnzip(destinationFolder: Path)
 
             for (entry in entries)
             {
-                val file = destinationFolder.resolve(entry.name).toFile()
+                // Normalize paths to prevent Zip Slip vulnerability
+                val destDir = destinationFolder.toAbsolutePath().normalize()
+                val resolvedPath = destinationFolder.resolve(entry.name).toAbsolutePath().normalize()
+
+                if (!resolvedPath.startsWith(destDir)) {
+                    UULog.e(LOG_TAG, "Potential Zip Slip attempt: " + entry.name)
+                    continue
+                }
+
                 val pathParts = TextUtils.join("/", entry.name.split("/").dropLast(1))
                 Files.createDirectories(destinationFolder.resolve(pathParts))
 
-                val fos = FileOutputStream(file)
+                val fos = FileOutputStream(resolvedPath.toFile())
                 zis.uuCopyTo(fos)
                 zis.closeEntry()
             }
