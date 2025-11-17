@@ -91,7 +91,7 @@ class UUEncryptedSharedPreferences(
 
     override fun edit(): SharedPreferences.Editor
     {
-        return Editor(delegate.edit(), keyAlias)
+        return EncryptedEditor(delegate.edit(), keyAlias)
     }
 
     override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener?)
@@ -104,7 +104,7 @@ class UUEncryptedSharedPreferences(
         delegate.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
-    class Editor(
+    class EncryptedEditor(
         private val delegate: SharedPreferences.Editor,
         private val keyAlias: String
     ) : SharedPreferences.Editor
