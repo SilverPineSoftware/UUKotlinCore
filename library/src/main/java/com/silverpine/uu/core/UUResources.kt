@@ -297,7 +297,7 @@ object UUResources
         return applicationContext.uuAppVersion()
     }
 
-    fun uuAppVersionCode(): String
+    fun getAppVersionCode(): String
     {
         requireResources()
         return applicationContext.uuAppVersionCode()

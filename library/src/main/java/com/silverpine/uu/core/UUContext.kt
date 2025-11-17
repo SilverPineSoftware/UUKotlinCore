@@ -52,7 +52,9 @@ fun Context.uuAppVersionCode(): String
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
         {
             info.longVersionCode
-        } else {
+        }
+        else
+        {
             info.versionCode.toLong()
         }.toString(10)
     }
