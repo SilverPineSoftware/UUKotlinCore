@@ -1,5 +1,5 @@
 name: Publish To Stage
-permissions: read
+permissions: read-all
 
 on:
   push:

@@ -1,5 +1,5 @@
 name: Publish
-permissions: read
+permissions: read-all
 
 on:
   release:
