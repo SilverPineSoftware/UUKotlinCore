@@ -6,6 +6,10 @@ on:
     branches:
         - develop
 
+concurrency:
+  group: publish-to-stage-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
 
   run-tests:
