@@ -1,10 +1,36 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
-import java.util.*
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUTimer"
+
+interface UUTimerThread
+{
+    fun postDelayed(interval: Long, runnable: Runnable)
+    fun remove(runnable: Runnable)
+}
+
+class UUWorkerTimerThread(name: String): UUTimerThread
+{
+    private val workerThread = UUWorkerThread(name)
+
+    override fun postDelayed(interval: Long, runnable: Runnable)
+    {
+        workerThread.postDelayed(interval, runnable)
+    }
+
+    override fun remove(runnable: Runnable)
+    {
+        workerThread.remove(runnable)
+    }
+
+}
 
 /**
  * A simple named timer that wraps Timer and TimerTask
+ *
+ * @since 1.0.0
  */
 class UUTimer(
     val timerId: String,
@@ -18,6 +44,7 @@ class UUTimer(
     /**
      * Gets the last time this timer was fired
      *
+     * @since 1.0.0
      * @return a long
      */
     var lastFireTime: Long = 0
@@ -25,6 +52,8 @@ class UUTimer(
 
     /**
      * Starts the timer
+     *
+     * @since 1.0.0
      */
     fun start()
     {
@@ -34,6 +63,8 @@ class UUTimer(
 
     /**
      * Cancels the timer
+     *
+     * @since 1.0.0
      */
     fun cancel()
     {
@@ -58,7 +89,7 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "safeStartTimer", "", ex)
+            UULog.logException(LOG_TAG, "safeStartTimer", ex)
         }
     }
 
@@ -73,11 +104,11 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "safeCancelTimer", "", ex)
+            UULog.logException(LOG_TAG, "safeCancelTimer", ex)
         }
     }
 
-    private fun handlerTimerFired()
+    private fun handleTimerFired()
     {
         try
         {
@@ -85,7 +116,7 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "handlerTimerFired", "", ex)
+            UULog.logException(LOG_TAG, "handleTimerFired", ex)
         }
     }
 
@@ -93,7 +124,7 @@ class UUTimer(
     {
         try
         {
-            handlerTimerFired()
+            handleTimerFired()
 
             if (repeat)
             {
@@ -106,14 +137,14 @@ class UUTimer(
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "safeInvokeRun", "", ex)
+            UULog.logException(LOG_TAG, "safeInvokeRun", ex)
         }
     }
 
     companion object
     {
         private val theActiveTimers = HashMap<String, UUTimer>()
-        private val workerThread = UUWorkerThread("UUTimer")
+        var workerThread: UUTimerThread = UUWorkerTimerThread("UUTimer")
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // Private Class Methods
@@ -129,7 +160,7 @@ class UUTimer(
             }
             catch (ex: Exception)
             {
-                UULog.e(UUTimer::class.java, "addTimer", "", ex)
+                UULog.logException(LOG_TAG, "addTimer", ex)
             }
         }
 
@@ -144,7 +175,7 @@ class UUTimer(
             }
             catch (ex: Exception)
             {
-                UULog.e(UUTimer::class.java, "removeTimer", "", ex)
+                UULog.logException(LOG_TAG, "removeTimer", ex)
             }
         }
 
@@ -154,6 +185,7 @@ class UUTimer(
         /**
          * Finds an active timer by ID
          *
+         * @since 1.0.0
          * @param timerId the timer ID to lookup
          *
          * @return a timer or null if not found
@@ -169,6 +201,7 @@ class UUTimer(
         /**
          * Lists all active timers
          *
+         * @since 1.0.0
          * @return a list of UUTimer's
          */
         fun listActiveTimers(): ArrayList<UUTimer>
@@ -189,6 +222,7 @@ class UUTimer(
         /**
          * Fires a named timer
          *
+         * @since 1.0.0
          * @param timerId timer ID
          * @param timeoutMilliseconds timout in milliseconds
          * @param userInfo optional user context
@@ -212,6 +246,7 @@ class UUTimer(
         /**
          * Cancels a named timer
          *
+         * @since 1.0.0
          * @param timerId timer ID
          */
         fun cancelActiveTimer(timerId: String)

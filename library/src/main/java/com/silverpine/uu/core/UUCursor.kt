@@ -10,6 +10,9 @@ import androidx.core.database.getLongOrNull
 import androidx.core.database.getShortOrNull
 import androidx.core.database.getStringOrNull
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUCursor"
 
 fun Cursor.uuGetShort(column: Any, defaultValue: Short? = null): Short?
 {
@@ -25,7 +28,7 @@ fun Cursor.uuGetShort(column: Any, defaultValue: Short? = null): Short?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetShort", "", ex)
+        UULog.logException(LOG_TAG, "uuGetShort", ex)
     }
 
     return result
@@ -50,7 +53,7 @@ fun Cursor.uuGetInt(column: Any, defaultValue: Int? = null): Int?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetInt", "", ex)
+        UULog.logException(LOG_TAG, "uuGetInt", ex)
     }
 
     return result
@@ -75,7 +78,7 @@ fun Cursor.uuGetLong(column: Any, defaultValue: Long? = null): Long?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetLong", "", ex)
+        UULog.logException(LOG_TAG, "uuGetLong", ex)
     }
 
     return result
@@ -112,7 +115,7 @@ fun Cursor.uuGetFloat(column: Any, defaultValue: Float? = null): Float?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetFloat", "", ex)
+        UULog.logException(LOG_TAG, "uuGetFloat", ex)
     }
 
     return result
@@ -138,7 +141,7 @@ fun Cursor.uuGetDouble(column: Any, defaultValue: Double? = null): Double?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetDouble", "", ex)
+        UULog.logException(LOG_TAG, "uuGetDouble", ex)
     }
 
     return result
@@ -164,7 +167,7 @@ fun Cursor.uuGetBlob(column: Any, defaultValue: ByteArray? = null): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetBlob", "", ex)
+        UULog.logException(LOG_TAG, "uuGetBlob", ex)
     }
 
     return result
@@ -190,7 +193,7 @@ fun Cursor.uuGetString(column: Any, defaultValue: String? = null): String?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuGetString", "", ex)
+        UULog.logException(LOG_TAG, "uuGetString", ex)
     }
 
     return result
@@ -258,7 +261,8 @@ fun Cursor.uuSafeGetStringSet(column: Any, defaultValue: Set<String> = setOf()):
 
 fun <T: Any> Cursor.uuGetJsonObject(jsonClass: Class<T>, column: Any, defaultValue: T? = null): T?
 {
-    return UUJson.fromString(uuGetString(column), jsonClass) ?: defaultValue
+    val json = uuGetString(column) ?: return null
+    return UUJson.fromString(json, jsonClass).getOrNull() ?: defaultValue
 }
 
 fun <T: Any> Cursor.uuSafeGetJsonObject(jsonClass: Class<T>, column: Any, defaultValue: T): T
@@ -266,46 +270,10 @@ fun <T: Any> Cursor.uuSafeGetJsonObject(jsonClass: Class<T>, column: Any, defaul
     return uuGetJsonObject(jsonClass, column) ?: defaultValue
 }
 
-///**
-// * Safely gets a column value based on the cursor field type
-// *
-// * @param cursor a database cursor
-// * @param column column name to get
-// * @param defaultValue the default value
-// *
-// * @return an Object of type String, Long, Double, byte[], or null
-// */
-//    @Nullable
-//    public static Object safeGet(
-//            @NonNull final Cursor cursor,
-//            @NonNull final Object column,
-//            @Nullable final Object defaultValue)
-//    {
-//        int index = cursor.getColumnIndex(column.toString());
-//        return safeGet(cursor, index, defaultValue);
-//    }
-
-///**
-// * Safely gets a column value based on the cursor field type
-// *
-// * @param cursor a database cursor
-// * @param column column name to get
-// * @param defaultValue the default value
-// *
-// * @return an Object of type String, Long, Double, byte[], or null
-// */
-//    @Nullable
-//    public static Object safeGet(
-//            @NonNull final Cursor cursor,
-//            @NonNull final Object column,
-//            @Nullable final Object defaultValue)
-//    {
-//        int index = cursor.getColumnIndex(column.toString());
-//        return safeGet(cursor, index, defaultValue);
-//    }
 /**
  * Safely gets a column value based on the cursor field type
  *
+ * @since 1.0.0
  * @param index index to get
  * @param defaultValue the default value
  *
@@ -350,120 +318,9 @@ fun Cursor.uuGet(index: Int, defaultValue: Any? = null): Any?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "safeGet", "", ex)
+        UULog.logException(LOG_TAG, "uuGet", ex)
         defaultValue
     }
 
     return result
 }
-
-/*
-
-fun <T> safeGet(
-    fieldType: Class<T>,
-    cursor: Cursor,
-    column: Any,
-    defaultValue: T?
-): Any? {
-    try {
-        if (fieldType == Long::class.javaPrimitiveType) {
-            return safeGetLong(
-                cursor,
-                column,
-                if (defaultValue != null) Long::class.javaPrimitiveType!!.cast(defaultValue) else 0L
-            )
-        } else if (fieldType == Int::class.javaPrimitiveType) {
-            return safeGetInt(
-                cursor,
-                column,
-                if (defaultValue != null) Int::class.javaPrimitiveType!!.cast(defaultValue) else 0
-            )
-        } else if (fieldType == Short::class.javaPrimitiveType) {
-            return safeGetShort(
-                cursor,
-                column,
-                if (defaultValue != null) Short::class.javaPrimitiveType!!.cast(defaultValue) else 0.toShort()
-            )
-        } else if (fieldType == Byte::class.javaPrimitiveType) {
-            val `val` = safeGetInt(
-                cursor,
-                column,
-                if (defaultValue != null) Int::class.javaPrimitiveType!!.cast(defaultValue) else 0
-            )
-            return `val`.toByte()
-        } else if (fieldType == Float::class.javaPrimitiveType) {
-            return safeGetFloat(
-                cursor,
-                column,
-                if (defaultValue != null) Float::class.javaPrimitiveType!!.cast(defaultValue) else 0.0f
-            )
-        } else if (fieldType == Double::class.javaPrimitiveType) {
-            return safeGetDouble(
-                cursor,
-                column,
-                if (defaultValue != null) Double::class.javaPrimitiveType!!.cast(defaultValue) else 0.0
-            )
-        } else if (fieldType == Boolean::class.javaPrimitiveType) {
-            return safeGetBoolean(
-                cursor,
-                column,
-                if (defaultValue != null) Boolean::class.javaPrimitiveType!!.cast(defaultValue) else false
-            )
-        } else if (fieldType == Char::class.javaPrimitiveType) {
-            val `val` = safeGetInt(
-                cursor,
-                column,
-                if (defaultValue != null) Int::class.javaPrimitiveType!!.cast(defaultValue) else 0
-            )
-            return Char(`val`.toByte().toUShort())
-        } else if (fieldType == Long::class.java) {
-            return safeGetLongObject(cursor, column, defaultValue as Long?)
-        } else if (fieldType == Int::class.java) {
-            return safeGetIntObject(cursor, column, defaultValue as Int?)
-        } else if (fieldType == Short::class.java) {
-            return safeGetShortObject(cursor, column, defaultValue as Short?)
-        } else if (fieldType == Byte::class.java) {
-            val `val` = safeGetInt(
-                cursor,
-                column,
-                if (defaultValue != null) Int::class.javaPrimitiveType!!.cast(defaultValue) else 0
-            )
-            return `val`.toByte()
-        } else if (fieldType == Float::class.java) {
-            return safeGetFloatObject(cursor, column, defaultValue as Float?)
-        } else if (fieldType == Double::class.java) {
-            return safeGetDoubleObject(cursor, column, defaultValue as Double?)
-        } else if (fieldType == Boolean::class.java) {
-            return safeGetBooleanObject(cursor, column, defaultValue as Boolean?)
-        } else if (fieldType == Char::class.java) {
-            val `val` = safeGetInt(
-                cursor,
-                column,
-                if (defaultValue != null) Int::class.javaPrimitiveType!!.cast(defaultValue) else 0
-            )
-            return Char(`val`.toByte().toUShort())
-        } else if (fieldType == String::class.java) {
-            return uu.toolbox.data.UUCursor.safeGetString(cursor, column)
-        } else if (Array<Byte>::class.java == fieldType) {
-            val `val`: ByteArray = uu.toolbox.data.UUCursor.safeGetBlob(cursor, column)
-            if (`val` != null) {
-                val tmp = arrayOfNulls<Byte>(`val`.size)
-                for (i in tmp.indices) {
-                    tmp[i] = `val`[i]
-                }
-                return tmp
-            }
-        } else if (ByteArray::class.java == fieldType) {
-            return uu.toolbox.data.UUCursor.safeGetBlob(cursor, column, defaultValue as ByteArray?)
-        } else if (fieldType.isEnum) {
-            val stringVal = safeGetString(cursor, column)
-            if (UUString.isNotEmpty(stringVal)) {
-                return java.lang.Enum.valueOf(fieldType as Class<Enum<*>>, stringVal)
-            }
-        }
-    } catch (ex: Exception) {
-        UULog.debug(UUDataModel::class.java, "getField", ex)
-    }
-    return defaultValue
-}
-*/

@@ -37,3 +37,32 @@ fun <T> List<T>.uuGetOrNull(index: Int): T?
         null
     }
 }
+
+/**
+ * Splits this list into a sequence of sublists, each with a maximum size of [chunkSize].
+ *
+ * The final chunk may contain fewer elements if the list size is not evenly divisible.
+ * If [chunkSize] is zero or negative, an empty list is returned.
+ *
+ * @since 1.0.0
+ * @param chunkSize The maximum number of elements per chunk.
+ * @return A list of sub lists, each containing up to [chunkSize] elements.
+ *
+ * @sample listOf(1, 2, 3, 4, 5).uuSplitIntoChunks(2) // returns [[1, 2], [3, 4], [5]]
+ */
+fun <T> List<T>.uuSplitIntoChunks(chunkSize: Int): List<List<T>>
+{
+    if (chunkSize <= 0) return listOf()
+
+    val chunks = mutableListOf<List<T>>()
+    var index = 0
+
+    while (index < this.size)
+    {
+        val end = minOf(index + chunkSize, this.size)
+        chunks.add(this.subList(index, end))
+        index += chunkSize
+    }
+
+    return chunks
+}

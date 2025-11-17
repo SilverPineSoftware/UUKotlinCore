@@ -1,10 +1,15 @@
 package com.silverpine.uu.core
 
-import android.util.Base64
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.nio.charset.Charset
-import java.util.*
+import java.util.Base64
+import java.util.Locale
 import java.util.regex.Pattern
+
+private const val LOG_TAG = "UUString"
 
 fun String?.uuSafeString(): String
 {
@@ -29,6 +34,7 @@ fun String?.uuIsNotEmpty(): Boolean
 /**
  * Converts a hex string into a byte array
  *
+ * @since 1.0.0
  * @return a byte array or null if the string has invalid hex characters
  */
 fun String?.uuToHexData(): ByteArray?
@@ -64,6 +70,7 @@ fun String?.uuToHexData(): ByteArray?
 /**
  * Safely creates a ByteArray from a string
  *
+ * @since 1.0.0
  * @param encoding the character encoding to use
  * @return a ByteArray or null if an error occurs
  */
@@ -75,7 +82,7 @@ fun String.uuToByteArray(encoding: Charset): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuToByteArray", "", ex)
+        UULog.logException(LOG_TAG, "uuToByteArray", ex)
         null
     }
 }
@@ -83,6 +90,7 @@ fun String.uuToByteArray(encoding: Charset): ByteArray?
 /**
  * Safely creates a UTF8 byte array
  *
+ * @since 1.0.0
  * @return a byte[] or null if an error occurs
  */
 fun String.uuUtf8ByteArray(): ByteArray?
@@ -93,6 +101,7 @@ fun String.uuUtf8ByteArray(): ByteArray?
 /**
  * Safely creates a ASCII byte array
  *
+ * @since 1.0.0
  * @return a byte[] or null if an error occurs
  */
 fun String.uuAsciiByteArray(): ByteArray?
@@ -100,40 +109,49 @@ fun String.uuAsciiByteArray(): ByteArray?
     return uuToByteArray(Charsets.US_ASCII)
 }
 
-
-
 /**
- * Safelye decodes a base 64 into its byte[] representation
+ * Decodes this [String] from Base64 into a [ByteArray].
  *
- * @param base64Options Base64 flags to encode with (defaults to Base64.NO_WRAP)
- * @return a byte[] or null if an exception is caught
+ * This is a convenience extension that wraps [Base64.Decoder.decode] and returns
+ * the result inside a [Result] type to simplify error handling.
+ *
+ * ### Behavior
+ * - On success, returns a [Result.success] containing the decoded bytes.
+ * - On failure (e.g. if the string is not valid Base64), returns a [Result.failure]
+ *   wrapping the thrown [Exception].
+ *
+ * @receiver the Base64‑encoded string to decode.
+ *
+ * @since 1.0.0
+ * @param decoder the [Base64.Decoder] to use for decoding. Defaults to
+ * [Base64.getDecoder].
+ *
+ * @return a [Result] containing the decoded [ByteArray] on success, or a failure
+ * if decoding fails.
+ *
+ * ### Example
+ * ```
+ * val encoded = "SGVsbG8gd29ybGQ=" // "Hello world"
+ * val decoded = encoded.uuToBase64Bytes().getOrThrow()
+ * println(String(decoded)) // prints "Hello world"
+ * ```
  */
-fun String.uuToBase64Bytes(base64Options: Int = Base64.NO_WRAP): ByteArray?
+fun String.uuFromBase64(decoder: Base64.Decoder = Base64.getDecoder()): Result<ByteArray>
 {
     return try
     {
-        Base64.decode(this, base64Options)
+        Result.success(decoder.decode(this))
     }
     catch (ex: Exception)
     {
-        null
+        Result.failure(ex)
     }
-}
-
-fun String.uuDecodeFromBase64ToUtf8String(base64options: Int = Base64.NO_WRAP): String
-{
-    return uuFromBase64ToString(base64options, Charsets.UTF_8)
-}
-
-fun String.uuFromBase64ToString(base64options: Int, encoding: Charset): String
-{
-    val base64 = uuToBase64Bytes(base64options) ?: return ""
-    return base64.uuString(encoding)
 }
 
 /**
  * Capitalizes the first letter of a string
  *
+ * @since 1.0.0
  * @return A string with the first letter capitalized, or the string itself if the length is
  * less than zero or null.
  */
@@ -152,6 +170,7 @@ fun String.uuFirstCapital(): String
 /**
  * Converts a string to snake_case
  *
+ * @since 1.0.0
  * @param string a string
  *
  * @return another string
@@ -166,6 +185,7 @@ fun String.uuToSnakeCase(): String
 /**
  * Safely truncates a string to a given length
  *
+ * @since 1.0.0
  * @return another string
  */
 fun String.uuTruncate(length: Int): String
@@ -183,6 +203,7 @@ fun String.uuTruncate(length: Int): String
 /**
  * Checks to see if all characters in a string are a numerical digit
  *
+ * @since 1.0.0
  * @return true or false
  */
 fun String.uuIsDigits(): Boolean
@@ -201,6 +222,7 @@ fun String.uuIsDigits(): Boolean
 /**
  * Checks to see if all characters in a string are alphabetic
  *
+ * @since 1.0.0
  * @return true or false
  */
 val String.uuIsAlphabeticOnly: Boolean
@@ -210,6 +232,7 @@ val String.uuIsAlphabeticOnly: Boolean
 /**
  * Checks to see if all characters in a string are alphabetic or numeric
  *
+ * @since 1.0.0
  * @return true or false
  */
 val String.uuIsAlphanumericOnly: Boolean
@@ -219,6 +242,7 @@ val String.uuIsAlphanumericOnly: Boolean
 /**
  * Applies a simple transform to each element in an array
  *
+ * @since 1.0.0
  * @param input the input array
  * @param transformMethod the transform method
  * @return the output array
@@ -258,7 +282,7 @@ fun String.uuMatchesRegex(regexPattern: String): Boolean
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuMatchesRegex", "", ex)
+        UULog.logException(LOG_TAG, "uuMatchesRegex", ex)
         false
     }
 }
@@ -281,4 +305,18 @@ fun String.uuHasNumber(): Boolean
 fun String.uuHasSymbol(): Boolean
 {
     return uuMatchesRegex(UU_PASSWORD_VALID_SYMBOLS_REGEX)
+}
+
+fun Throwable.uuStackTrace(): String
+{
+    return runCatching()
+    {
+        val sw = StringWriter()
+        printStackTrace(PrintWriter(sw))
+        return sw.toString()
+
+    }.getOrElse()
+    {
+        uuSafeToString()
+    }
 }

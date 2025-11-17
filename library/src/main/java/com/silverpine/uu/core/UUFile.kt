@@ -1,9 +1,13 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.isDirectory
+
+private const val LOG_TAG = "UUFile"
+
 fun Path.uuListAllFiles(): ArrayList<Path>
 {
     val list = ArrayList<Path>()
@@ -16,7 +20,7 @@ fun Path.uuListAllFiles(): ArrayList<Path>
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuListAllFiles", "", ex)
+        UULog.logException(LOG_TAG, "uuListAllFiles", ex)
     }
 
     return list
@@ -36,7 +40,7 @@ private fun Path.uuSafeDelete()
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuSafeDelete", "", ex)
+        UULog.logException(LOG_TAG, "uuSafeDelete", ex)
     }
 }
 
@@ -50,6 +54,6 @@ private fun Path.uuDeleteContents()
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuDeleteContents", "", ex)
+        UULog.logException(LOG_TAG, "uuDeleteContents", ex)
     }
 }

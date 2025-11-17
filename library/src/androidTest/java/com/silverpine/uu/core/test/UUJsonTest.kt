@@ -13,7 +13,9 @@ import com.silverpine.uu.core.test.models.PrimitiveListModel
 import com.silverpine.uu.core.test.models.PrimitiveModel
 import com.silverpine.uu.core.test.models.TestEnumCamelCase
 import com.silverpine.uu.core.test.models.TestEnumSnakeCase
+import com.silverpine.uu.core.uuUtf8ByteArray
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.test.UUAssert
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -28,6 +30,7 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -117,13 +120,15 @@ class UUJsonTest
     /**
      * Tests an object with a nullable enum field being deserialized when the JSON string has
      * garbage in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0006_nullable_lenient_enums()
     {
         val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":\"Garbage\",\"custom_two\":\"window_trim\",\"custom_three\":\"one\",\"custom_four\":\"tv_ladder_hat\"}"
 
-        val check = UUJson.fromString(input, EnumModel::class.java)
+        val check = UUJson.fromString(input, EnumModel::class.java).getOrNull()
         Assert.assertNotNull(check)
         Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
@@ -136,13 +141,15 @@ class UUJsonTest
     /**
      * Tests an object with a nullable enum field being deserialized when the JSON string has
      * null in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0007_nullable_lenient_enum_null()
     {
         val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":null,\"custom_two\":\"window_trim\",\"custom_three\":\"one\",\"custom_four\":\"tv_ladder_hat\"}"
 
-        val check = UUJson.fromString(input, EnumModel::class.java)
+        val check = UUJson.fromString(input, EnumModel::class.java).getOrNull()
         Assert.assertNotNull(check)
         Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
@@ -155,17 +162,19 @@ class UUJsonTest
     /**
      * Tests an object with a non-nullable enum field being deserialized when the JSON string has
      * garbage in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0008_non_nullable_lenient_enums()
     {
         val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":\"two\",\"custom_two\":\"window_trim\",\"custom_three\":\"FooBar\",\"custom_four\":\"tv_ladder_hat\"}"
 
-        val check = UUJson.fromString(input, EnumModel::class.java)
+        val check = UUJson.fromString(input, EnumModel::class.java).getOrNull()
         Assert.assertNotNull(check)
         Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
-        Assert.assertEquals(TestEnumCamelCase.Two, check.customOne)
+        Assert.assertNull(check.customOne)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.customTwo)
         Assert.assertEquals(TestEnumCamelCase.One, check.customThree)
         Assert.assertEquals(TestEnumSnakeCase.tv_ladder_hat, check.customFour)
@@ -174,13 +183,15 @@ class UUJsonTest
     /**
      * Tests an object with a non-nullable enum field being deserialized when the JSON string has
      * null in it.
+     *
+     * @since 1.0.0
      */
     @Test
     fun test_0009_non_nullable_lenient_enum_null()
     {
         val input = "{\"camel_case\":\"Three\",\"snake_case\":\"window_trim\",\"custom_one\":\"Two\",\"custom_two\":\"window_trim\",\"custom_three\":null,\"custom_four\":\"tv_ladder_hat\"}"
 
-        val check = UUJson.fromString(input, EnumModel::class.java)
+        val check = UUJson.fromString(input, EnumModel::class.java).getOrNull()
         Assert.assertNotNull(check)
         Assert.assertEquals(TestEnumCamelCase.Three, check!!.camelCase)
         Assert.assertEquals(TestEnumSnakeCase.window_trim, check.snake_case)
@@ -205,15 +216,14 @@ class UUJsonTest
         {
             val source = createObject()
 
-            val json = UUJson.toJson(source, source.javaClass)
-            Assert.assertNotNull(json)
-            UULog.d(javaClass, "doToFromJsonTest-$i", "JSON Object: $json")
+            val json = UUAssert.unwrap(UUJson.toJson(source, source.javaClass).getOrNull())
+            //UULog.d(javaClass, "doToFromJsonTest-$i", "JSON Object: $json")
 
             val check = TestObject(source)
             val checkJson = check.encodeToJson()
             Assert.assertEquals(json, checkJson)
 
-            val fromJson: T? = UUJson.fromString(json, source.javaClass)
+            val fromJson: T? = UUJson.fromString(json, source.javaClass).getOrNull()
             Assert.assertNotNull(fromJson)
             Assert.assertEquals(source, fromJson)
 
@@ -221,6 +231,10 @@ class UUJsonTest
             val fromCheck: T? = fromObj.decodeFromJson(json)
             Assert.assertNotNull(fromJson)
             Assert.assertEquals(source, fromCheck)
+
+            val jsonBytes = UUAssert.unwrap(json.uuUtf8ByteArray())
+            val fromJsonBytes: T? = UUJson.fromBytes(jsonBytes, source.javaClass).getOrNull()
+            assertNotNull(fromJsonBytes)
         }
     }
 
@@ -232,15 +246,15 @@ class UUJsonTest
     {
         fun encodeToJson(): String?
         {
-            return UUJson.toJson(jsonObject, jsonObject.javaClass)
+            return UUJson.toJson(jsonObject, jsonObject.javaClass).getOrNull()
         }
     }
 
     class FromObject
     {
-        inline fun <reified T: Any> decodeFromJson(string: String?): T?
+        inline fun <reified T: Any> decodeFromJson(string: String): T?
         {
-            return UUJson.fromString(string, T::class.java)
+            return UUJson.fromString(string, T::class.java).getOrNull()
         }
     }
 
@@ -263,7 +277,7 @@ class UUJsonTest
         //val obj: HashMap<String, String> = hashMapOf()
 
         @Suppress("UNCHECKED_CAST")
-        val vendorMap = UUJson.fromString(input, SerializableHashMap::class.java) as? Map<String, String>
+        val vendorMap = UUJson.fromString(input, SerializableHashMap::class.java).getOrNull() as? Map<String, String>
         Assert.assertNotNull(vendorMap)
 
         //Assert.assertEquals("ESS Embedded System Solutions Inc.", vendorMap["06FD"])
@@ -326,6 +340,5 @@ class UUJsonTest
 
 // or
     }
-
 }
 

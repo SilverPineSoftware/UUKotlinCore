@@ -18,7 +18,10 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.io.ByteArrayOutputStream
+
+private const val LOG_TAG = "UUResources"
 
 object UUResources
 {
@@ -55,7 +58,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getString", "Error getting resource name $resourceId", ex)
+            UULog.logException(LOG_TAG, "getString($resourceId)", ex)
             result = null
         }
 
@@ -77,7 +80,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getString", "Error getting resource entry name $resourceId", ex)
+            UULog.logException(LOG_TAG, "getResourceEntryName($resourceId)", ex)
             result = null
         }
 
@@ -99,7 +102,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getString", "Error getting resource package name $resourceId", ex)
+            UULog.logException(LOG_TAG, "getResourcePackageName($resourceId)", ex)
             result = null
         }
 
@@ -121,7 +124,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getString", "Error getting resource type name $resourceId", ex)
+            UULog.logException(LOG_TAG, "getResourceTypeName($resourceId)", ex)
             result = null
         }
 
@@ -138,7 +141,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getResourceUri", "Error getting resource uri $resourceId in folder $resourceFolder", ex)
+            UULog.logException(LOG_TAG, "getResourceUrl(resourceId: $resourceId, resourceFolder: $resourceFolder)", ex)
             result = null
         }
 
@@ -168,7 +171,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getString", "Error loading string $resourceId", ex)
+            UULog.logException(LOG_TAG, "getString($resourceId)", ex)
             result = null
         }
 
@@ -190,7 +193,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getString", "Error loading formatted string $resourceId", ex)
+            UULog.logException(LOG_TAG, "getString($resourceId)", ex)
             result = null
         }
 
@@ -215,7 +218,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getDrawable", "Error loading drawable $resourceId", ex)
+            UULog.logException(LOG_TAG, "getDrawable($resourceId)", ex)
             result = null
         }
 
@@ -237,7 +240,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getColor", "Error loading color $resourceId", ex)
+            UULog.logException(LOG_TAG, "getColor($resourceId)", ex)
             result = null
         }
 
@@ -259,7 +262,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getDimension", "Error loading dimension $resourceId", ex)
+            UULog.logException(LOG_TAG, "getDimension($resourceId)", ex)
             result = null
         }
 
@@ -281,7 +284,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getDimensionPixelSize", "Error loading dimension pixel size $resourceId", ex)
+            UULog.logException(LOG_TAG, "getDimensionPixelSize($resourceId)", ex)
             result = null
         }
 
@@ -291,39 +294,13 @@ object UUResources
     fun getAppVersion(): String
     {
         requireResources()
-
-        try
-        {
-            val ctx = applicationContext
-            val manager = ctx.packageManager
-            val info = manager.getPackageInfo(ctx.packageName, 0)
-            return info.versionName ?: "unknown"
-        }
-        catch (ex: Exception)
-        {
-            UULog.e(javaClass, "getAppVersion", "", ex)
-        }
-
-        return "unknown"
+        return applicationContext.uuAppVersion()
     }
 
-    fun getAppBuild(): String
+    fun uuAppVersionCode(): String
     {
         requireResources()
-
-        try
-        {
-            val ctx = applicationContext
-            val manager = ctx.packageManager
-            val info = manager.getPackageInfo(ctx.packageName, 0)
-            return info.longVersionCode.toString(10)
-        }
-        catch (ex: Exception)
-        {
-            UULog.e(javaClass, "getAppBuild", "", ex)
-        }
-
-        return "unknown"
+        return applicationContext.uuAppVersionCode()
     }
 
     fun getAppBundleId(): String
@@ -347,7 +324,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getRawText", "Error loading raw text $resourceId", ex)
+            UULog.logException(LOG_TAG, "getRawText($resourceId)", ex)
             result = null
         }
 
@@ -369,7 +346,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getRawBytes", "Error loading raw bytes $resourceId", ex)
+            UULog.logException(LOG_TAG, "getRawBytes($resourceId)", ex)
             result = null
         }
 
@@ -391,7 +368,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getFont", "Error loading font $resourceId", ex)
+            UULog.logException(LOG_TAG, "getFont($resourceId)", ex)
             result = null
         }
 
@@ -413,7 +390,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getInteger", "Error loading integer $resourceId", ex)
+            UULog.logException(LOG_TAG, "getInteger($resourceId)", ex)
             result = null
         }
 
@@ -435,7 +412,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getIntArray", "Error loading integer $resourceId", ex)
+            UULog.logException(LOG_TAG, "getIntArray($resourceId)", ex)
             result = null
         }
 
@@ -457,7 +434,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getStringArray", "Error loading integer $resourceId", ex)
+            UULog.logException(LOG_TAG, "getStringArray($resourceId)", ex)
             result = null
         }
 
@@ -480,7 +457,7 @@ object UUResources
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getFloat", "Error loading float $resourceId", ex)
+            UULog.logException(LOG_TAG, "getFloat($resourceId)", ex)
             result = null
         }
 

@@ -1,11 +1,14 @@
 package com.silverpine.uu.core
 
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
+
+private const val LOG_TAG = "UUSerializable"
 
 fun <T : Serializable?> ByteArray.uuDeserialize(type: Class<T>): T?
 {
@@ -21,7 +24,7 @@ fun <T : Serializable?> ByteArray.uuDeserialize(type: Class<T>): T?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuDeserialize", "", ex)
+        UULog.logException(LOG_TAG, "uuDeserialize", ex)
         result = null
     }
     finally
@@ -36,6 +39,7 @@ fun <T : Serializable?> ByteArray.uuDeserialize(type: Class<T>): T?
 /**
  * Safely serializes an object
  *
+ * @since 1.0.0
  * @return an array of bytes
  */
 fun Serializable.uuSerialize(): ByteArray?
@@ -54,7 +58,7 @@ fun Serializable.uuSerialize(): ByteArray?
     }
     catch (ex: Exception)
     {
-        UULog.d(javaClass, "uuSerialize", "", ex)
+        UULog.logException(LOG_TAG, "uuSerialize", ex)
         result = null
     }
     finally

@@ -37,3 +37,31 @@ fun <T> Array<T>.uuGetOrNull(index: Int): T?
         null
     }
 }
+
+/**
+ * Splits this array into a sequence of sub arrays, each with a maximum size of [chunkSize].
+ *
+ * The final chunk may contain fewer elements if the array size is not evenly divisible.
+ * If [chunkSize] is zero or negative, an empty list is returned.
+ *
+ * @since 1.0.0
+ * @param chunkSize The maximum number of elements per chunk.
+ * @return A list of arrays, each containing up to [chunkSize] elements.
+ *
+ * @sample arrayOf("a", "b", "c", "d").uuSplitIntoChunks(3) // returns [["a", "b", "c"], ["d"]]
+ */
+fun <T> Array<T>.uuSplitIntoChunks(chunkSize: Int): List<Array<T>>
+{
+    if (chunkSize <= 0) return listOf()
+
+    val chunks = mutableListOf<Array<T>>()
+    var index = 0
+
+    while (index < this.size) {
+        val end = minOf(index + chunkSize, this.size)
+        chunks.add(this.copyOfRange(index, end))
+        index += chunkSize
+    }
+
+    return chunks
+}

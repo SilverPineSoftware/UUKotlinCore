@@ -5,6 +5,9 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import com.silverpine.uu.logging.UULog
+import com.silverpine.uu.logging.logException
+
+private const val LOG_TAG = "UUContentResolver"
 
 object UUContentResolver
 {
@@ -32,7 +35,7 @@ object UUContentResolver
         }
         catch (ex: Exception)
         {
-            UULog.d(javaClass, "getFileName", "", ex)
+            UULog.logException(LOG_TAG, "getFileName" ,ex)
         }
 
         return ""
