@@ -27,4 +27,29 @@ jobs:
       SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+
+  upload-release-artifacts:
+    needs: [run-tests, run-instrumented-tests, publish-library]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Archive test results
+      if: always()
+      run: |
+        # Create zip for unit test results
+        zip -r library-test-results-${{ github.event.release.tag_name }}.zip library/build/reports/tests/
+        
+        # Create zip for Android test results
+        zip -r library-instrumented-test-results-${{ github.event.release.tag_name }}.zip library/build/reports/androidTests/
+                  
+    - name: Upload test results to release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload "${{ github.event.release.tag_name }}" \
+          library-test-results-${{ github.event.release.tag_name }}.zip \
+          library-instrumented-test-results-${{ github.event.release.tag_name }}.zip \
+          --clobber 
+      
       
