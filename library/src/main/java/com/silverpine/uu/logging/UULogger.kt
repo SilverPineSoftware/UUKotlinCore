@@ -210,5 +210,46 @@ open class UULogger(
     {
         writeToLog(UULogLevel.FATAL, tag, message)
     }
+
+    /**
+     * Factory methods for creating pre-configured logger instances with common log writers.
+     *
+     * @since 1.0.0
+     */
+    companion object
+    {
+        /**
+         * Returns a logger configured to write to the console using [UUConsoleLogWriter].
+         *
+         * This is a convenience factory method that creates a logger instance with console
+         * output. Useful for quick debugging or when console output is the desired logging
+         * destination.
+         *
+         * @since 1.0.0
+         *
+         * @return A new [UULogger] instance with console output.
+         */
+        val console: UULogger
+            get()
+            {
+                return UULogger(UUConsoleLogWriter())
+            }
+
+        /**
+         * Returns a logger configured to write using [UUPrintLogWriter].
+         *
+         * This is a convenience factory method that creates a logger instance with print-based
+         * output. Useful when standard print statements are the desired logging mechanism.
+         *
+         * @since 1.0.0
+         *
+         * @return A new [UULogger] instance with print-based output.
+         */
+        val print: UULogger
+            get()
+            {
+                return UULogger(UUPrintLogWriter())
+            }
+    }
 }
 
