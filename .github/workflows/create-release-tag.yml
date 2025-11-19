@@ -1,0 +1,21 @@
+name: Create Release Tag
+permissions:
+  contents: write
+  
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        # If not specified, the version from gradle.properties will be used
+        description: 'Release version (e.g., 1.0.0). If not specified, uses version from gradle.properties'
+        required: false
+        type: string
+
+jobs:
+  create-tag:
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_create_release_tag.yml@main
+    with:
+      version: ${{ inputs.version }}
+    secrets:
+      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      

@@ -1,10 +1,11 @@
 name: Publish
-permissions: read-all
+permissions:
+  contents: write
 
 on:
-  release:
-    types: [released]
-
+  create:
+    tags:
+      - '*.*.*'  # Matches numerical version tags like 1.0.0, 2.1.3, etc.
 
 jobs:
 
@@ -28,28 +29,23 @@ jobs:
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
 
-  upload-release-artifacts:
+  create-release:
     needs: [run-tests, run-instrumented-tests, publish-library]
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_create_release.yml@main
+    secrets:
+      UU_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  prepare-next-version:
+    needs: [create-release]
     runs-on: ubuntu-latest
+    if: always()
     permissions:
       contents: write
     steps:
-    - name: Archive test results
-      if: always()
-      run: |
-        # Create zip for unit test results
-        zip -r library-test-results-${{ github.event.release.tag_name }}.zip library/build/reports/tests/
-        
-        # Create zip for Android test results
-        zip -r library-instrumented-test-results-${{ github.event.release.tag_name }}.zip library/build/reports/androidTests/
-                  
-    - name: Upload test results to release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release upload "${{ github.event.release.tag_name }}" \
-          library-test-results-${{ github.event.release.tag_name }}.zip \
-          library-instrumented-test-results-${{ github.event.release.tag_name }}.zip \
-          --clobber 
+      - name: Prepare Next Version
+        uses: SilverPineSoftware/UUKotlinBuild/.github/actions/uu-prepare-next-version@main
+        continue-on-error: true
+        with:
+          release_pat: ${{ secrets.RELEASE_PAT }}
       
       
