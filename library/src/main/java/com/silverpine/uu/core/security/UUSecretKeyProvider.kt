@@ -12,8 +12,8 @@ import javax.crypto.SecretKey
  *
  * @since 1.0.0
  */
-interface UUSecretKeyProvider {
-
+interface UUSecretKeyProvider
+{
     /**
      * Loads or generates a symmetric AES key from the underlying keystore.
      *
