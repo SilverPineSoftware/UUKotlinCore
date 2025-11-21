@@ -6,7 +6,6 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'kotlinx-serialization'
 }
 
 apply from: "${uu_build_common}/uu-build-library-common.gradle"
