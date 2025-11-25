@@ -12,20 +12,28 @@ concurrency:
 
 jobs:
 
+  get-build-suffix:
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_get_snapshot_build_suffix.yml@main
+
   run-tests:
+    needs: [get-build-suffix]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_tests.yml@main
     with:
       module_name: 'library'
-    
+      build_suffix: ${{ needs.get-build-suffix.outputs.build_suffix }}
+   
   run-instrumented-tests:
-    needs: [run-tests]
+    needs: [get-build-suffix, run-tests]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@main
     with:
       module_name: 'library'
 
   publish-library-snapshot:
-    needs: [run-instrumented-tests]
+    needs: [get-build-suffix, run-instrumented-tests]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_library_publish_snapshot.yml@main
+    with:
+      module_name: 'library'
+      build_suffix: ${{ needs.get-build-suffix.outputs.build_suffix }}
     secrets:
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}

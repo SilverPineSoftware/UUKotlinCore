@@ -23,6 +23,8 @@ jobs:
   publish-library:
     needs: [run-instrumented-tests]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_library_publish_release.yml@main
+    with:
+      module_name: 'library'
     secrets:
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
