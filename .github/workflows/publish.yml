@@ -44,7 +44,7 @@ jobs:
   prepare-next-version:
     needs: [create-release]
     runs-on: ubuntu-latest
-    if: always()
+    if: success()
     permissions:
       contents: write
     steps:
