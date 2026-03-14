@@ -1,5 +1,6 @@
 package com.silverpine.uu.core.test.security
 
+import android.content.SharedPreferences
 import com.silverpine.uu.core.security.UUCrypto
 import com.silverpine.uu.core.security.UUEncryptedSharedPreferences
 import com.silverpine.uu.core.test.fakes.UUFakeSecretKeyProvider
@@ -7,6 +8,20 @@ import com.silverpine.uu.core.test.fakes.UUFakeSharedPreferences
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+
+private fun <T : Enum<T>> SharedPreferences.getEnumSet(key: String, enumClass: Class<T>, defaultValue: Set<T>?): Set<T>?
+{
+    val storedSet = getStringSet(key, null) ?: return defaultValue
+    val constants = enumClass.enumConstants ?: return defaultValue
+    val nameToEnum = constants.associateBy { it.name }
+    return storedSet.mapNotNull { nameToEnum[it] }.toSet()
+}
+
+private fun <T : Enum<T>> SharedPreferences.putEnumSet(key: String, value: Set<T>?)
+{
+    val names = value?.map { it.name }?.toSet()?.toMutableSet()
+    edit().putStringSet(key, names).commit()
+}
 
 class UUEncryptedSharedPreferencesJvmTest
 {
@@ -146,5 +161,152 @@ class UUEncryptedSharedPreferencesJvmTest
         val def = setOf("fallback")
         val retrieved = prefs.getStringSet(key, def.toMutableSet())
         assertEquals(def, retrieved)
+    }
+
+    @Test
+    fun putAndGetStringSet_emptySet_roundTrip()
+    {
+        val key = "empty_set_key"
+        val value = emptySet<String>()
+
+        prefs.edit().putStringSet(key, value.toMutableSet()).commit()
+        val retrieved = prefs.getStringSet(key, null)
+
+        assertNotNull(retrieved)
+        assertTrue(retrieved!!.isEmpty())
+    }
+
+    @Test
+    fun putAndGetStringSet_singleElement_roundTrip()
+    {
+        val key = "single_key"
+        val value = setOf("VALUE1")
+
+        prefs.edit().putStringSet(key, value.toMutableSet()).commit()
+        val retrieved = prefs.getStringSet(key, null)
+
+        assertNotNull(retrieved)
+        assertEquals(1, retrieved!!.size)
+        assertTrue(retrieved.contains("VALUE1"))
+    }
+
+    @Test
+    fun putAndGetStringSet_enumLikeNames_roundTrip()
+    {
+        val key = "enum_set_key"
+        val value = setOf("VALUE1", "VALUE2", "VALUE3")
+
+        prefs.edit().putStringSet(key, value.toMutableSet()).commit()
+        val retrieved = prefs.getStringSet(key, null)
+
+        assertNotNull(retrieved)
+        assertEquals(value.size, retrieved!!.size)
+        assertTrue(retrieved.containsAll(value))
+        assertTrue(value.containsAll(retrieved))
+
+        val rawStored = delegate.getString(key, null)
+        assertNotNull(rawStored)
+        assertNotEquals(value.toString(), rawStored)
+    }
+
+    @Test
+    fun getStringSet_returnsNullWhenMissingAndDefaultNull()
+    {
+        val retrieved = prefs.getStringSet("missing_set", null)
+        assertNull(retrieved)
+    }
+
+    @Test
+    fun putEmptyStringSet_roundTrip()
+    {
+        val key = "empty_roles"
+        prefs.edit().putStringSet(key, mutableSetOf()).commit()
+        assertTrue(prefs.contains(key))
+
+        val retrieved = prefs.getStringSet(key, setOf("default").toMutableSet())
+        assertNotNull(retrieved)
+        assertTrue(retrieved!!.isEmpty())
+    }
+
+    private enum class TestEnum { VALUE1, VALUE2, VALUE3 }
+
+    @Test
+    fun putAndGetEnumSet_roundTrip()
+    {
+        val key = "enum_set_key"
+        val value = setOf(TestEnum.VALUE1, TestEnum.VALUE3)
+
+        prefs.putEnumSet(key, value)
+        val retrieved = prefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertEquals(value, retrieved)
+        val rawStored = delegate.getString(key, null)
+        assertNotNull(rawStored)
+        assertNotEquals(value.toString(), rawStored)
+    }
+
+    @Test
+    fun getEnumSet_returnsDefaultIfMissing()
+    {
+        val defaultValue = setOf(TestEnum.VALUE1)
+        val retrieved = prefs.getEnumSet("missing_enum_set", TestEnum::class.java, defaultValue)
+
+        assertEquals(defaultValue, retrieved)
+    }
+
+    @Test
+    fun getEnumSet_returnsNullWhenMissingAndDefaultNull()
+    {
+        val retrieved = prefs.getEnumSet("missing_enum_set", TestEnum::class.java, null)
+
+        assertNull(retrieved)
+    }
+
+    @Test
+    fun getEnumSet_skipsInvalidNames()
+    {
+        val key = "enum_set_key"
+        prefs.edit().putStringSet(key, setOf("VALUE1", "INVALID_VALUE", "VALUE3").toMutableSet()).commit()
+
+        val retrieved = prefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertEquals(setOf(TestEnum.VALUE1, TestEnum.VALUE3), retrieved)
+    }
+
+    @Test
+    fun getEnumSet_returnsEmptySetWhenAllNamesInvalid()
+    {
+        val key = "enum_set_key"
+        prefs.edit().putStringSet(key, setOf("INVALID1", "INVALID2").toMutableSet()).commit()
+
+        val retrieved = prefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertTrue(retrieved!!.isEmpty())
+    }
+
+    @Test
+    fun putNullEnumSet_removesKey()
+    {
+        val key = "enum_set_key"
+        prefs.putEnumSet(key, setOf(TestEnum.VALUE1, TestEnum.VALUE2))
+        assertTrue(prefs.contains(key))
+
+        prefs.putEnumSet(key, null)
+        assertFalse(prefs.contains(key))
+        assertNull(prefs.getEnumSet(key, TestEnum::class.java, null))
+    }
+
+    @Test
+    fun putEmptyEnumSet_roundTrip()
+    {
+        val key = "enum_set_key"
+        prefs.putEnumSet(key, emptySet())
+        val retrieved = prefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertTrue(retrieved!!.isEmpty())
     }
 }

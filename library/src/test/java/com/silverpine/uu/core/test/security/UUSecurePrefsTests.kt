@@ -251,6 +251,82 @@ class UUSecurePrefsTests
     }
 
     @Test
+    fun putAndGetEnumSet_roundTrip()
+    {
+        val key = "enum_set_key"
+        val value = setOf(TestEnum.VALUE1, TestEnum.VALUE3)
+
+        UUSecurePrefs.putEnumSet(key, value)
+        val retrieved = UUSecurePrefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertEquals(value, retrieved)
+    }
+
+    @Test
+    fun getEnumSet_returnsDefaultIfMissing()
+    {
+        val defaultValue = setOf(TestEnum.VALUE1)
+        val retrieved = UUSecurePrefs.getEnumSet("missing_enum_set", TestEnum::class.java, defaultValue)
+
+        assertEquals(defaultValue, retrieved)
+    }
+
+    @Test
+    fun getEnumSet_returnsNullWhenMissingAndDefaultNull()
+    {
+        val retrieved = UUSecurePrefs.getEnumSet("missing_enum_set", TestEnum::class.java, null)
+
+        assertNull(retrieved)
+    }
+
+    @Test
+    fun getEnumSet_skipsInvalidNames()
+    {
+        val key = "enum_set_key"
+        UUSecurePrefs.putStringSet(key, setOf("VALUE1", "INVALID_VALUE", "VALUE3"))
+
+        val retrieved = UUSecurePrefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertEquals(setOf(TestEnum.VALUE1, TestEnum.VALUE3), retrieved)
+    }
+
+    @Test
+    fun getEnumSet_returnsEmptySetWhenAllNamesInvalid()
+    {
+        val key = "enum_set_key"
+        UUSecurePrefs.putStringSet(key, setOf("INVALID1", "INVALID2"))
+
+        val retrieved = UUSecurePrefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertTrue(retrieved!!.isEmpty())
+    }
+
+    @Test
+    fun putNullEnumSet_removesKey()
+    {
+        val key = "enum_set_key"
+        UUSecurePrefs.putEnumSet(key, setOf(TestEnum.VALUE1, TestEnum.VALUE2))
+        assertNotNull(UUSecurePrefs.getEnumSet(key, TestEnum::class.java, null))
+
+        UUSecurePrefs.putEnumSet(key, null)
+        assertNull(UUSecurePrefs.getEnumSet(key, TestEnum::class.java, null))
+    }
+
+    @Test
+    fun putEmptyEnumSet_roundTrip()
+    {
+        val key = "enum_set_key"
+        UUSecurePrefs.putEnumSet(key, emptySet())
+        val retrieved = UUSecurePrefs.getEnumSet(key, TestEnum::class.java, null)
+
+        assertNotNull(retrieved)
+        assertTrue(retrieved!!.isEmpty())
+    }
+
+    @Test
     fun multipleOperations_roundTrip()
     {
         UUSecurePrefs.putString("string", "test")

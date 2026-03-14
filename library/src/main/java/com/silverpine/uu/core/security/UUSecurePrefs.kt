@@ -224,6 +224,29 @@ object UUSecurePrefs: UUPrefs
     }
 
     /**
+     * Retrieves an encrypted set of enum values from secure preferences.
+     *
+     * The set is stored as a set of strings (enum names) and automatically decrypted when
+     * retrieved. Each string is converted back to the enum type; invalid names are skipped.
+     *
+     * @since 1.0.0
+     * @param T The enum type to retrieve
+     * @param key The key identifying the preference
+     * @param enumClass The class of the enum type to retrieve
+     * @param defaultValue The value to return if the key doesn't exist or is null
+     * @return The decrypted set of enum values, or `defaultValue` if not found
+     * @throws RuntimeException if [init] has not been called
+     */
+    override fun <T: Enum<T>> getEnumSet(key: String, enumClass: Class<T>, defaultValue: Set<T>?): Set<T>?
+    {
+        requireReader()
+        val storedSet = getStringSet(key, null) ?: return defaultValue
+        val constants = enumClass.enumConstants ?: return defaultValue
+        val nameToEnum = constants.associateBy { it.name }
+        return storedSet.mapNotNull { nameToEnum[it] }.toSet()
+    }
+
+    /**
      * Stores a string value in secure preferences with encryption.
      * 
      * The value is automatically encrypted before being stored.
@@ -370,6 +393,24 @@ object UUSecurePrefs: UUPrefs
     override fun <T: Enum<T>> putEnum(key: String, value: T?)
     {
         return putString(key, value?.name)
+    }
+
+    /**
+     * Stores a set of enum values in secure preferences with encryption.
+     *
+     * The set is stored as a set of strings (enum names) and automatically encrypted.
+     * If `value` is `null` or empty, the key will be removed from storage.
+     *
+     * @since 1.0.0
+     * @param T The enum type to store
+     * @param key The key identifying the preference
+     * @param value The set of enum values to encrypt and store, or `null` to remove the key
+     * @throws RuntimeException if [init] has not been called
+     */
+    override fun <T: Enum<T>> putEnumSet(key: String, value: Set<T>?)
+    {
+        val names = value?.map { it.name }?.toSet()
+        return putStringSet(key, names)
     }
 
     /**
