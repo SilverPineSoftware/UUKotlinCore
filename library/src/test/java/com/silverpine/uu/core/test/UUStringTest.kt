@@ -5,6 +5,9 @@ import com.silverpine.uu.core.uuHasLowercase
 import com.silverpine.uu.core.uuHasNumber
 import com.silverpine.uu.core.uuHasSymbol
 import com.silverpine.uu.core.uuHasUppercase
+import com.silverpine.uu.core.uuSnakeToCamelCase
+import com.silverpine.uu.core.uuSnakeToPascalCase
+import com.silverpine.uu.core.uuToSnakeCase
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -141,5 +144,76 @@ class UUStringTest
 
         assertTrue(result.isSuccess)
         assertEquals(original, String(result.getOrThrow()))
+    }
+
+    @Test
+    fun test_uuToSnakeCase()
+    {
+        val cases = arrayListOf(
+            Pair("", ""),
+            Pair("a", "a"),
+            Pair("userName", "user_name"),
+            Pair("UserName", "user_name"),
+            Pair("already_snake", "already_snake"),
+            Pair("XML", "xml"),
+            Pair("getHTTPResponse", "get_httpresponse"),
+            Pair("iPhone", "i_phone"),
+        )
+
+        for ((input, expected) in cases)
+        {
+            assertEquals(expected, input.uuToSnakeCase(), "input=$input")
+        }
+    }
+
+    @Test
+    fun test_uuSnakeToCamelCase()
+    {
+        val cases = arrayListOf(
+            Pair("", ""),
+            Pair("user_name", "userName"),
+            Pair("USER_NAME", "userName"),
+            Pair("single", "single"),
+            Pair("a_b_c", "abc"),
+            Pair("aa_bb_cc", "aaBbCc"),
+            Pair("user__name", "userName"),
+        )
+
+        for ((input, expected) in cases)
+        {
+            assertEquals(expected, input.uuSnakeToCamelCase(), "input=$input")
+        }
+    }
+
+    @Test
+    fun test_uuSnakeToPascalCase()
+    {
+        val cases = arrayListOf(
+            Pair("", ""),
+            Pair("user_name", "UserName"),
+            Pair("USER_NAME", "UserName"),
+            Pair("single", "Single"),
+            Pair("a_b_c", "abc"),
+            Pair("aa_bb_cc", "AaBbCc"),
+            Pair("user__name", "UserName"),
+        )
+
+        for ((input, expected) in cases)
+        {
+            assertEquals(expected, input.uuSnakeToPascalCase(), "input=$input")
+        }
+    }
+
+    @Test
+    fun `uuToSnakeCase then uuSnakeToCamelCase_roundTripsSimpleCamelCase`()
+    {
+        val original = "userName"
+        assertEquals(original, original.uuToSnakeCase().uuSnakeToCamelCase())
+    }
+
+    @Test
+    fun `uuToSnakeCase then uuSnakeToPascalCase_producesPascalFromCamel`()
+    {
+        assertEquals("UserName", "userName".uuToSnakeCase().uuSnakeToPascalCase())
     }
 }

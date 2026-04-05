@@ -171,7 +171,6 @@ fun String.uuFirstCapital(): String
  * Converts a string to snake_case
  *
  * @since 1.0.0
- * @param string a string
  *
  * @return another string
  */
@@ -181,6 +180,46 @@ fun String.uuToSnakeCase(): String
     val replacement = "$1_$2"
     return replace(regex.toRegex(), replacement).lowercase(Locale.getDefault())
 }
+
+/**
+ * Converts a snake_case string to camelCase.
+ *
+ * The receiver is lowercased, split on underscores, each non-empty segment is capitalized with
+ * [uuFirstCapital], and the first segment is lowercased again so the result starts with a
+ * lowercase letter (for example `user_name` becomes `userName`).
+ *
+ * @since 1.0.0
+ * @return the camelCase string
+ */
+fun String.uuSnakeToCamelCase(): String
+{
+    val parts = lowercase().split("_")
+    val capitalizedParts = parts.map { it.uuFirstCapital() }.toTypedArray()
+
+    if (capitalizedParts.isNotEmpty())
+    {
+        capitalizedParts[0] = capitalizedParts[0].lowercase()
+    }
+
+    return capitalizedParts.joinToString("")
+}
+
+/**
+ * Converts a snake_case string to PascalCase.
+ *
+ * The receiver is lowercased, split on underscores, and each segment is capitalized with
+ * [uuFirstCapital] and concatenated (for example `user_name` becomes `UserName`).
+ *
+ * @since 1.0.0
+ * @return the PascalCase string
+ */
+fun String.uuSnakeToPascalCase(): String
+{
+    val parts = lowercase().split("_")
+    val capitalizedParts = parts.map { it.uuFirstCapital() }.toTypedArray()
+    return capitalizedParts.joinToString("")
+}
+
 
 /**
  * Safely truncates a string to a given length
