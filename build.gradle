@@ -8,7 +8,7 @@ buildscript {
     ext.uu_target_sdk = 36
     ext.uu_java_version = 17
 
-    ext.uu_build_common_version = '0.0.18'
+    ext.uu_build_common_version = '0.0.19'
     ext.uu_build_common_url = 'https://raw.githubusercontent.com/SilverPineSoftware/UUKotlinBuild'
     ext.uu_build_common = "${uu_build_common_url}/${uu_build_common_version}"
 }
