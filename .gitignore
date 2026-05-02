@@ -19,3 +19,4 @@ local.properties
 /.idea/codeStyles
 *.salive
 /.kotlin
+/.idea/planningMode.xml
