@@ -6,24 +6,19 @@ buildscript {
 
     ext.uu_min_sdk = 26
     ext.uu_target_sdk = 36
-    ext.uu_gradle_version = '9.2.0'
-    ext.uu_kotlin_version = '2.3.21'
-    ext.uu_nexus_version = '2.0.0'
     ext.uu_java_version = 17
 
     ext.uu_build_common_version = '0.0.16'
     ext.uu_build_common_url = 'https://raw.githubusercontent.com/SilverPineSoftware/UUKotlinBuild'
     ext.uu_build_common = "${uu_build_common_url}/${uu_build_common_version}"
-
-    ext.uu_test_version = '0.0.20'
 }
 
 plugins {
-    id 'com.android.application' version "${uu_gradle_version}" apply false
-    id 'com.android.library' version "${uu_gradle_version}" apply false
-    id 'org.jetbrains.kotlin.android' version "${uu_kotlin_version}" apply false
-    id 'io.github.gradle-nexus.publish-plugin' version "${uu_nexus_version}" apply true
-    id 'org.jetbrains.kotlin.plugin.serialization' version "${uu_kotlin_version}" apply true
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.nexus.publish)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 apply from: "${uu_build_common}/uu-publish-common.gradle"
