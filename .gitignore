@@ -21,3 +21,4 @@ local.properties
 /.kotlin
 /.idea/planningMode.xml
 /.vscode
+/.idea/kotlinc.xml
