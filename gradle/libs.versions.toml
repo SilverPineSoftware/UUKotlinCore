@@ -24,7 +24,7 @@ espresso_core = "3.7.0"
 kotlin_test = "2.2.10"
 
 # uu
-uu_build = "0.0.1"
+uu_build = "0.0.2"
 uu_test = "0.0.20"
 
 
