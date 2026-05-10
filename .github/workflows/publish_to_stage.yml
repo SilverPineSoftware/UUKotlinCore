@@ -4,7 +4,7 @@ permissions: read-all
 on:
   push:
     branches:
-        - develop
+      - develop
 
 concurrency:
   group: publish-to-stage-${{ github.ref }}
@@ -21,14 +21,18 @@ jobs:
     with:
       module_name: 'library'
       build_suffix: ${{ needs.get-build-suffix.outputs.build_suffix }}
-    env:
-      GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
-   
+    secrets:
+      # PAT with read:packages for SilverpineSoftware/UUKotlinBuild GitHub Packages (Gradle plugins).
+      # Repository secret RELEASE_PAT — env on the caller job does not propagate to reusable workflows.
+      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+
   run-instrumented-tests:
     needs: [get-build-suffix, run-tests]
     uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@main
     with:
       module_name: 'library'
+    secrets:
+      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
 
   publish-library-snapshot:
     needs: [get-build-suffix, run-instrumented-tests]
@@ -37,6 +41,7 @@ jobs:
       module_name: 'library'
       build_suffix: ${{ needs.get-build-suffix.outputs.build_suffix }}
     secrets:
+      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -45,6 +50,3 @@ jobs:
       SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
-      
-      
-      

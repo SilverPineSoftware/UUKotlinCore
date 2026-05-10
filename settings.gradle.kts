@@ -9,7 +9,9 @@ pluginManagement {
             credentials {
                 username = providers.gradleProperty("gpr.user").orNull
                     ?: System.getenv("GITHUB_ACTOR")
+                // CI: pass secrets.RELEASE_PAT as env GPR_TOKEN (do not rely on default GITHUB_TOKEN for another repo's Packages).
                 password = providers.gradleProperty("gpr.token").orNull
+                    ?: System.getenv("GPR_TOKEN")
                     ?: System.getenv("GITHUB_TOKEN")
             }
         }
