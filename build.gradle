@@ -7,10 +7,6 @@ buildscript {
     ext.uu_min_sdk = 26
     ext.uu_target_sdk = 36
     ext.uu_java_version = 17
-
-    ext.uu_build_common_version = '0.0.19'
-    ext.uu_build_common_url = 'https://raw.githubusercontent.com/SilverPineSoftware/UUKotlinBuild'
-    ext.uu_build_common = "${uu_build_common_url}/${uu_build_common_version}"
 }
 
 plugins {
@@ -19,6 +15,7 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.nexus.publish)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.uu.library) apply false
+    alias(libs.plugins.uu.android.test) apply false
+    alias(libs.plugins.uu.publish)
 }
-
-apply from: "${uu_build_common}/uu-publish-common.gradle"

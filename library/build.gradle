@@ -4,10 +4,9 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'com.silverpine.uu.library'
+    id 'com.silverpine.uu.android-test'
 }
-
-apply from: "${uu_build_common}/uu-build-library-common.gradle"
-apply from: "${uu_build_common}/uu-build-test-common.gradle"
 
 dependencies {
 
