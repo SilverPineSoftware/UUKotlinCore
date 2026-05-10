@@ -21,6 +21,8 @@ jobs:
     with:
       module_name: 'library'
       build_suffix: ${{ needs.get-build-suffix.outputs.build_suffix }}
+  env:
+    GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
    
   run-instrumented-tests:
     needs: [get-build-suffix, run-tests]
@@ -43,5 +45,6 @@ jobs:
       SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+      
       
       
