@@ -13,7 +13,7 @@ plugins {
     alias(uuBuild.plugins.kotlin.android) apply false
     alias(uuBuild.plugins.nexus.publish)
     alias(uuBuild.plugins.kotlin.serialization)
-    alias(libs.plugins.uu.library) apply false
-    alias(libs.plugins.uu.android.test) apply false
-    alias(libs.plugins.uu.publish)
+    alias(uuBuild.plugins.uu.library) apply false
+    alias(uuBuild.plugins.uu.android.test) apply false
+    alias(uuBuild.plugins.uu.publish)
 }

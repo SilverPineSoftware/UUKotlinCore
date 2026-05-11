@@ -4,8 +4,8 @@ plugins {
     id("maven-publish")
     id("signing")
     alias(uuBuild.plugins.kotlin.serialization)
-    id("com.silverpine.uu.library")
-    id("com.silverpine.uu.android-test")
+    alias(uuBuild.plugins.uu.library)
+    alias(uuBuild.plugins.uu.android.test)
 }
 
 dependencies {

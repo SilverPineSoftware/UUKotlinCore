@@ -18,8 +18,8 @@ mockito_kotlin = "6.3.0"
 espresso_core = "3.7.0"
 kotlin_test = "2.2.10"
 
-# uu — uu_build pins Silverpine convention plugins and com.silverpine.uu:uu-kotlin-build-catalog (see settings.gradle.kts).
-uu_build = "0.0.20"
+# uu — uu_build selects com.silverpine.uu:uu-kotlin-build-catalog (Silverpine plugin ids + AGP/Kotlin/Nexus live in that catalog).
+uu_build = "0.0.21"
 uu_test = "0.0.20"
 
 
@@ -51,10 +51,3 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 # uu
 uu-test-ktx = { module = "com.silverpine.uu:uu-test-ktx", version.ref = "uu_test" }
 uu-test-instrumented-ktx = { module = "com.silverpine.uu:uu-test-instrumented-ktx", version.ref = "uu_test" }
-
-
-[plugins]
-uu-library = { id = "com.silverpine.uu.library", version.ref = "uu_build" }
-# uu-library-app = { id = "com.silverpine.uu.library-app", version.ref = "uu_build" }
-uu-publish = { id = "com.silverpine.uu.publish", version.ref = "uu_build" }
-uu-android-test = { id = "com.silverpine.uu.android-test", version.ref = "uu_build" }
