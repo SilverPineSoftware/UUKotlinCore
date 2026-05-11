@@ -10,7 +10,7 @@ on:
 jobs:
 
   run-tests:
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_tests.yml@0
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_tests.yml@main
     with:
       module_name: 'library'
     secrets:
@@ -18,7 +18,7 @@ jobs:
 
   run-instrumented-tests:
     needs: [run-tests]
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@0
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_instrumented_tests.yml@main
     with:
       module_name: 'library'
     secrets:
@@ -26,7 +26,7 @@ jobs:
 
   publish-library:
     needs: [run-instrumented-tests]
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_library_publish_release.yml@0
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_library_publish_release.yml@main
     with:
       module_name: 'library'
     secrets:
@@ -42,7 +42,7 @@ jobs:
 
   create-release:
     needs: [run-tests, run-instrumented-tests, publish-library]
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_create_release.yml@0
+    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_create_release.yml@main
     secrets:
       UU_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -54,7 +54,7 @@ jobs:
       contents: write
     steps:
       - name: Prepare Next Version
-        uses: SilverPineSoftware/UUKotlinBuild/.github/actions/uu-prepare-next-version@0
+        uses: SilverPineSoftware/UUKotlinBuild/.github/actions/uu-prepare-next-version@main
         continue-on-error: true
         with:
           release_pat: ${{ secrets.RELEASE_PAT }}
