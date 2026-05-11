@@ -13,7 +13,7 @@ on:
 
 jobs:
   create-tag:
-    uses: SilverPineSoftware/UUKotlinBuild/.github/workflows/uu_create_release_tag.yml@v0
+    uses: SilverPineSoftware/UUGithubActions/.github/workflows/uu_create_release_tag.yml@main
     with:
       version: ${{ inputs.version }}
     secrets:
