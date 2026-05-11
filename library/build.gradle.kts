@@ -3,7 +3,7 @@ plugins {
     id("kotlin-parcelize")
     id("maven-publish")
     id("signing")
-    alias(libs.plugins.kotlin.serialization)
+    alias(uuBuild.plugins.kotlin.serialization)
     id("com.silverpine.uu.library")
     id("com.silverpine.uu.android-test")
 }

@@ -8,11 +8,11 @@ extra["uu_target_sdk"] = 36
 extra["uu_java_version"] = 17
 
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.nexus.publish)
-    alias(libs.plugins.kotlin.serialization)
+    alias(uuBuild.plugins.android.application) apply false
+    alias(uuBuild.plugins.android.library) apply false
+    alias(uuBuild.plugins.kotlin.android) apply false
+    alias(uuBuild.plugins.nexus.publish)
+    alias(uuBuild.plugins.kotlin.serialization)
     alias(libs.plugins.uu.library) apply false
     alias(libs.plugins.uu.android.test) apply false
     alias(libs.plugins.uu.publish)

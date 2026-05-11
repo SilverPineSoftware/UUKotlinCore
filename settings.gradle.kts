@@ -23,6 +23,31 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            name = "UUKotlinBuildGitHubPackages"
+            url = uri("https://maven.pkg.github.com/SilverpineSoftware/UUKotlinBuild")
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull
+                    ?: System.getenv("GITHUB_ACTOR")
+                password = providers.gradleProperty("gpr.token").orNull
+                    ?: System.getenv("GPR_TOKEN")
+                    ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+        mavenLocal()
+    }
+    versionCatalogs {
+        register("uuBuild") {
+            val uuBuildVersion =
+                Regex("""(?m)^uu_build\s*=\s*"([^"]+)"""")
+                    .find(
+                        layout.rootDirectory.file("gradle/libs.versions.toml").asFile.readText(),
+                    )
+                    ?.groupValues
+                    ?.get(1)
+                    ?: error("Set versions.uu_build in gradle/libs.versions.toml.")
+            from("com.silverpine.uu:uu-kotlin-build-catalog:$uuBuildVersion")
+        }
     }
 }
 

@@ -1,10 +1,5 @@
 [versions]
 
-# plugins
-agp = "9.2.1"
-kotlin = "2.3.21"
-nexusPublish = "2.0.0"
-
 # library
 annotation = "1.10.0"
 appcompat = "1.7.1"
@@ -23,8 +18,8 @@ mockito_kotlin = "6.3.0"
 espresso_core = "3.7.0"
 kotlin_test = "2.2.10"
 
-# uu
-uu_build = "0.0.3"
+# uu — uu_build pins Silverpine convention plugins and com.silverpine.uu:uu-kotlin-build-catalog (see settings.gradle.kts).
+uu_build = "0.0.20"
 uu_test = "0.0.20"
 
 
@@ -59,12 +54,6 @@ uu-test-instrumented-ktx = { module = "com.silverpine.uu:uu-test-instrumented-kt
 
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-# kotlin-parcelize    = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-nexus-publish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexusPublish" }
 uu-library = { id = "com.silverpine.uu.library", version.ref = "uu_build" }
 # uu-library-app = { id = "com.silverpine.uu.library-app", version.ref = "uu_build" }
 uu-publish = { id = "com.silverpine.uu.publish", version.ref = "uu_build" }
