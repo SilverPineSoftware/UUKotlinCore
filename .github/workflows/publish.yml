@@ -14,7 +14,7 @@ jobs:
     with:
       module_name: 'library'
     secrets:
-      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
 
   run-instrumented-tests:
     needs: [run-tests]
@@ -22,7 +22,7 @@ jobs:
     with:
       module_name: 'library'
     secrets:
-      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
 
   publish-library:
     needs: [run-instrumented-tests]
@@ -30,7 +30,7 @@ jobs:
     with:
       module_name: 'library'
     secrets:
-      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}

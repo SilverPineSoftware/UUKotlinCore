@@ -24,7 +24,7 @@ jobs:
     secrets:
       # PAT with read:packages for SilverpineSoftware/UUKotlinBuild GitHub Packages (Gradle plugins).
       # Repository secret RELEASE_PAT — env on the caller job does not propagate to reusable workflows.
-      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
 
   run-instrumented-tests:
     needs: [get-build-suffix, run-tests]
@@ -32,7 +32,7 @@ jobs:
     with:
       module_name: 'library'
     secrets:
-      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
 
   publish-library-snapshot:
     needs: [get-build-suffix, run-instrumented-tests]
@@ -41,7 +41,7 @@ jobs:
       module_name: 'library'
       build_suffix: ${{ needs.get-build-suffix.outputs.build_suffix }}
     secrets:
-      RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+      READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
       MAVEN_CENTRAL_NEXUS_URL: ${{ secrets.MAVEN_CENTRAL_NEXUS_URL }}
       MAVEN_CENTRAL_SNAPSHOT_URL: ${{ secrets.MAVEN_CENTRAL_SNAPSHOT_URL }}
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
