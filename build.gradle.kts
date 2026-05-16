@@ -1,12 +1,3 @@
-extra["uu_namespace"] = "com.silverpine.uu.core"
-extra["uu_publish_artifact_id"] = "uu-core-ktx"
-extra["uu_publish_description"] = "Useful Utilities Core"
-extra["uu_scm_module_name"] = "UUKotlinCore"
-
-extra["uu_min_sdk"] = 26
-extra["uu_target_sdk"] = 36
-extra["uu_java_version"] = 17
-
 plugins {
     alias(uuBuild.plugins.android.application) apply false
     alias(uuBuild.plugins.android.library) apply false
