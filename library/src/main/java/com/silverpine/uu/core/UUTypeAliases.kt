@@ -6,7 +6,6 @@ typealias UUObjectBlock<T> = (T) -> Unit
 typealias UUListBlock<T> = (List<T>) -> Unit
 typealias UUObjectErrorBlock<T> = (T?, UUError?) -> Unit
 typealias UUListErrorBlock<T> = (List<T>?, UUError?) -> Unit
-typealias UUResultBlock<T> = (UUResult<T>) -> Unit
 
 fun UUVoidBlock.dispatch()
 {
@@ -53,14 +52,6 @@ fun <T> UUListErrorBlock<T>.dispatch(obj: List<T>?, error: UUError?)
     uuDispatch()
     {
         this(obj, error)
-    }
-}
-
-fun <T> UUResultBlock<T>.dispatch(result: UUResult<T>)
-{
-    uuDispatch()
-    {
-        this(result)
     }
 }
 
