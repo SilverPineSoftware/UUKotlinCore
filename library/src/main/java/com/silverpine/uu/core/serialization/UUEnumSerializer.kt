@@ -21,7 +21,7 @@ import kotlinx.serialization.encoding.Encoder
  * - [UUEnumFormat.Ordinal] — ordinal index (e.g. `0`, `1`, `2`)
  *
  * ### Nullability
- * - If [value] is `null`, serialization will encode a JSON `null`.
+ * - If value is `null`, serialization will encode a JSON `null`.
  * - If deserialization fails to match any enum constant, [defaultDeserializeValue] is returned.
  *
  * @since 1.0.0

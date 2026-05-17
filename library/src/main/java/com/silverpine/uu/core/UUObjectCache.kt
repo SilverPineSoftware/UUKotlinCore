@@ -10,8 +10,7 @@ import java.util.concurrent.ConcurrentHashMap
  * 
  * @since 1.0.0
  * @param T The type of objects stored in the cache
- * 
- * @sample
+ *
  * ```kotlin
  * val cache: UUObjectCache<String> = UUInMemoryObjectCache()
  * cache["key1"] = "value1"
@@ -62,8 +61,7 @@ interface UUObjectCache<T>
  * 
  * @since 1.0.0
  * @param T The type of objects stored in the cache
- * 
- * @sample
+ *
  * ```kotlin
  * val cache = UUInMemoryObjectCache<String>()
  * cache["user:123"] = "John Doe"

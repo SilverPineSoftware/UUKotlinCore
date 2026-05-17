@@ -21,7 +21,7 @@ import com.silverpine.uu.core.uuToHexData
  * via the [init] method.
  * 
  * @since 1.0.0
- * @sample
+ *
  * ```kotlin
  * // Initialize with default name
  * UUSecurePrefs.init(context)

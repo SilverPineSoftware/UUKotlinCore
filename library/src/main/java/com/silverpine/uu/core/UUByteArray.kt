@@ -1369,7 +1369,7 @@ fun ByteArray.uuBcd8(index: Int): Result<Int>
  * Decodes a 16-bit **binary-coded decimal (BCD)** value from this [ByteArray],
  * starting at the given [index], and returns its decimal representation.
  *
- * This method leverages [uuReadBcd8] to decode **two consecutive bytes**:
+ * This method leverages [uuBcd8] to decode **two consecutive bytes**:
  * - At `index` → the **high two digits** (thousands and hundreds).
  * - At `index + 1` → the **low two digits** (tens and ones).
  *

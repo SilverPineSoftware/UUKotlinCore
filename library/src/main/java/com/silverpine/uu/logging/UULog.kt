@@ -148,8 +148,7 @@ object UULog
  * @param logTag A short identifier for the source of the log message (e.g., class name or component).
  * @param where A description of where the exception was caught (e.g., method name or operation).
  * @param throwable The throwable that was caught and should be logged.
- * 
- * @sample
+ *
  * ```kotlin
  * try {
  *     performRiskyOperation()

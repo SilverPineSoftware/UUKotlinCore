@@ -19,9 +19,9 @@ interface UULogWriter
      * @since 1.0.0
      *
      * @param level The severity of the log message, represented by [UULogLevel].
-     *              Common levels include [UULogLevel.Verbose], [UULogLevel.Debug],
-     *              [UULogLevel.Info], [UULogLevel.Warn], [UULogLevel.Error],
-     *              and [UULogLevel.Fatal].
+     *              Common levels include [UULogLevel.VERBOSE], [UULogLevel.DEBUG],
+     *              [UULogLevel.INFO], [UULogLevel.WARN], [UULogLevel.ERROR],
+     *              and [UULogLevel.FATAL].
      *
      * @param tag A short string identifier (such as a component or module name)
      *            used to categorize and filter log output.

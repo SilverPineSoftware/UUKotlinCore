@@ -48,7 +48,9 @@ fun <T> Array<T>.uuGetOrNull(index: Int): T?
  * @param chunkSize The maximum number of elements per chunk.
  * @return A list of arrays, each containing up to [chunkSize] elements.
  *
- * @sample arrayOf("a", "b", "c", "d").uuSplitIntoChunks(3) // returns [["a", "b", "c"], ["d"]]
+ * ```kotlin
+ * arrayOf("a", "b", "c", "d").uuSplitIntoChunks(3) // returns [["a", "b", "c"], ["d"]]
+ * ```
  */
 fun <T> Array<T>.uuSplitIntoChunks(chunkSize: Int): List<Array<T>>
 {

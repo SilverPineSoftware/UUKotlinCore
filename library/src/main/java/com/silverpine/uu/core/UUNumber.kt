@@ -40,7 +40,9 @@ fun Int.uuIsBitSet(mask: Int): Boolean
  * @param index The bit position to modify (0 until [Byte.SIZE_BITS]).
  * @return A new [Byte] with the specified bit modified, or the original value if [index] is out of bounds.
  *
- * @sample 0.toByte().uuSetBit(true, 0) // returns 1
+ * ```kotlin
+ * 0.toByte().uuSetBit(true, 0) // returns 1
+ * ```
  */
 fun Byte.uuSetBit(to: Boolean, index: Int): Byte
 {
@@ -59,7 +61,9 @@ fun Byte.uuSetBit(to: Boolean, index: Int): Byte
  * @param index The bit position to modify (0 until [UByte.SIZE_BITS]).
  * @return A new [UByte] with the specified bit modified, or the original value if [index] is out of bounds.
  *
- * @sample 0u.toUByte().uuSetBit(true, 7) // returns 0x80u
+ * ```kotlin
+ * 0u.toUByte().uuSetBit(true, 7) // returns 0x80u
+ * ```
  */
 fun UByte.uuSetBit(to: Boolean, index: Int): UByte
 {
@@ -78,7 +82,9 @@ fun UByte.uuSetBit(to: Boolean, index: Int): UByte
  * @param index The bit position to modify (0 until [Short.SIZE_BITS]).
  * @return A new [Short] with the specified bit modified, or the original value if [index] is out of bounds.
  *
- * @sample 0.toShort().uuSetBit(true, 15) // returns Short.MIN_VALUE
+ * ```kotlin
+ * 0.toShort().uuSetBit(true, 15) // returns Short.MIN_VALUE
+ * ```
  */
 fun Short.uuSetBit(to: Boolean, index: Int): Short
 {
@@ -97,7 +103,9 @@ fun Short.uuSetBit(to: Boolean, index: Int): Short
  * @param index The bit position to modify (0 until [UShort.SIZE_BITS]).
  * @return A new [UShort] with the specified bit modified, or the original value if [index] is out of bounds.
  *
- * @sample 0u.toUShort().uuSetBit(true, 15) // returns 0x8000u
+ * ```kotlin
+ * 0u.toUShort().uuSetBit(true, 15) // returns 0x8000u
+ * ```
  */
 fun UShort.uuSetBit(to: Boolean, index: Int): UShort
 {
@@ -116,7 +124,9 @@ fun UShort.uuSetBit(to: Boolean, index: Int): UShort
  * @param index The bit position to modify (0 until [Long.SIZE_BITS]).
  * @return A new [Long] with the specified bit modified, or the original value if [index] is out of bounds.
  *
- * @sample 0L.uuSetBit(true, 63) // returns Long.MIN_VALUE
+ * ```kotlin
+ * 0L.uuSetBit(true, 63) // returns Long.MIN_VALUE
+ * ```
  */
 fun Long.uuSetBit(to: Boolean, index: Int): Long
 {
@@ -135,7 +145,9 @@ fun Long.uuSetBit(to: Boolean, index: Int): Long
  * @param index The bit position to modify (0 until [ULong.SIZE_BITS]).
  * @return A new [ULong] with the specified bit modified, or the original value if [index] is out of bounds.
  *
- * @sample 0uL.uuSetBit(true, 63) // returns 0x8000000000000000uL
+ * ```kotlin
+ * 0uL.uuSetBit(true, 63) // returns 0x8000000000000000uL
+ * ```
  */
 fun ULong.uuSetBit(to: Boolean, index: Int): ULong
 {

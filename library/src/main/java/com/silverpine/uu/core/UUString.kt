@@ -99,7 +99,7 @@ fun String.uuUtf8ByteArray(): ByteArray?
 }
 
 /**
- * Safely creates a ASCII byte array
+ * Safely creates an ASCII byte array
  *
  * @since 1.0.0
  * @return a byte[] or null if an error occurs
@@ -282,8 +282,7 @@ val String.uuIsAlphanumericOnly: Boolean
  * Applies a simple transform to each element in an array
  *
  * @since 1.0.0
- * @param input the input array
- * @param transformMethod the transform method
+ * @param transform the transform method
  * @return the output array
  */
 fun Array<String>.uuTransform(transform: (String)->String): Array<String>

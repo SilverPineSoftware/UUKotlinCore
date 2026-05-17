@@ -48,7 +48,9 @@ fun <T> List<T>.uuGetOrNull(index: Int): T?
  * @param chunkSize The maximum number of elements per chunk.
  * @return A list of sub lists, each containing up to [chunkSize] elements.
  *
- * @sample listOf(1, 2, 3, 4, 5).uuSplitIntoChunks(2) // returns [[1, 2], [3, 4], [5]]
+ * ```kotlin
+ * listOf(1, 2, 3, 4, 5).uuSplitIntoChunks(2) // returns [[1, 2], [3, 4], [5]]
+ * ```
  */
 fun <T> List<T>.uuSplitIntoChunks(chunkSize: Int): List<List<T>>
 {

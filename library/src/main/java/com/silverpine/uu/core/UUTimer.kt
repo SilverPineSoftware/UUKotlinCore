@@ -226,7 +226,7 @@ class UUTimer(
          * @param timerId timer ID
          * @param timeoutMilliseconds timout in milliseconds
          * @param userInfo optional user context
-         * @param delegate timer callback
+         * @param block timer callback
          */
         fun startTimer(
             timerId: String,

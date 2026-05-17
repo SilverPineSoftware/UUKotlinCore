@@ -11,8 +11,7 @@ package com.silverpine.uu.core
  * Setting a value to `null` typically removes the key from storage.
  * 
  * @since 1.0.0
- * 
- * @sample
+ *
  * ```kotlin
  * val prefs: UUPrefs = // implementation
  * 
@@ -129,8 +128,7 @@ interface UUPrefs
      * @param enumClass The class of the enum type to retrieve
      * @param defaultValue The value to return if the key doesn't exist, is null, or doesn't match any enum value. Defaults to `null`
      * @return The enum value associated with the key, or `defaultValue` if not found or invalid
-     * 
-     * @sample
+     *
      * ```kotlin
      * enum class Theme { LIGHT, DARK, AUTO }
      * 
@@ -157,7 +155,6 @@ interface UUPrefs
      * @param defaultValue The value to return if the key doesn't exist or is null. Defaults to `null`
      * @return The set of enum values associated with the key, or `defaultValue` if not found
      *
-     * @sample
      * ```kotlin
      * enum class Theme { LIGHT, DARK, AUTO }
      *
@@ -258,8 +255,7 @@ interface UUPrefs
      * @param T The enum type to store
      * @param key The key identifying the preference
      * @param value The enum value to store, or `null` to remove the key
-     * 
-     * @sample
+     *
      * ```kotlin
      * enum class Theme { LIGHT, DARK, AUTO }
      * 
@@ -283,7 +279,6 @@ interface UUPrefs
      * @param key The key identifying the preference
      * @param value The set of enum values to store, or `null` to remove the key
      *
-     * @sample
      * ```kotlin
      * enum class Theme { LIGHT, DARK, AUTO }
      *
