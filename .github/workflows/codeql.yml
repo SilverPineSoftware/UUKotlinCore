@@ -17,3 +17,4 @@ jobs:
     uses: SilverPineSoftware/UUGithubActions/.github/workflows/uu_android_codeql.yml@main
     secrets:
       READ_PACKAGES_PAT: ${{ secrets.CI_READ_PACKAGES_GITHUB_TOKEN }}
+      UU_KOTLIN_BUILD_PACKAGE_URL: ${{ secrets.UU_KOTLIN_BUILD_PACKAGE_URL }}
