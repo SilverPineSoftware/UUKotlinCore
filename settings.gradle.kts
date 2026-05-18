@@ -4,7 +4,7 @@ pluginManagement {
     // block that gets evaluated before all other parts of the script
     val configureUuKotlinBuildRepo: MavenArtifactRepository.() -> Unit = {
         name = "UUKotlinBuildGitHubPackages"
-        url = uri(System.getenv("UU_KOTLIN_BUILD_URL"))
+        url = uri(System.getenv("UU_KOTLIN_BUILD_PACKAGE_URL"))
         credentials {
             username = providers.gradleProperty("gpr.user").orNull
                 ?: System.getenv("GITHUB_ACTOR")
