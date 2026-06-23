@@ -196,6 +196,11 @@ data class UUSignedJsonWebToken(
         return result
     }
 
+    override fun toString(): String
+    {
+        return "raw: $compactSerialization\nheader: $header\npayload: $payload\nsignature: ${signature.uuBase64()}"
+    }
+
     companion object
     {
         /**
@@ -284,6 +289,11 @@ data class UUEncryptedJsonWebToken(
         result = 31 * result + ciphertext.contentHashCode()
         result = 31 * result + authTag.contentHashCode()
         return result
+    }
+
+    override fun toString(): String
+    {
+        return "raw: $compactSerialization\nprotectedHeader: $protectedHeader\nencryptedKey: ${encryptedKey.uuBase64()}\niv: ${iv.uuBase64()}\nciphertext: ${ciphertext.uuBase64()}\nauthTag: ${authTag.uuBase64()}"
     }
 
     companion object
