@@ -24,8 +24,9 @@ import javax.crypto.spec.GCMParameterSpec
  * - On decryption, the IV is parsed from the buffer and used to initialize the cipher.
  *
  * ### Key Management
- * Keys are obtained from [secretKeyProvider], which defaults to [UUSecretKey] (backed by
- * the Android Keystore). For testing, this provider can be swapped with a fake or mock.
+ * Keys are obtained from [secretKeyProvider], which defaults to [UUSecretKey] (hardware-backed
+ * Android Keystore, preferring StrongBox when available). For testing, this provider can be
+ * swapped with a fake or mock.
  *
  * @since 1.0.0
  * @property secretKeyProvider the provider used to load or generate AES keys.

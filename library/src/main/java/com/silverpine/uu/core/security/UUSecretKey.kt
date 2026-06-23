@@ -1,7 +1,9 @@
 package com.silverpine.uu.core.security
 
+import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import android.security.keystore.StrongBoxUnavailableException
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -10,22 +12,9 @@ import javax.crypto.SecretKey
  * Singleton implementation of [UUSecretKeyProvider] that manages symmetric AES keys
  * using the Android Keystore system.
  *
- * This object encapsulates the logic for securely loading or generating AES keys
- * configured for AES/GCM/NoPadding encryption and decryption. Keys are stored in the
- * device's hardware‑backed keystore (when available) under a caller‑supplied alias,
- * ensuring that sensitive key material never leaves the secure enclave.
- *
- * Typical usage:
- * ```
- * val result = UUSecretKey.loadGcmKey("my_app_key")
- * result.onSuccess { key ->
- *     val cipher = Cipher.getInstance("AES/GCM/NoPadding")
- *     cipher.init(Cipher.ENCRYPT_MODE, key)
- *     // Use cipher to encrypt data
- * }.onFailure { ex ->
- *     // Handle error
- * }
- * ```
+ * Keys are generated for AES/GCM/NoPadding and stored in hardware-backed secure storage.
+ * When the device supports StrongBox, key generation prefers that isolated secure element;
+ * otherwise keys fall back to the standard TEE-backed Android Keystore.
  *
  * ### Behavior
  * - If a valid [SecretKey] already exists under the given alias, it is returned.
@@ -45,7 +34,7 @@ object UUSecretKey: UUSecretKeyProvider
     private const val KEY_STORE_TYPE: String = "AndroidKeyStore"
 
     /**
-     * Loads or generates a symmetric AES key from the underlying keystore.
+     * Loads or generates a symmetric AES key from the Android Keystore.
      *
      * If a key with the given [alias] already exists and is valid, it is returned.
      * Otherwise, a new key is generated with the specified [keySizeBits] and stored
@@ -80,21 +69,52 @@ object UUSecretKey: UUSecretKeyProvider
                 }
             }
 
-            val kg = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEY_STORE_TYPE)
-            val spec = KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                .setKeySize(keySizeBits)
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                .build()
-
-            kg.init(spec)
-
-            val key = kg.generateKey()
+            val key = generateHardwareBackedKey(alias, keySizeBits)
             Result.success(key)
         }
         catch (ex: Exception)
         {
             Result.failure(ex)
         }
+    }
+
+    private fun generateHardwareBackedKey(alias: String, keySizeBits: Int): SecretKey
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        {
+            try
+            {
+                return generateKey(alias, keySizeBits, strongBoxBacked = true)
+            }
+            catch (_: StrongBoxUnavailableException)
+            {
+                // Fall back to the standard hardware-backed keystore.
+            }
+        }
+
+        return generateKey(alias, keySizeBits, strongBoxBacked = false)
+    }
+
+    private fun generateKey(
+        alias: String,
+        keySizeBits: Int,
+        strongBoxBacked: Boolean): SecretKey
+    {
+        val kg = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEY_STORE_TYPE)
+        val builder = KeyGenParameterSpec.Builder(
+            alias,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+            .setKeySize(keySizeBits)
+            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .setRandomizedEncryptionRequired(true)
+
+        if (strongBoxBacked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        {
+            builder.setIsStrongBoxBacked(true)
+        }
+
+        kg.init(builder.build())
+        return kg.generateKey()
     }
 }
