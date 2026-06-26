@@ -56,7 +56,7 @@ object UURandom
     }
 
     /**
-     * Generates a random integer with an upper and lower bound
+     * Generates a random integer in `min..max` (both bounds inclusive).
      *
      * @since 1.0.0
      * @param min minimum value
@@ -65,12 +65,22 @@ object UURandom
      */
     fun int(min: Int, max: Int): Int
     {
-        val range = max - min
-        return secureRandom.nextInt(range) + min
+        if (min > max)
+        {
+            return min
+        }
+
+        if (min == max)
+        {
+            return min
+        }
+
+        val span = (max.toULong() - min.toULong()) + 1uL
+        return min + secureUniform(span).toInt()
     }
 
     /**
-     * Generates a random integer with an upper and lower bound or null
+     * Generates a random integer in `min..max`, or null when [bool] is false.
      *
      * @since 1.0.0
      * @param min minimum value
@@ -83,7 +93,7 @@ object UURandom
     }
 
     /**
-     * Generates a random integer with an upper bound
+     * Generates a random integer in `0..max` (inclusive).
      *
      * @since 1.0.0
      * @param max maximum value
@@ -95,7 +105,7 @@ object UURandom
     }
 
     /**
-     * Generates a random integer with an upper bound or null
+     * Generates a random integer in `0..max`, or null when [bool] is false.
      *
      * @since 1.0.0
      * @param max maximum value
@@ -107,14 +117,14 @@ object UURandom
     }
 
     /**
-     * Generates a random integer
+     * Generates a random 32-bit signed integer.
      *
      * @since 1.0.0
      * @return a random integer
      */
     fun int(): Int
     {
-        return secureRandom.nextInt()
+        return loadInt()
     }
 
     /**
@@ -151,14 +161,14 @@ object UURandom
     }
 
     /**
-     * Generates a random long
+     * Generates a random 64-bit signed integer.
      *
      * @since 1.0.0
      * @return a random long
      */
     fun long(): Long
     {
-        return secureRandom.nextLong()
+        return loadLong()
     }
 
     /**
@@ -1127,5 +1137,39 @@ object UURandom
     fun asciiWordsOrNull(maxNumberOfWords: Int, maxWordLength: Int): String?
     {
         return if (bool()) asciiWords(maxNumberOfWords, maxWordLength) else null
+    }
+
+    private fun loadInt(): Int
+    {
+        return ByteBuffer.wrap(bytes(4)).int
+    }
+
+    private fun loadLong(): Long
+    {
+        return ByteBuffer.wrap(bytes(8)).long
+    }
+
+    private fun loadULong(): ULong
+    {
+        return loadLong().toULong()
+    }
+
+    private fun secureUniform(span: ULong): ULong
+    {
+        if (span <= 1uL)
+        {
+            return 0uL
+        }
+
+        val threshold = (ULong.MAX_VALUE / span) * span
+        var value: ULong
+
+        do
+        {
+            value = loadULong()
+        }
+        while (value >= threshold)
+
+        return value % span
     }
 }

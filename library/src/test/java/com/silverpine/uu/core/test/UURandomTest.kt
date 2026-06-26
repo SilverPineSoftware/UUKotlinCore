@@ -487,6 +487,20 @@ class UURandomTest
     }
 
     @Test
+    fun test_int_min_max_includes_endpoints()
+    {
+        assertEquals(5, UURandom.int(5, 5))
+
+        val values = mutableSetOf<Int>()
+        repeat(64)
+        {
+            values.add(UURandom.int(5, 6))
+        }
+
+        assertEquals(setOf(5, 6), values)
+    }
+
+    @Test
     fun test_int_max()
     {
         val max = 1000
@@ -496,7 +510,7 @@ class UURandomTest
             assertNotNull(actual)
             val rangeCheck = actual.toLong()
             assertTrue(rangeCheck >= 0)
-            assertTrue(rangeCheck < max)
+            assertTrue(rangeCheck <= max)
             println("UURandom.int(max): $actual")
         }
     }
@@ -922,7 +936,7 @@ class UURandomTest
             {
                 val rangeCheck = actual.toLong()
                 assertTrue(rangeCheck >= 0)
-                assertTrue(rangeCheck < max)
+                assertTrue(rangeCheck <= max)
                 println("UURandom.intOrNull(max): $actual")
             }
             else
