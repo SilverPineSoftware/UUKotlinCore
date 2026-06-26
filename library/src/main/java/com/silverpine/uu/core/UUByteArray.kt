@@ -5,6 +5,7 @@ import com.silverpine.uu.logging.logException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.charset.Charset
+import java.security.MessageDigest
 import java.util.Base64
 import java.util.Locale
 
@@ -1649,4 +1650,72 @@ fun ByteArray.uuSplitIntoChunks(chunkSize: Int): List<ByteArray>
     }
 
     return chunks
+}
+
+/**
+ * Computes the SHA-256 digest of this [ByteArray] (FIPS 180-4).
+ *
+ * Returns a 32-byte digest using [MessageDigest] with algorithm `"SHA-256"`.
+ *
+ * Example:
+ * ```
+ * val digest = "abc".toByteArray(Charsets.UTF_8).uuSha256()
+ * println(digest.uuToHex())
+ * ```
+ *
+ * @receiver the input bytes to hash.
+ *
+ * @since 1.0.0
+ * @return a 32-byte SHA-256 digest.
+ */
+fun ByteArray.uuSha256(): ByteArray
+{
+    return shaDigest("SHA-256")
+}
+
+/**
+ * Computes the SHA-384 digest of this [ByteArray] (FIPS 180-4).
+ *
+ * Returns a 48-byte digest using [MessageDigest] with algorithm `"SHA-384"`.
+ *
+ * Example:
+ * ```
+ * val digest = "abc".toByteArray(Charsets.UTF_8).uuSha384()
+ * println(digest.uuToHex())
+ * ```
+ *
+ * @receiver the input bytes to hash.
+ *
+ * @since 1.0.0
+ * @return a 48-byte SHA-384 digest.
+ */
+fun ByteArray.uuSha384(): ByteArray
+{
+    return shaDigest("SHA-384")
+}
+
+/**
+ * Computes the SHA-512 digest of this [ByteArray] (FIPS 180-4).
+ *
+ * Returns a 64-byte digest using [MessageDigest] with algorithm `"SHA-512"`.
+ *
+ * Example:
+ * ```
+ * val digest = "abc".toByteArray(Charsets.UTF_8).uuSha512()
+ * println(digest.uuToHex())
+ * ```
+ *
+ * @receiver the input bytes to hash.
+ *
+ * @since 1.0.0
+ * @return a 64-byte SHA-512 digest.
+ */
+fun ByteArray.uuSha512(): ByteArray
+{
+    return shaDigest("SHA-512")
+}
+
+private fun ByteArray.shaDigest(algorithm: String): ByteArray
+{
+    return MessageDigest.getInstance(algorithm).digest(this)
 }

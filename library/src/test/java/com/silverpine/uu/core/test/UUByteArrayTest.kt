@@ -22,6 +22,9 @@ import com.silverpine.uu.core.uuReadUInt64
 import com.silverpine.uu.core.uuReadUInt8
 import com.silverpine.uu.core.uuReset
 import com.silverpine.uu.core.uuSetAll
+import com.silverpine.uu.core.uuSha256
+import com.silverpine.uu.core.uuSha384
+import com.silverpine.uu.core.uuSha512
 import com.silverpine.uu.core.uuSplitIntoChunks
 import com.silverpine.uu.core.uuString
 import com.silverpine.uu.core.uuSubData
@@ -1326,5 +1329,76 @@ class UUByteArrayTest
 
             assertEquals(expectedHexChunks, actualHex, "Chunk mismatch for input=$hex size=$chunkSize", )
         }
+    }
+
+    private fun assertShaDigest(
+        input: ByteArray,
+        expectedHex: String,
+        expectedLength: Int,
+        digest: (ByteArray) -> ByteArray)
+    {
+        val actual = digest(input)
+        assertEquals(expectedLength, actual.size)
+        assertEquals(expectedHex, actual.uuToHex())
+    }
+
+    @Test
+    fun test_uuSha256_empty()
+    {
+        assertShaDigest(
+            ByteArray(0),
+            "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+            32,
+            ByteArray::uuSha256)
+    }
+
+    @Test
+    fun test_uuSha256_abc()
+    {
+        assertShaDigest(
+            "abc".toByteArray(Charsets.UTF_8),
+            "BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD",
+            32,
+            ByteArray::uuSha256)
+    }
+
+    @Test
+    fun test_uuSha384_empty()
+    {
+        assertShaDigest(
+            ByteArray(0),
+            "38B060A751AC96384CD9327EB1B1E36A21FDB71114BE07434C0CC7BF63F6E1DA274EDEBFE76F65FBD51AD2F14898B95B",
+            48,
+            ByteArray::uuSha384)
+    }
+
+    @Test
+    fun test_uuSha384_abc()
+    {
+        assertShaDigest(
+            "abc".toByteArray(Charsets.UTF_8),
+            "CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7",
+            48,
+            ByteArray::uuSha384)
+    }
+
+    @Test
+    fun test_uuSha512_empty()
+    {
+        assertShaDigest(
+            ByteArray(0),
+            "CF83E1357EEFB8BDF1542850D66D8007D620E4050B5715DC83F4A921D36CE9CE47D0D13C5D85F2B0FF8318D2877EEC2F63B931BD47417A81A538327AF927DA3E",
+            64,
+            ByteArray::uuSha512)
+    }
+
+    @Test
+    fun test_uuSha512_abc()
+    {
+        assertShaDigest(
+            "abc".toByteArray(Charsets.UTF_8),
+            "DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F",
+            64,
+            ByteArray::uuSha512)
     }
 }
