@@ -14,6 +14,15 @@ import org.junit.jupiter.api.TestFactory
 
 class UUSafeEnumSerializerTest
 {
+    @TestFactory
+    fun `explicit null uses the required fallback across formats`(): List<DynamicTest> =
+        UUEnumFormat.entries.map { format ->
+            DynamicTest.dynamicTest("Null input, format=$format") {
+                val fallback = TestEnum.SixSeven
+                assertEquals(fallback, Json.decodeFromString(serializer(format, fallback), "null"))
+            }
+        }
+
     private fun serializer(format: UUEnumFormat, fallback: TestEnum): KSerializer<TestEnum>
     {
         return object : UUSafeEnumSerializer<TestEnum>(TestEnum::class.java, format, fallback) {}

@@ -26,6 +26,18 @@ enum class TestEnum
 
 class UUEnumSerializerTest
 {
+    @TestFactory
+    fun `explicit null uses the configured fallback across formats`(): List<DynamicTest> =
+        UUEnumFormat.entries.flatMap { format ->
+            listOf<TestEnum?>(null, TestEnum.SixSeven).map { fallback ->
+                DynamicTest.dynamicTest("Null input, format=$format, fallback=$fallback") {
+                    val ser = serializer(format, fallback)
+                    assertEquals("null", Json.encodeToString(ser, null))
+                    assertEquals(fallback, Json.decodeFromString(ser, "null"))
+                }
+            }
+        }
+
     private fun serializer(format: UUEnumFormat, fallback: TestEnum? = null): KSerializer<TestEnum?>
     {
         return object : UUEnumSerializer<TestEnum>(TestEnum::class.java, format, fallback) {}

@@ -1,5 +1,6 @@
 package com.silverpine.uu.core.serialization
 
+import com.silverpine.uu.core.UUNumberBackedEnum
 import com.silverpine.uu.core.uuToSnakeCase
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encoding.Decoder
@@ -33,7 +34,7 @@ object UUEnumSerialization
      * - `Ordinal` → `value.ordinal`
      *
      * @since 1.0.0
-     * @param encoder The KotlinX encoder to write to.
+     * @param encoder The Kotlinx encoder to write to.
      * @param format The format to use for serialization.
      * @param value The enum value to serialize, or `null`.
      */
@@ -63,6 +64,21 @@ object UUEnumSerialization
         }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
+    fun <N: Number, T> serializeNumberBacked(encoder: Encoder, value: T?)
+    where T: Enum<T>,
+          T: UUNumberBackedEnum<N>
+    {
+        if (value == null)
+        {
+            encoder.encodeNull()
+        }
+        else
+        {
+            encoder.encodeLong(value.value.toLong())
+        }
+    }
+
     /**
      * Deserializes an enum value using the specified [format], optionally falling back to [defaultDeserializeValue].
      *
@@ -77,43 +93,73 @@ object UUEnumSerialization
      * - `Ordinal` → match on `ordinal`
      *
      * @since 1.0.0
-     * @param decoder The KotlinX decoder to read from.
+     * @param decoder The Kotlinx decoder to read from.
      * @param format The format to use for deserialization.
      * @param enumClass The enum class to match against.
      * @param defaultDeserializeValue The fallback value if no match is found. Can be `null`.
      * @return The matched enum constant, or the fallback value.
      */
+    @OptIn(ExperimentalSerializationApi::class)
     fun <T: Enum<T>> deserialize(
         decoder: Decoder,
         format: UUEnumFormat,
         enumClass: Class<T>,
         defaultDeserializeValue: T?): T?
     {
-        return when (format)
+        val converted: T? = if (decoder.decodeNotNullMark())
         {
-            UUEnumFormat.Name ->
+            when (format)
             {
-                val decoded = decoder.decodeString()
-                enumClass.enumConstants?.firstOrNull { it.name == decoded }
-            }
+                UUEnumFormat.Name ->
+                {
+                    val decoded = decoder.decodeString()
+                    enumClass.enumConstants?.firstOrNull { it.name == decoded }
+                }
 
-            UUEnumFormat.NameLower ->
-            {
-                val decoded = decoder.decodeString()
-                enumClass.enumConstants?.firstOrNull { it.name.equals(decoded, ignoreCase = true) }
-            }
+                UUEnumFormat.NameLower ->
+                {
+                    val decoded = decoder.decodeString()
+                    enumClass.enumConstants?.firstOrNull { it.name.equals(decoded, ignoreCase = true) }
+                }
 
-            UUEnumFormat.NameSnakeCase ->
-            {
-                val decoded = decoder.decodeString()
-                enumClass.enumConstants?.firstOrNull { it.name.uuToSnakeCase() == decoded.uuToSnakeCase() }
-            }
+                UUEnumFormat.NameSnakeCase ->
+                {
+                    val decoded = decoder.decodeString()
+                    enumClass.enumConstants?.firstOrNull { it.name.uuToSnakeCase() == decoded.uuToSnakeCase() }
+                }
 
-            UUEnumFormat.Ordinal ->
-            {
-                val decoded = decoder.decodeInt()
-                enumClass.enumConstants?.firstOrNull { it.ordinal == decoded }
+                UUEnumFormat.Ordinal ->
+                {
+                    val decoded = decoder.decodeInt()
+                    enumClass.enumConstants?.firstOrNull { it.ordinal == decoded }
+                }
             }
-        } ?: defaultDeserializeValue
+        }
+        else
+        {
+            decoder.decodeNull()
+        }
+
+        return converted ?: defaultDeserializeValue
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    fun <N: Number, T> deserializeNumberBacked(
+        decoder: Decoder,
+        converter: (Long)->T?,
+        defaultDeserializeValue: T?): T?
+        where T: Enum<T>,
+              T: UUNumberBackedEnum<N>
+    {
+        val converted: T? = if (decoder.decodeNotNullMark())
+        {
+            converter(decoder.decodeLong())
+        }
+        else
+        {
+            decoder.decodeNull()
+        }
+
+        return converted ?: defaultDeserializeValue
     }
 }

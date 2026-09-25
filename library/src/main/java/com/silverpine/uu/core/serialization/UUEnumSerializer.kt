@@ -1,7 +1,9 @@
 package com.silverpine.uu.core.serialization
 
+import com.silverpine.uu.core.UUNumberBackedEnum
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -50,6 +52,28 @@ abstract class UUEnumSerializer<T : Enum<T>>(
     }
 }
 
+abstract class UUNumberBackedEnumSerializer<N: Number, T>(
+    private val converter: (Long)->T?,
+    private val defaultDeserializeValue: T? = null
+) : KSerializer<T?>
+    where T: Enum<T>,
+          T: UUNumberBackedEnum<N>
+{
+    override val descriptor = PrimitiveSerialDescriptor("UUNumberBackedEnumSerializer",PrimitiveKind.LONG)
+
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun serialize(encoder: Encoder, value: T?)
+    {
+        UUEnumSerialization.serializeNumberBacked(encoder, value)
+    }
+
+    override fun deserialize(decoder: Decoder): T?
+    {
+        return UUEnumSerialization.deserializeNumberBacked(decoder, converter, defaultDeserializeValue )
+    }
+
+}
+
 /**
  * Factory for creating a UUEnumSerializer with the given format and fallback.
  *
@@ -66,6 +90,14 @@ fun <T : Enum<T>> uuEnumSerializer(
     defaultDeserializeValue: T? = null
 ): UUEnumSerializer<T> =
     object : UUEnumSerializer<T>(enumClass, format, defaultDeserializeValue) {}
+
+fun <N: Number, T> uuNumberBackedEnumSerializer(
+    converter: (Long)->T?,
+    defaultDeserializeValue: T? = null
+): KSerializer<T?>
+        where T: Enum<T>,
+              T: UUNumberBackedEnum<N> =
+    object : UUNumberBackedEnumSerializer<N, T>(converter, defaultDeserializeValue) {}
 
 
 
