@@ -25,7 +25,91 @@ val Int.uuPx: Int
  * @param mask the mask of bits to check
  * @return true if the bits are found in the value, false otherwise
  */
+fun Byte.uuIsBitSet(mask: Byte): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun Short.uuIsBitSet(mask: Short): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
 fun Int.uuIsBitSet(mask: Int): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun Long.uuIsBitSet(mask: Long): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun UByte.uuIsBitSet(mask: UByte): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun UShort.uuIsBitSet(mask: UShort): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun UInt.uuIsBitSet(mask: UInt): Boolean
+{
+    return (this and mask) == mask
+}
+
+/**
+ * Evaluates two values to determine if one contains bits from the other
+ *
+ * @since 1.0.0
+ * @param mask the mask of bits to check
+ * @return true if the bits are found in the value, false otherwise
+ */
+fun ULong.uuIsBitSet(mask: ULong): Boolean
 {
     return (this and mask) == mask
 }

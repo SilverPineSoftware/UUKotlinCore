@@ -2,6 +2,7 @@ package com.silverpine.uu.core.test
 
 import com.silverpine.uu.core.uuClearBit
 import com.silverpine.uu.core.uuFromBcd8
+import com.silverpine.uu.core.uuIsBitSet
 import com.silverpine.uu.core.uuIsLeapYear
 import com.silverpine.uu.core.uuSetBit
 import com.silverpine.uu.core.uuToBcd8
@@ -20,7 +21,7 @@ class UNumberTests
     fun test_uuToBcd8()
     {
         // Each test datum: input, expected
-        val inputs = arrayOf<Pair<Int,Int?>>(
+        val inputs = arrayOf(
             Pair(12, 0x12),
             Pair(99, 0x99),
             Pair(0, 0x00),
@@ -50,7 +51,7 @@ class UNumberTests
     fun test_uuFromBcd8()
     {
         // Each test datum: original number, its BCD
-        val inputs = arrayOf<Pair<Int,Int>>(
+        val inputs = arrayOf(
             Pair(12, 0x12),
             Pair(99, 0x99),
             Pair(0, 0x00),
@@ -64,7 +65,7 @@ class UNumberTests
 
             val actual = bcd.uuFromBcd8()
             assertEquals(
-                expected, actual.toInt(),
+                expected, actual,
                 "Failed to decode BCD " + Integer.toHexString(bcd)
             )
         }
@@ -109,6 +110,114 @@ class UNumberTests
         assertTrue(0.uuIsLeapYear)
         assertTrue((-4).uuIsLeapYear)
         assertFalse((-1).uuIsLeapYear)
+    }
+
+    @Nested
+    inner class IsBitSetTests
+    {
+        // Each test supplies a call to its concrete overload. ULong holds the test
+        // bit patterns without losing the highest bit of any integer size.
+        private fun assertBitMasks(size: Int, isBitSet: (ULong, ULong) -> Boolean)
+        {
+            val allBits = ULong.MAX_VALUE shr (ULong.SIZE_BITS - size)
+            assertTrue(isBitSet(0uL, 0uL), "Zero contains the empty mask")
+            assertTrue(isBitSet(allBits, 0uL), "All bits contain the empty mask")
+            assertTrue(isBitSet(allBits, allBits), "All bits match themselves")
+            assertFalse(isBitSet(0uL, allBits), "Zero contains no set bits")
+            assertFalse(isBitSet(1uL, allBits), "One bit does not satisfy an all-bits mask")
+
+            for (index in 0 until size)
+            {
+                val bit = 1uL shl index
+                assertTrue(isBitSet(allBits, bit), "Bit $index of $size is set")
+                assertFalse(isBitSet(0uL, bit), "Bit $index of $size is absent")
+                assertFalse(isBitSet(allBits xor bit, bit), "Bit $index of $size is cleared")
+
+                for (maskIndex in 0 until size)
+                {
+                    assertEquals(
+                        index == maskIndex,
+                        isBitSet(bit, 1uL shl maskIndex),
+                        "Value bit $index and mask bit $maskIndex of $size"
+                    )
+                }
+            }
+
+            assertTrue(isBitSet(0b1011uL, 0b0011uL), "All requested bits are present")
+            assertFalse(isBitSet(0b1011uL, 0b0110uL), "Partial overlap is insufficient")
+            assertFalse(isBitSet(0b1011uL, 0b0100uL), "Disjoint mask is absent")
+
+            val highBit = 1uL shl (size - 1)
+            val highAndLow = highBit or 1uL
+            assertTrue(isBitSet(highAndLow, highAndLow), "Highest and lowest bits match")
+            assertTrue(isBitSet(allBits, highAndLow), "Extra bits are allowed")
+            assertFalse(isBitSet(highBit, highAndLow), "Lowest requested bit is missing")
+            assertFalse(isBitSet(1uL, highAndLow), "Highest requested bit is missing")
+        }
+
+        @Test
+        fun `Byte - checks every bit and composite masks`()
+        {
+            assertBitMasks(Byte.SIZE_BITS) { value, mask ->
+                value.toByte().uuIsBitSet(mask.toByte())
+            }
+        }
+
+        @Test
+        fun `Short - checks every bit and composite masks`()
+        {
+            assertBitMasks(Short.SIZE_BITS) { value, mask ->
+                value.toShort().uuIsBitSet(mask.toShort())
+            }
+        }
+
+        @Test
+        fun `Int - checks every bit and composite masks`()
+        {
+            assertBitMasks(Int.SIZE_BITS) { value, mask ->
+                value.toInt().uuIsBitSet(mask.toInt())
+            }
+        }
+
+        @Test
+        fun `Long - checks every bit and composite masks`()
+        {
+            assertBitMasks(Long.SIZE_BITS) { value, mask ->
+                value.toLong().uuIsBitSet(mask.toLong())
+            }
+        }
+
+        @Test
+        fun `UByte - checks every bit and composite masks`()
+        {
+            assertBitMasks(UByte.SIZE_BITS) { value, mask ->
+                value.toUByte().uuIsBitSet(mask.toUByte())
+            }
+        }
+
+        @Test
+        fun `UShort - checks every bit and composite masks`()
+        {
+            assertBitMasks(UShort.SIZE_BITS) { value, mask ->
+                value.toUShort().uuIsBitSet(mask.toUShort())
+            }
+        }
+
+        @Test
+        fun `UInt - checks every bit and composite masks`()
+        {
+            assertBitMasks(UInt.SIZE_BITS) { value, mask ->
+                value.toUInt().uuIsBitSet(mask.toUInt())
+            }
+        }
+
+        @Test
+        fun `ULong - checks every bit and composite masks`()
+        {
+            assertBitMasks(ULong.SIZE_BITS) { value, mask ->
+                value.uuIsBitSet(mask)
+            }
+        }
     }
 
     @Nested
@@ -175,7 +284,7 @@ class UNumberTests
         @Test
         fun `UInt - set bit at position 0`()
         {
-            val value: UInt = 0u
+            val value = 0u
             val result = value.uuSetBit(true, 0)
             assertEquals(1u, result)
         }
@@ -183,7 +292,7 @@ class UNumberTests
         @Test
         fun `UInt - clear bit at position 0`()
         {
-            val value: UInt = 1u
+            val value = 1u
             val result = value.uuSetBit(false, 0)
             assertEquals(0u, result)
         }
@@ -191,7 +300,7 @@ class UNumberTests
         @Test
         fun `UInt - set bit at higher position`()
         {
-            val value: UInt = 0u
+            val value = 0u
             val result = value.uuSetBit(true, 5)
             assertEquals(32u, result) // 1u shl 5
         }
@@ -199,7 +308,7 @@ class UNumberTests
         @Test
         fun `UInt - clear bit at higher position`()
         {
-            val value: UInt = 63u // 0b111111
+            val value = 63u // 0b111111
             val result = value.uuSetBit(false, 5)
             assertEquals(31u, result) // clears bit 5
         }
@@ -207,7 +316,7 @@ class UNumberTests
         @Test
         fun `UInt - out of range index returns unchanged`()
         {
-            val value: UInt = 42u
+            val value = 42u
             assertEquals(value, value.uuSetBit(true, -1))
             assertEquals(value, value.uuSetBit(true, UInt.SIZE_BITS)) // too high
         }
@@ -215,7 +324,7 @@ class UNumberTests
         @Test
         fun `UInt - set and clear round trip`()
         {
-            val value: UInt = 0u
+            val value = 0u
             val set = value.uuSetBit(true, 7)
             val cleared = set.uuSetBit(false, 7)
             assertEquals(value, cleared)
@@ -225,7 +334,7 @@ class UNumberTests
         fun `UInt - set highest valid bit`()
         {
             val index = UInt.SIZE_BITS - 1 // 31
-            val value: UInt = 0u
+            val value = 0u
             val result = value.uuSetBit(true, index)
             assertEquals(0x80000000u, result) // highest bit in UInt
         }
@@ -506,7 +615,7 @@ class UNumberTests
         }
 
         @Test
-        fun ubyte_clearBit_validIndex()
+        fun uByte_clearBit_validIndex()
         {
             val original: UByte = 0b11111111u
             val result = original.uuClearBit(7)
@@ -514,7 +623,7 @@ class UNumberTests
         }
 
         @Test
-        fun ushort_clearBit_validIndex()
+        fun uShort_clearBit_validIndex()
         {
             val original: UShort = 0b1000000000000000u
             val result = original.uuClearBit(15)
@@ -546,7 +655,7 @@ class UNumberTests
         }
 
         @Test
-        fun ulong_clearBit_validIndex()
+        fun uLong_clearBit_validIndex()
         {
             val original = 1uL shl 63
             val result = original.uuClearBit(63)
