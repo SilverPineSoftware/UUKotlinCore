@@ -168,7 +168,7 @@ fun String.uuFirstCapital(): String
 }
 
 /**
- * Converts a string to snake_case
+ * Converts a string to snake_case using locale-independent lowercase.
  *
  * @since 1.0.0
  *
@@ -178,7 +178,7 @@ fun String.uuToSnakeCase(): String
 {
     val regex = "(\\p{Ll})(\\p{Lu})"
     val replacement = "$1_$2"
-    return replace(regex.toRegex(), replacement).lowercase(Locale.getDefault())
+    return replace(regex.toRegex(), replacement).lowercase()
 }
 
 /**

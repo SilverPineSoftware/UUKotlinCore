@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.parallel.ResourceLock
+import org.junit.jupiter.api.parallel.Resources
+import java.util.Locale
 import java.util.Base64
 
 class UUStringTest
@@ -144,6 +147,35 @@ class UUStringTest
 
         assertTrue(result.isSuccess)
         assertEquals(original, String(result.getOrThrow()))
+    }
+
+    @Test
+    @ResourceLock(Resources.LOCALE)
+    fun `snake case is independent of the default locale`()
+    {
+        val original = Locale.getDefault()
+        try
+        {
+            for (locale in listOf(Locale.US, Locale.forLanguageTag("tr-TR")))
+            {
+                Locale.setDefault(locale)
+                for ((input, expected) in listOf(
+                    "IDLE" to "idle",
+                    "InProgress" to "in_progress",
+                    "IN_PROGRESS" to "in_progress",
+                    "userId" to "user_id",
+                    "already_snake_case" to "already_snake_case",
+                    "" to ""
+                ))
+                {
+                    assertEquals(expected, input.uuToSnakeCase(), "input=$input, locale=$locale")
+                }
+            }
+        }
+        finally
+        {
+            Locale.setDefault(original)
+        }
     }
 
     @Test

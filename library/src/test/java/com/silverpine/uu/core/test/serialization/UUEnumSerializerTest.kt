@@ -12,6 +12,9 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import org.junit.jupiter.api.parallel.ResourceLock
+import org.junit.jupiter.api.parallel.Resources
+import java.util.Locale
 
 enum class TestEnum
 {
@@ -26,6 +29,47 @@ enum class TestEnum
 
 class UUEnumSerializerTest
 {
+    private enum class LocaleStatus
+    {
+        IDLE,
+        InProgress
+    }
+
+    @Test
+    @ResourceLock(Resources.LOCALE)
+    fun `snake case enum wire values work across locales`()
+    {
+        val original = Locale.getDefault()
+        val ser = object : UUEnumSerializer<LocaleStatus>(
+            LocaleStatus::class.java, UUEnumFormat.NameSnakeCase
+        ) {}
+        try
+        {
+            for (writeLocale in listOf(Locale.US, Locale.forLanguageTag("tr-TR")))
+            {
+                for ((value, expected) in listOf(
+                    LocaleStatus.IDLE to "\"idle\"",
+                    LocaleStatus.InProgress to "\"in_progress\""
+                ))
+                {
+                    Locale.setDefault(writeLocale)
+                    val encoded = Json.encodeToString(ser, value)
+                    assertEquals(expected, encoded, "writeLocale=$writeLocale")
+                    for (readLocale in listOf(Locale.US, Locale.forLanguageTag("tr-TR")))
+                    {
+                        Locale.setDefault(readLocale)
+                        assertEquals(value, Json.decodeFromString(ser, encoded),
+                            "writeLocale=$writeLocale, readLocale=$readLocale")
+                    }
+                }
+            }
+        }
+        finally
+        {
+            Locale.setDefault(original)
+        }
+    }
+
     @TestFactory
     fun `explicit null uses the configured fallback across formats`(): List<DynamicTest> =
         UUEnumFormat.entries.flatMap { format ->
