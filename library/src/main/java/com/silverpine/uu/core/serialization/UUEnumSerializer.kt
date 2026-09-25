@@ -5,6 +5,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.nullable
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -38,7 +39,7 @@ abstract class UUEnumSerializer<T : Enum<T>>(
     private val defaultDeserializeValue: T? = null
 ) : KSerializer<T?>
 {
-    override val descriptor = PrimitiveSerialDescriptor("UUEnumSerializer-$format", format.primitiveKind)
+    override val descriptor = PrimitiveSerialDescriptor("UUEnumSerializer-$format", format.primitiveKind).nullable
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun serialize(encoder: Encoder, value: T?)
@@ -59,7 +60,7 @@ abstract class UUNumberBackedEnumSerializer<N: Number, T>(
     where T: Enum<T>,
           T: UUNumberBackedEnum<N>
 {
-    override val descriptor = PrimitiveSerialDescriptor("UUNumberBackedEnumSerializer",PrimitiveKind.LONG)
+    override val descriptor = PrimitiveSerialDescriptor("UUNumberBackedEnumSerializer",PrimitiveKind.LONG).nullable
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun serialize(encoder: Encoder, value: T?)
