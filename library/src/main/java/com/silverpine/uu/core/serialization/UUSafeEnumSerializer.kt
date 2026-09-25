@@ -8,7 +8,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonDecoder
 
 /**
- * A strict Kotlin-X Serialization adapter for enums that guarantees non-null deserialization.
+ * A Kotlin-X Serialization adapter that returns a non-null enum when decoding succeeds.
  *
  * This serializer encodes enums using the specified [UUEnumFormat], and ensures that deserialization
  * returns a non-null enum when decoding succeeds. If the input cannot be matched to any known value, the
@@ -25,15 +25,17 @@ import kotlinx.serialization.json.JsonDecoder
  * - [UUEnumFormat.Ordinal] — ordinal index (e.g. `0`, `1`, `2`)
  *
  * ### Behavior
- * - Serialization delegates to [UUEnumSerialization.serialize] using the configured [format].
- * - Deserialization attempts to match the input using [UUEnumSerialization.deserialize].
- * - If no match is found, [defaultDeserializeValue] is returned.
+ * - Serialization writes the primitive through [UUEnumSerialization.serializeValue], without a nullable presence marker.
+ * - JSON decoding uses [UUEnumSerialization.deserialize] to consume explicit null and apply the fallback.
+ * - Other decoders use [UUEnumSerialization.deserializeValue] without reading a nullable presence marker.
+ * - Explicit JSON null or an unknown decoded value returns [defaultDeserializeValue].
+ * - Malformed input errors propagate instead of using the fallback.
  *
  * @since 1.0.0
  * @param T The enum type being serialized.
  * @param enumClass The Java class reference for the enum.
  * @param format The format to use during serialization. Defaults to [UUEnumFormat.Default].
- * @param defaultDeserializeValue The fallback value to use if deserialization fails.
+ * @param defaultDeserializeValue The required fallback for explicit JSON null or unknown decoded values.
  */
 abstract class UUSafeEnumSerializer<T : Enum<T>>(
     private val enumClass: Class<T>,
@@ -67,6 +69,7 @@ abstract class UUSafeEnumSerializer<T : Enum<T>>(
 
 /**
  * Factory for creating a UUSafeEnumSerializer with the given format and fallback.
+ * Malformed input errors propagate instead of using the fallback.
  *
  * @since 1.0.0
  * @param T The enum type.

@@ -24,13 +24,14 @@ import kotlinx.serialization.encoding.Encoder
  *
  * ### Nullability
  * - If value is `null`, serialization will encode a JSON `null`.
- * - If deserialization fails to match any enum constant, [defaultDeserializeValue] is returned.
+ * - Explicit null or an unknown decoded value returns [defaultDeserializeValue], which may be null.
+ * - Malformed input errors propagate instead of using the fallback.
  *
  * @since 1.0.0
  * @param T The enum type being serialized.
  * @param enumClass The Java class reference for the enum.
  * @param format The format to use during serialization. Defaults to [UUEnumFormat.Default].
- * @param defaultDeserializeValue The fallback value to use if deserialization fails. Can be `null`.
+ * @param defaultDeserializeValue The fallback for explicit null or unknown decoded values. Can be `null`.
  */
 abstract class UUEnumSerializer<T : Enum<T>>(
     private val enumClass: Class<T>,
@@ -90,12 +91,13 @@ abstract class UUValueBackedEnumSerializer<V: Any, T>(
 
 /**
  * Factory for creating a UUEnumSerializer with the given format and fallback.
+ * Malformed input errors propagate instead of using the fallback.
  *
  * @since 1.0.0
  * @param T The enum type.
  * @param enumClass The enum class reference.
  * @param format The format to use for serialization. Defaults to Name.
- * @param defaultDeserializeValue The fallback value if deserialization fails. Can be null.
+ * @param defaultDeserializeValue The fallback for explicit null or unknown decoded values. Can be null.
  * @return A UUEnumSerializer instance for the given enum type.
  */
 fun <T : Enum<T>> uuEnumSerializer(

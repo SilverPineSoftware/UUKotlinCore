@@ -114,7 +114,7 @@ object UUEnumSerialization
      * @param decoder The Kotlinx decoder to read from.
      * @param format The format to use for deserialization.
      * @param enumClass The enum class to match against.
-     * @param defaultDeserializeValue The fallback value if no match is found. Can be `null`.
+     * @param defaultDeserializeValue The fallback for explicit null or unknown decoded values. Can be `null`.
      * @return The matched enum constant, or the fallback value.
      */
     @OptIn(ExperimentalSerializationApi::class)
