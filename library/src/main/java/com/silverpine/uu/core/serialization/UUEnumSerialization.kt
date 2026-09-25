@@ -1,13 +1,14 @@
 package com.silverpine.uu.core.serialization
 
-import com.silverpine.uu.core.UUNumberBackedEnum
+import com.silverpine.uu.core.UUValueBackedEnum
 import com.silverpine.uu.core.uuToSnakeCase
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Internal utility for serializing and deserializing enums using flexible format strategies.
+ * Shared utility for serializing and deserializing enums using flexible format strategies.
  *
  * This object provides reusable logic for encoding and decoding enum values based on [UUEnumFormat],
  * supporting both nullable and non-nullable use cases. It is used by [UUEnumSerializer] and [UUSafeEnumSerializer]
@@ -18,6 +19,7 @@ import kotlinx.serialization.encoding.Encoder
  * - [UUEnumFormat.NameLower] — lowercase name (e.g. `"red_blue"`)
  * - [UUEnumFormat.NameSnakeCase] — snake_case conversion (e.g. `"red_blue"`)
  * - [UUEnumFormat.Ordinal] — ordinal index (e.g. `0`, `1`, `2`)
+ * - [serializeValueBacked] / [deserializeValueBacked] — explicit values via a backing serializer.
  *
  * @since 1.0.0
  */
@@ -52,7 +54,7 @@ object UUEnumSerialization
         }
     }
 
-    // Non-nullable serializers write only the primitive, without a presence marker.
+    /** Writes a non-null enum primitive without a nullable presence marker. */
     internal fun <T: Enum<T>> serializeValue(encoder: Encoder, format: UUEnumFormat, value: T)
     {
         when (format)
@@ -71,10 +73,17 @@ object UUEnumSerialization
         }
     }
 
+    /**
+     * Encodes null or a presence marker followed by the enum's backing value.
+     *
+     * @param encoder Destination encoder.
+     * @param valueSerializer Controls the backing value's wire representation without numeric coercion.
+     * @param value Enum to encode, or null.
+     */
     @OptIn(ExperimentalSerializationApi::class)
-    fun <N: Number, T> serializeNumberBacked(encoder: Encoder, value: T?)
+    fun <V: Any, T> serializeValueBacked(encoder: Encoder, valueSerializer: KSerializer<V>, value: T?)
     where T: Enum<T>,
-          T: UUNumberBackedEnum<N>
+          T: UUValueBackedEnum<V>
     {
         if (value == null)
         {
@@ -83,7 +92,7 @@ object UUEnumSerialization
         else
         {
             encoder.encodeNotNullMark()
-            encoder.encodeLong(value.value.toLong())
+            valueSerializer.serialize(encoder, value.value)
         }
     }
 
@@ -92,7 +101,8 @@ object UUEnumSerialization
      *
      * This function reads either a string or integer from the [decoder], depending on the format,
      * and attempts to match it to a constant in [enumClass]. If no match is found, it returns
-     * [defaultDeserializeValue] (which may be `null`).
+     * [defaultDeserializeValue] (which may be `null`). Explicit null also uses that fallback;
+     * malformed input errors propagate.
      *
      * Matching is format-specific:
      * - `Name` → exact match on `name`
@@ -126,7 +136,7 @@ object UUEnumSerialization
         return converted ?: defaultDeserializeValue
     }
 
-    // Reading a non-nullable primitive must not consume a nullable presence marker.
+    /** Reads an enum primitive without consuming a nullable presence marker; returns null if unknown. */
     internal fun <T: Enum<T>> deserializeValue(
         decoder: Decoder,
         format: UUEnumFormat,
@@ -160,17 +170,27 @@ object UUEnumSerialization
         }
     }
 
+    /**
+     * Decodes a nullable backing value and resolves it to an enum.
+     *
+     * @param decoder Source decoder.
+     * @param valueSerializer Decodes non-null backing values; malformed input errors propagate.
+     * @param fromValue Reverse lookup; not called for null input. Exceptions propagate.
+     * @param defaultDeserializeValue Result when input is null or reverse lookup returns null.
+     * @return The matched enum or the configured fallback.
+     */
     @OptIn(ExperimentalSerializationApi::class)
-    fun <N: Number, T> deserializeNumberBacked(
+    fun <V: Any, T> deserializeValueBacked(
         decoder: Decoder,
-        converter: (Long)->T?,
+        valueSerializer: KSerializer<V>,
+        fromValue: (V) -> T?,
         defaultDeserializeValue: T?): T?
         where T: Enum<T>,
-              T: UUNumberBackedEnum<N>
+              T: UUValueBackedEnum<V>
     {
         val converted: T? = if (decoder.decodeNotNullMark())
         {
-            converter(decoder.decodeLong())
+            fromValue(valueSerializer.deserialize(decoder))
         }
         else
         {

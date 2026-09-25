@@ -1,9 +1,5 @@
 package com.silverpine.uu.core.serialization
 
-import com.silverpine.uu.core.serialization.UUEnumFormat.Name
-import com.silverpine.uu.core.serialization.UUEnumFormat.NameLower
-import com.silverpine.uu.core.serialization.UUEnumFormat.NameSnakeCase
-import com.silverpine.uu.core.serialization.UUEnumFormat.Ordinal
 import kotlinx.serialization.descriptors.PrimitiveKind
 
 /**
@@ -19,12 +15,12 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * - [Ordinal] — Uses the ordinal index of the enum constant (e.g. `0`, `1`, `2`).
  *
  * ### Serialization Type
- * Each format maps to a [PrimitiveKind] used by KotlinX Serialization:
+ * Each format maps to a [PrimitiveKind] used by Kotlin-X Serialization:
  * - `STRING` for [Name], [NameLower], and [NameSnakeCase]
  * - `INT` for [Ordinal]
  *
  * @since 1.0.0
- * @property primitiveKind The KotlinX [PrimitiveKind] associated with this format.
+ * @property primitiveKind The Kotlin-X [PrimitiveKind] associated with this format.
  */
 enum class UUEnumFormat
 {

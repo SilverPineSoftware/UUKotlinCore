@@ -1,6 +1,7 @@
 package com.silverpine.uu.core.test.serialization
 
 import com.silverpine.uu.core.serialization.*
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -14,10 +15,10 @@ internal object NullableNameSerializer : UUEnumSerializer<TestEnum>(TestEnum::cl
 internal object DefaultNameSerializer : UUEnumSerializer<TestEnum>(
     TestEnum::class.java, defaultDeserializeValue = TestEnum.Two
 )
-internal object NullableNumberSerializer : UUNumberBackedEnumSerializer<Long, LongBacked>(
+internal object NullableNumberSerializer : UUValueBackedEnumSerializer<Long, LongBacked>(Long.serializer(),
     { raw -> LongBacked.entries.firstOrNull { it.value == raw } }
 )
-internal object DefaultNumberSerializer : UUNumberBackedEnumSerializer<Long, LongBacked>(
+internal object DefaultNumberSerializer : UUValueBackedEnumSerializer<Long, LongBacked>(Long.serializer(),
     { raw -> LongBacked.entries.firstOrNull { it.value == raw } }, LongBacked.TEN
 )
 
@@ -60,8 +61,8 @@ class UUEnumDescriptorTest
         val serializers = listOf(
             NullableNumberSerializer,
             DefaultNumberSerializer,
-            uuNumberBackedEnumSerializer<Long, LongBacked>({ null }),
-            uuNumberBackedEnumSerializer<Long, LongBacked>({ null }, LongBacked.TEN)
+            uuValueBackedEnumSerializer<Long, LongBacked>(Long.serializer(), { null }),
+            uuValueBackedEnumSerializer<Long, LongBacked>(Long.serializer(), { null }, LongBacked.TEN)
         )
         for (serializer in serializers)
         {

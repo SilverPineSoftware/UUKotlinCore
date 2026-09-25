@@ -8,11 +8,12 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonDecoder
 
 /**
- * A strict KotlinX Serialization adapter for enums that guarantees non-null deserialization.
+ * A strict Kotlin-X Serialization adapter for enums that guarantees non-null deserialization.
  *
  * This serializer encodes enums using the specified [UUEnumFormat], and ensures that deserialization
- * always returns a valid enum constant. If the input cannot be matched to any known value, the
- * [defaultDeserializeValue] is returned instead of throwing an exception.
+ * returns a non-null enum when decoding succeeds. If the input cannot be matched to any known value, the
+ * [defaultDeserializeValue] is returned. Explicit JSON null also uses this fallback;
+ * malformed input errors still propagate.
  *
  * This is ideal for use with non-nullable enum fields in data models, especially when consuming
  * external JSON that may contain unexpected or invalid values.
@@ -70,9 +71,9 @@ abstract class UUSafeEnumSerializer<T : Enum<T>>(
  * @since 1.0.0
  * @param T The enum type.
  * @param enumClass The enum class reference.
- * @param format The format to use for serialization. Defaults to NameSnakeCase.
- * @param defaultDeserializeValue The fallback value if deserialization fails. Can be null.
- * @return A UUEnumSerializer instance for the given enum type.
+ * @param format The format to use for serialization. Defaults to Name.
+ * @param defaultDeserializeValue The required fallback for explicit JSON null or unknown decoded values.
+ * @return A UUSafeEnumSerializer instance for the given enum type.
  */
 fun <T : Enum<T>> uuSafeEnumSerializer(
     enumClass: Class<T>,

@@ -1,6 +1,7 @@
 package com.silverpine.uu.core.test.serialization
 
 import com.silverpine.uu.core.serialization.*
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.AbstractDecoder
@@ -89,7 +90,7 @@ class UUEnumPresenceMarkerTest
     fun `number backed sequence preserves markers and 64 bit values`(): List<DynamicTest> =
         listOf<LongBacked?>(null, LongBacked.TEN).map { fallback ->
             DynamicTest.dynamicTest("Number fallback=$fallback") {
-                val serializer = uuNumberBackedEnumSerializer<Long, LongBacked>(
+                val serializer = uuValueBackedEnumSerializer<Long, LongBacked>(Long.serializer(),
                     { raw -> LongBacked.entries.firstOrNull { it.value == raw } }, fallback
                 )
                 val values = listOf(LongBacked.MIN, null, LongBacked.HIGH, LongBacked.MAX)

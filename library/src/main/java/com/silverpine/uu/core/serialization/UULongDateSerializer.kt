@@ -15,7 +15,7 @@ import java.util.TimeZone
  * A [KSerializer] for [Long] that serializes epoch milliseconds to formatted date strings
  * and deserializes date strings back to epoch milliseconds.
  *
- * This serializer converts Unix epoch timestamps (milliseconds since January 1, 1970 UTC)
+ * This serializer converts Unix epoch timestamps (milliseconds since January 1, 1970, UTC)
  * into human-readable date strings for JSON serialization. By default, it uses RFC 3339
  * format with milliseconds in UTC timezone.
  *
