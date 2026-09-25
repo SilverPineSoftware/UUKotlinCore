@@ -47,20 +47,27 @@ object UUEnumSerialization
         }
         else
         {
-            when (format)
-            {
-                UUEnumFormat.Name ->
-                    encoder.encodeString(value.name)
+            encoder.encodeNotNullMark()
+            serializeValue(encoder, format, value)
+        }
+    }
 
-                UUEnumFormat.NameLower ->
-                    encoder.encodeString(value.name.lowercase())
+    // Non-nullable serializers write only the primitive, without a presence marker.
+    internal fun <T: Enum<T>> serializeValue(encoder: Encoder, format: UUEnumFormat, value: T)
+    {
+        when (format)
+        {
+            UUEnumFormat.Name ->
+                encoder.encodeString(value.name)
 
-                UUEnumFormat.NameSnakeCase ->
-                    encoder.encodeString(value.name.uuToSnakeCase())
+            UUEnumFormat.NameLower ->
+                encoder.encodeString(value.name.lowercase())
 
-                UUEnumFormat.Ordinal ->
-                    encoder.encodeInt(value.ordinal)
-            }
+            UUEnumFormat.NameSnakeCase ->
+                encoder.encodeString(value.name.uuToSnakeCase())
+
+            UUEnumFormat.Ordinal ->
+                encoder.encodeInt(value.ordinal)
         }
     }
 
@@ -75,6 +82,7 @@ object UUEnumSerialization
         }
         else
         {
+            encoder.encodeNotNullMark()
             encoder.encodeLong(value.value.toLong())
         }
     }
@@ -108,32 +116,7 @@ object UUEnumSerialization
     {
         val converted: T? = if (decoder.decodeNotNullMark())
         {
-            when (format)
-            {
-                UUEnumFormat.Name ->
-                {
-                    val decoded = decoder.decodeString()
-                    enumClass.enumConstants?.firstOrNull { it.name == decoded }
-                }
-
-                UUEnumFormat.NameLower ->
-                {
-                    val decoded = decoder.decodeString()
-                    enumClass.enumConstants?.firstOrNull { it.name.equals(decoded, ignoreCase = true) }
-                }
-
-                UUEnumFormat.NameSnakeCase ->
-                {
-                    val decoded = decoder.decodeString()
-                    enumClass.enumConstants?.firstOrNull { it.name.uuToSnakeCase() == decoded.uuToSnakeCase() }
-                }
-
-                UUEnumFormat.Ordinal ->
-                {
-                    val decoded = decoder.decodeInt()
-                    enumClass.enumConstants?.firstOrNull { it.ordinal == decoded }
-                }
-            }
+            deserializeValue(decoder, format, enumClass)
         }
         else
         {
@@ -141,6 +124,40 @@ object UUEnumSerialization
         }
 
         return converted ?: defaultDeserializeValue
+    }
+
+    // Reading a non-nullable primitive must not consume a nullable presence marker.
+    internal fun <T: Enum<T>> deserializeValue(
+        decoder: Decoder,
+        format: UUEnumFormat,
+        enumClass: Class<T>): T?
+    {
+        return when (format)
+        {
+            UUEnumFormat.Name ->
+            {
+                val decoded = decoder.decodeString()
+                enumClass.enumConstants?.firstOrNull { it.name == decoded }
+            }
+
+            UUEnumFormat.NameLower ->
+            {
+                val decoded = decoder.decodeString()
+                enumClass.enumConstants?.firstOrNull { it.name.equals(decoded, ignoreCase = true) }
+            }
+
+            UUEnumFormat.NameSnakeCase ->
+            {
+                val decoded = decoder.decodeString()
+                enumClass.enumConstants?.firstOrNull { it.name.uuToSnakeCase() == decoded.uuToSnakeCase() }
+            }
+
+            UUEnumFormat.Ordinal ->
+            {
+                val decoded = decoder.decodeInt()
+                enumClass.enumConstants?.firstOrNull { it.ordinal == decoded }
+            }
+        }
     }
 
     @OptIn(ExperimentalSerializationApi::class)

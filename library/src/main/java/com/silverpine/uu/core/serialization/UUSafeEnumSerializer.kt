@@ -5,6 +5,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonDecoder
 
 /**
  * A strict KotlinX Serialization adapter for enums that guarantees non-null deserialization.
@@ -44,12 +45,22 @@ abstract class UUSafeEnumSerializer<T : Enum<T>>(
     @OptIn(ExperimentalSerializationApi::class)
     override fun serialize(encoder: Encoder, value: T)
     {
-        UUEnumSerialization.serialize(encoder, format, value)
+        UUEnumSerialization.serializeValue(encoder, format, value)
     }
 
     override fun deserialize(decoder: Decoder): T
     {
-        return UUEnumSerialization.deserialize(decoder, format, enumClass, null) ?: defaultDeserializeValue
+        // JSON permits an explicit null even for a non-nullable property. Preserve
+        // its fallback behavior without reading presence bytes in binary formats.
+        val converted = if (decoder is JsonDecoder)
+        {
+            UUEnumSerialization.deserialize(decoder, format, enumClass, null)
+        }
+        else
+        {
+            UUEnumSerialization.deserializeValue(decoder, format, enumClass)
+        }
+        return converted ?: defaultDeserializeValue
     }
 }
 

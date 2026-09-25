@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import org.mockito.kotlin.inOrder
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
@@ -129,7 +130,10 @@ class UUEnumSerializationTest
             DynamicTest.dynamicTest("Encode $value") {
                 val encoder = mock<Encoder>()
                 UUEnumSerialization.serializeNumberBacked<Long, LongBacked>(encoder, value)
-                verify(encoder).encodeLong(value.value)
+                inOrder(encoder) {
+                    verify(encoder).encodeNotNullMark()
+                    verify(encoder).encodeLong(value.value)
+                }
                 verifyNoMoreInteractions(encoder)
             }
         }
