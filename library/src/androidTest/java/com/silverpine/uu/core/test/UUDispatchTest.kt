@@ -1,17 +1,18 @@
 package com.silverpine.uu.core.test
 
+import android.os.SystemClock
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.silverpine.uu.core.uuDispatch
 import com.silverpine.uu.core.uuDispatchMain
 import com.silverpine.uu.core.uuIsMainThread
 import com.silverpine.uu.core.uuSleep
-import com.silverpine.uu.logging.UULog
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -32,10 +33,13 @@ class UUDispatchTest
             latch.countDown()
         }
 
-        latch.await()
+        Assert.assertTrue(
+            "Main-thread callback did not complete within 10 seconds",
+            latch.await(10, TimeUnit.SECONDS)
+        )
 
-        Assert.assertTrue(didInvoke)
-        Assert.assertTrue(didInvokeMain)
+        Assert.assertTrue("Callback was not invoked", didInvoke)
+        Assert.assertTrue("Callback must execute on the main thread", didInvokeMain)
     }
 
     @Test
@@ -45,26 +49,31 @@ class UUDispatchTest
 
         var didInvoke = false
         var didInvokeMain = false
-        val start = System.currentTimeMillis()
+        val start = SystemClock.uptimeMillis()
         var end = 0L
         val delay = 100L
 
         uuDispatchMain(delay)
         {
-            end = System.currentTimeMillis()
+            end = SystemClock.uptimeMillis()
             didInvoke = true
             didInvokeMain = uuIsMainThread()
             latch.countDown()
         }
 
-        latch.await()
+        Assert.assertTrue(
+            "Delayed main-thread callback did not complete within 10 seconds",
+            latch.await(10, TimeUnit.SECONDS)
+        )
 
-        Assert.assertTrue(didInvoke)
-        Assert.assertTrue(didInvokeMain)
+        Assert.assertTrue("Callback was not invoked", didInvoke)
+        Assert.assertTrue("Callback must execute on the main thread", didInvokeMain)
 
         val duration = end - start
-        println("delay: $delay, duration: $duration")
-        Assert.assertTrue(duration >= delay)
+        Assert.assertTrue(
+            "Expected at least ${delay}ms; observed ${duration}ms using uptimeMillis",
+            duration >= delay
+        )
     }
 
     @Test
@@ -82,38 +91,47 @@ class UUDispatchTest
             latch.countDown()
         }
 
-        latch.await()
+        Assert.assertTrue(
+            "Background callback did not complete within 10 seconds",
+            latch.await(10, TimeUnit.SECONDS)
+        )
 
-        Assert.assertTrue(didInvoke)
-        Assert.assertFalse(didInvokeMain)
+        Assert.assertTrue("Callback was not invoked", didInvoke)
+        Assert.assertFalse("Callback must execute off the main thread", didInvokeMain)
     }
 
     @Test
-    fun test_0003_mainWithDelay()
+    fun test_0003_backgroundWithDelay()
     {
         val latch = CountDownLatch(1)
 
         var didInvoke = false
         var didInvokeMain = true
-        val start = System.currentTimeMillis()
+        val start = SystemClock.uptimeMillis()
         var end = 0L
         val delay = 100L
 
         uuDispatch(delay)
         {
-            end = System.currentTimeMillis()
+            end = SystemClock.uptimeMillis()
             didInvoke = true
             didInvokeMain = uuIsMainThread()
             latch.countDown()
         }
 
-        latch.await()
+        Assert.assertTrue(
+            "Delayed background callback did not complete within 10 seconds",
+            latch.await(10, TimeUnit.SECONDS)
+        )
 
-        Assert.assertTrue(didInvoke)
-        Assert.assertFalse(didInvokeMain)
+        Assert.assertTrue("Callback was not invoked", didInvoke)
+        Assert.assertFalse("Callback must execute off the main thread", didInvokeMain)
 
         val duration = end - start
-        Assert.assertTrue(duration >= delay)
+        Assert.assertTrue(
+            "Expected at least ${delay}ms; observed ${duration}ms using uptimeMillis",
+            duration >= delay
+        )
     }
 
     @Test
@@ -142,6 +160,9 @@ class UUDispatchTest
             }
         }
 
-        latch.await()
+        Assert.assertTrue(
+            "Concurrent callbacks did not complete within 10 seconds",
+            latch.await(10, TimeUnit.SECONDS)
+        )
     }
 }
