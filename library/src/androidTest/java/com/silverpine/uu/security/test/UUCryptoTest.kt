@@ -2,6 +2,7 @@ package com.silverpine.uu.security.test
 
 import android.security.keystore.KeyInfo
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.silverpine.uu.core.security.UUCrypto
 import com.silverpine.uu.core.security.UUSecretKey
 import org.junit.After
@@ -11,6 +12,7 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -99,6 +101,17 @@ class UUCryptoInstrumentedTest
     @Test
     fun hardwareBackedKey_isInsideSecureHardware()
     {
+        // Enable on hardware-capable devices with
+        // -Pandroid.testInstrumentationRunnerArguments.requireHardwareBackedKeys=true
+        val requireHardware = InstrumentationRegistry.getArguments()
+            .getString("requireHardwareBackedKeys", "false")
+            .toBoolean()
+
+        assumeTrue(
+            "Hardware-backed keys are not required in this test environment",
+            requireHardware
+        )
+
         val secretKey = UUSecretKey.loadGcmKey(keyAlias).getOrThrow()
         val factory = SecretKeyFactory.getInstance(secretKey.algorithm, "AndroidKeyStore")
         val keyInfo = factory.getKeySpec(secretKey, KeyInfo::class.java) as KeyInfo
