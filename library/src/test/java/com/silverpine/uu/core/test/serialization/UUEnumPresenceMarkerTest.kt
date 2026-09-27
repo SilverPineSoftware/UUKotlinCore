@@ -39,6 +39,28 @@ class UUEnumPresenceMarkerTest
         override fun decodeElementIndex(descriptor: SerialDescriptor): Int = error("Primitives only")
     }
 
+    @Test
+    fun `safe value backed sequence uses no presence markers`()
+    {
+        val serializer = uuSafeValueBackedEnumSerializer<Long, LongBacked>(
+            Long.serializer(), { raw -> LongBacked.entries.firstOrNull { it.value == raw } }, LongBacked.TEN
+        )
+        val encoder = BinaryEncoder()
+        serializer.serialize(encoder, LongBacked.MIN)
+        serializer.serialize(encoder, LongBacked.MAX)
+        encoder.encodeLong(99L)
+        val expected = BinaryEncoder()
+        expected.encodeLong(Long.MIN_VALUE)
+        expected.encodeLong(Long.MAX_VALUE)
+        expected.encodeLong(99L)
+        assertArrayEquals(expected.bytes.toByteArray(), encoder.bytes.toByteArray())
+        val decoder = BinaryDecoder(encoder.bytes.toByteArray())
+        assertEquals(LongBacked.MIN, serializer.deserialize(decoder))
+        assertEquals(LongBacked.MAX, serializer.deserialize(decoder))
+        assertEquals(LongBacked.TEN, serializer.deserialize(decoder))
+        assertEquals(0, decoder.input.available())
+    }
+
     @TestFactory
     fun `nullable enum sequence consumes exactly one marker per value`(): List<DynamicTest> =
         UUEnumFormat.entries.flatMap { format ->
