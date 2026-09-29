@@ -56,7 +56,7 @@ class UUZipTests
         outputFolder.uuDelete()
 
         val fis = FileInputStream(zipPath.toFile())
-        fis.uuUnzip(outputFolder)
+        fis.use { it.uuUnzip(outputFolder).getOrThrow() }
 
         outputFolder.uuPrint()
 
@@ -73,7 +73,7 @@ class UUZipTests
         outputFolder.uuDelete()
 
         val fis = FileInputStream(zipPath.toFile())
-        fis.uuUnzip(outputFolder)
+        fis.use { it.uuUnzip(outputFolder).getOrThrow() }
 
         outputFolder.uuPrint()
 
@@ -90,7 +90,7 @@ class UUZipTests
         outputFolder.uuDelete()
 
         val fis = FileInputStream(zipPath.toFile())
-        fis.uuUnzip(outputFolder)
+        fis.use { it.uuUnzip(outputFolder).getOrThrow() }
 
         outputFolder.uuPrint()
 
