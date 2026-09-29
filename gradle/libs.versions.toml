@@ -4,7 +4,7 @@
 security_crypto = "1.1.0"
 
 # test
-uu_test = "0.0.25"
+uu_test = "0.0.26"
 
 [libraries]
 
