@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
 
     // This has to live in the pluginManagement block because it's a special
@@ -56,3 +58,24 @@ dependencyResolutionManagement {
 rootProject.name = "UUKotlinCore"
 
 include(":library")
+
+
+val localProps = Properties()
+val localPropsFile = file("local.properties")
+
+if (localPropsFile.exists()) {
+    localPropsFile.inputStream().use { localProps.load(it) }
+}
+val uuTestLocal = localProps.getProperty("uu.test.local", "false").toBoolean()
+
+if (uuTestLocal)
+{
+    includeBuild("../UUKotlinTest")
+    {
+        dependencySubstitution()
+        {
+            substitute(module("com.silverpine.uu:uu-test-ktx"))
+                .using(project(":library"))
+        }
+    }
+}
