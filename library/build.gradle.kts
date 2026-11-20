@@ -23,13 +23,13 @@ dependencies {
     testImplementation(uuBuild.mockito.junit.jupiter)
     testImplementation(uuBuild.mockito.core)
     testImplementation(uuBuild.mockito.kotlin)
-
     testImplementation(libs.uu.test.ktx)
 
     androidTestImplementation(uuBuild.androidx.junit)
     androidTestImplementation(uuBuild.androidx.espresso.core)
     androidTestImplementation(uuBuild.kotlin.test)
     androidTestImplementation(libs.uu.test.instrumented.ktx)
+    androidTestImplementation(libs.uu.test.ktx)
 }
 
 android {
